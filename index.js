@@ -22,7 +22,7 @@ class App extends Component {
       <div>
         <Title/>
         <div>
-        <TravelMap zoom={10} center={this.state.locations[0]}/>
+        <TravelMap zoom={6} center={this.state.locations[0]} locations={this.state.locations}/>
         </div>
         <p>
           This is where the world travel information will go! :)
