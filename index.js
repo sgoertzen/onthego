@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Title from './Title';
 import './style.css';
-import TravelMap from './map';
+import TravelMap from './TravelMap';
 
 class App extends Component {
   constructor() {
