@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import Title from './Title';
 import './style.css';
 import TravelMap from './TravelMap';
+import CountryButtons from './CountryButtons'
 
 class App extends Component {
   constructor() {
@@ -27,6 +28,7 @@ class App extends Component {
         <p>
           Ohio is just listed on here so we can see what the "traveled" path looks like.
         </p>
+        <CountryButtons/>
       </div>
       
     );
