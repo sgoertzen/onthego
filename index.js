@@ -8,7 +8,6 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      name: 'React',
       locations: [
         {name:'Ohio', lat: 41.1740136,lng: -81.519837,arrive:null,depart:new Date('2012-01-01T03:24:00')},
         {name:'Lafayette, CA', lat: 37.8937188,lng: -122.1579631,arrive:new Date('2012-01-01T03:24:00'),depart:new Date('2019-07-28T03:24:00')},
