@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
+import LocationButton from './LocationButton.js'
 
 
 class CoutryButtons extends Component {
   
   constructor(props) {
     super(props);
-    this.state = {
-      text: props.text,
-    };
+    this.state = {};
   }
 
   render() {
-    return <div>Location buttons here</div>
+    const buttons = this.props.locations.map(loc => {
+      return (
+        <LocationButton text={loc.name}
+          />
+      );
+    });
+    return buttons
   }
 }
 export default CoutryButtons;
