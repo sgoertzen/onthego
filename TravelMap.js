@@ -11,7 +11,7 @@ const handleApiLoaded = (map, maps, locations) => {
   var traveledPath = new google.maps.Polyline({
     path: pathCoords.traveled,
     geodesic: true,
-    strokeColor: '#339944',
+    strokeColor: '#6c027f',
     strokeOpacity: 1.0,
     strokeWeight: 4
   });
@@ -20,8 +20,8 @@ const handleApiLoaded = (map, maps, locations) => {
   var upcomingPath = new google.maps.Polyline({
     path: pathCoords.upcoming,
     geodesic: true,
-    strokeColor: '#0000ff',
-    strokeOpacity: 0.2,
+    strokeColor: '#ffaf05',
+    strokeOpacity: 0.4, 
     strokeWeight: 3
   });
   upcomingPath.setMap(map);

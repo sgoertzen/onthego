@@ -13,7 +13,7 @@ class MapMarker extends Component {
 
   render() {
     const markerStyle = {
-      color: 'red',
+      color: '#1c17b5',
       bottom: 150,
       left: '-45px',
       width: 120,
@@ -22,6 +22,7 @@ class MapMarker extends Component {
       padding: 10,
       fontSize: 14,
       zIndex: 100,
+      textAlign: 'center',
     };
 
     return <div style={markerStyle}>{this.state.text}</div>
