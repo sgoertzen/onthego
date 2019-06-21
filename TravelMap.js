@@ -2,31 +2,68 @@ import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import MapMarker from './MapMarker';
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
-
-const handleApiLoaded = (map, maps, places) => {
+const handleApiLoaded = (map, maps, locations) => {
   const markers = [];
   const infowindows = [];
 
-  // places.forEach((place) => {
-  //   markers.push(new maps.Marker({
-  //     position: {
-  //       lat: place.geometry.location.lat,
-  //       lng: place.geometry.location.lng,
-  //     },
-  //     map,
-  //   }));
+  var pathCoords = buildFlightPlanCoordinates(locations)
 
-  //   infowindows.push(new maps.InfoWindow({
-  //     content: getInfoWindowString(place),
-  //   }));
-  // });
+  var traveledPath = new google.maps.Polyline({
+    path: pathCoords.traveled,
+    geodesic: true,
+    strokeColor: '#339944',
+    strokeOpacity: 1.0,
+    strokeWeight: 4
+  });
+  traveledPath.setMap(map);
+  
+  var upcomingPath = new google.maps.Polyline({
+    path: pathCoords.upcoming,
+    geodesic: true,
+    strokeColor: '#0000ff',
+    strokeOpacity: 0.2,
+    strokeWeight: 3
+  });
+  upcomingPath.setMap(map);
+};
 
-  // markers.forEach((marker, i) => {
-  //   marker.addListener('click', () => {
-  //     infowindows[i].open(map, marker);
-  //   });
-  // });
+// TODO, Unit test this!
+const buildFlightPlanCoordinates = (locations) => {
+  const now = Date.now()
+  var traveledPath = [];
+  const upcomingPath = [];
+
+  for (const loc of locations) {
+    if (loc.arrive == null || loc.arrive < now) {
+      traveledPath.push({
+        lat: loc.lat,
+        lng: loc.lng
+      });
+    }
+    if (loc.depart == null || loc.depart > now) {
+      upcomingPath.push({
+        lat: loc.lat,
+        lng: loc.lng
+      });
+    }
+
+  }
+
+  return {
+    traveled: traveledPath,
+    upcoming: upcomingPath
+  };
+};
+
+// TODO, Unit test this!
+const currentLocation = (locations) => {
+  const now = Date.now()
+
+  for (const loc of locations) {
+    if (loc.arrive < now && loc.depart > now) {
+      return loc;
+    }
+  }
 };
 
 class TravelMap extends Component {
@@ -61,9 +98,9 @@ class TravelMap extends Component {
       <div style={{ height: '50vh', width: '100%' }}>
         <GoogleMapReact
           yesIWantToUseGoogleMapApiInternals
-          onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
+          onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps, this.props.locations)}
           bootstrapURLKeys={{ key: 'AIzaSyBDe1KUNj3px_7kkfl7cfkrEpihDwvunt4' }}
-          defaultCenter={this.props.center}
+          defaultCenter={currentLocation(this.props.locations)}
           defaultZoom={this.props.zoom}
         >
           {markers}
