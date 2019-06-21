@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import Title from './Title';
 import './style.css';
 import TravelMap from './TravelMap';
+import LocationButtons from './LocationButtons'
 
 class App extends Component {
   constructor() {
@@ -24,9 +25,7 @@ class App extends Component {
         <div>
         <TravelMap zoom={4} center={this.state.locations[0]} locations={this.state.locations}/>
         </div>
-        <p>
-          Ohio is just listed on here so we can see what the "traveled" path looks like.
-        </p>
+        <LocationButtons locations={this.state.locations}/>
       </div>
       
     );

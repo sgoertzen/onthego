@@ -8,6 +8,9 @@ Filter by family member
 Ability to post blog entry
 Ability to comment
 Make site responsive
+Ability to shrink/hide map
+RSS Feed of blog?
+Subscribe to blog?
 
 Family contribution
 
