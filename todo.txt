@@ -1,3 +1,10 @@
+Infrastructure:
+Support back button and deep links
+Support fire datastore
+Support firehosting
+Integrate with CI
+Support TypeScript
+
 Add:
 Add labels underneath map
 Move currently selected country out of map and into page state
@@ -8,7 +15,7 @@ Filter by family member
 Ability to post blog entry
 Ability to comment
 Make site responsive
-Ability to shrink/hide map
+Ability to shrink/hide/fullscreen map
 RSS Feed of blog?
 Subscribe to blog?
 

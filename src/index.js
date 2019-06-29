@@ -4,6 +4,7 @@ import Title from './Title';
 import './style.css';
 import TravelMap from './TravelMap';
 import LocationButtons from './LocationButtons'
+import Summary from './Summary'
 
 class App extends Component {
   constructor() {
@@ -26,6 +27,7 @@ class App extends Component {
         <TravelMap zoom={4} center={this.state.locations[0]} locations={this.state.locations}/>
         </div>
         <LocationButtons locations={this.state.locations}/>
+        <Summary locations={this.state.locations}/>
       </div>
       
     );
