@@ -3,7 +3,8 @@ Support back button and deep links
 Support fire datastore
 Support firehosting
 Integrate with CI
-Support TypeScript
+Support auto formatting
+[done] Support TypeScript
 
 Add:
 Add labels underneath map

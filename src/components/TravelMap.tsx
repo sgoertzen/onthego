@@ -20,8 +20,6 @@ interface mapProps {
 }
 
 const TravelMap: React.FC<mapProps> = (props) => {
-
-    
     const handleApiLoaded = (map:google.maps.Map, maps:any) => {
         let pathCoords = buildFlightPlanCoordinates(props.locations)
         let traveledPath = new maps.Polyline({
