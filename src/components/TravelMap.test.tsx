@@ -12,7 +12,7 @@ interface travelLocation {
 
 it('renders without crashing', () => {
     let locations: travelLocation[] = []
-  const div = document.createElement('div');
-  ReactDOM.render(<TravelMap locations={locations}/>, div);
-  ReactDOM.unmountComponentAtNode(div);
+    const div = document.createElement('div');
+    ReactDOM.render(<TravelMap locations={locations} />, div);
+    ReactDOM.unmountComponentAtNode(div);
 });
