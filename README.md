@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/sgoertzen/onthego.svg?branch=master)](https://travis-ci.com/sgoertzen/onthego) 
+
 Goertzens on the go
 
 ## Available Scripts
