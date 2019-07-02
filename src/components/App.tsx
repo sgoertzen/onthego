@@ -36,13 +36,6 @@ const locations: travelLocation[] = [
 ];
 
 const App: React.FC = () => {
-<<<<<<< HEAD
-    return (
-        <div className="App">
-            <TravelMap locations={locations} />
-        </div>
-    );
-=======
   var db = firebase.firestore();
   db.collection("locations").get().then((querySnapshot) => {
     querySnapshot.forEach((doc) => {
@@ -55,7 +48,6 @@ const App: React.FC = () => {
       <TravelMap locations={locations}/>
     </div>
   );
->>>>>>> Pulling data from firestore!
 }
 
 export default App;
