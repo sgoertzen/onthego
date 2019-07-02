@@ -2,6 +2,25 @@ import React from 'react';
 import './App.css';
 import TravelMap from './TravelMap';
 
+// Firebase App (the core Firebase SDK) is always required and
+// must be listed before other Firebase SDKs
+import * as firebase from "firebase/app";
+// Add the Firebase services that you want to use
+import "firebase/firestore";
+
+var firebaseConfig = {
+  apiKey: "AIzaSyBD_kBMKYuaiVbP_O8d4nm1vVGGtWFoZNI",
+  authDomain: "goertzensonthego.firebaseapp.com",
+  databaseURL: "https://goertzensonthego.firebaseio.com",
+  projectId: "goertzensonthego",
+  storageBucket: "goertzensonthego.appspot.com",
+  messagingSenderId: "696043264490",
+  appId: "1:696043264490:web:4b20e1e07ed75e5f"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
 interface travelLocation {
     name: string,
     lat: number,
@@ -17,11 +36,26 @@ const locations: travelLocation[] = [
 ];
 
 const App: React.FC = () => {
+<<<<<<< HEAD
     return (
         <div className="App">
             <TravelMap locations={locations} />
         </div>
     );
+=======
+  var db = firebase.firestore();
+  db.collection("locations").get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+        console.log(`${doc.id} => ${doc.data()}`);
+    });
+  });
+
+  return (
+    <div className="App">
+      <TravelMap locations={locations}/>
+    </div>
+  );
+>>>>>>> Pulling data from firestore!
 }
 
 export default App;

@@ -1,9 +1,9 @@
 Infrastructure:
 Support back button and deep links
 Support fire datastore
-Support firehosting
-Integrate with CI
-Support auto formatting
+[done] Support firehosting
+[done] Integrate with CI
+[done] Support auto formatting
 [done] Support TypeScript
 
 Add:
