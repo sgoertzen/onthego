@@ -14,8 +14,8 @@ interface mapProps {
 
 class TravelMap extends React.Component<mapProps> {
 
-    public props : mapProps
-    private map : google.maps.Map | null;
+    public props: mapProps
+    private map: google.maps.Map | null;
     private maps: any;
 
     constructor(props: mapProps) {
@@ -31,7 +31,7 @@ class TravelMap extends React.Component<mapProps> {
         this.drawPaths();
     }
     drawPaths() {
-        if (this.map == null){
+        if (this.map == null) {
             console.log("Skipping draw as no maps loaded")
             return;
         }

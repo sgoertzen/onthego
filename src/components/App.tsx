@@ -5,10 +5,10 @@ import * as firebase from "firebase/app";
 import "firebase/firestore";
 import { ITravelLocation, TravelLocation } from '../classes/TravelLocation';
 import LocationButtons from './LocationButtons';
-import {firebaseConfig2} from  '../config/firebase.config'
+import { firebaseConfig } from '../config/firebase.config'
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig2);
+firebase.initializeApp(firebaseConfig);
 
 const locations: ITravelLocation[] = [
     // { name: 'Ohio', coords: {latitude: 41.1740136, longitude: -81.519837}, arrive: new Date('2000-01-01T03:24:00'), depart: new Date('2012-01-01T03:24:00') },

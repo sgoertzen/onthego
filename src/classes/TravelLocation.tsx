@@ -13,8 +13,8 @@ export interface IGeoPoint {
 }
 
 export interface ITimestamp {
-    toDate():Date
-    nanoseconds:number
+    toDate(): Date
+    nanoseconds: number
 }
 
 export class TimeStamp implements ITimestamp {
