@@ -2,21 +2,14 @@
 import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import MapMarker from './MapMarker'
+import { ITravelLocation } from '../classes/TravelLocation';
 
-
-interface travelLocation {
-    name: string,
-    lat: number,
-    lng: number,
-    arrive?: Date,
-    depart?: Date
-}
 interface paths {
     traveledPath: google.maps.LatLng[],
     upcomingPath: google.maps.LatLng[]
 }
 interface mapProps {
-    locations: travelLocation[]
+    locations: ITravelLocation[]
 }
 
 const TravelMap: React.FC<mapProps> = (props) => {
@@ -41,7 +34,7 @@ const TravelMap: React.FC<mapProps> = (props) => {
         upcomingPath.setMap(map);
     }
 
-    const buildFlightPlanCoordinates = (locs: travelLocation[]) => {
+    const buildFlightPlanCoordinates = (locs: ITravelLocation[]) => {
         const now: Date = new Date()
         var traveledPath = [];
         const upcomingPath = [];
@@ -49,14 +42,14 @@ const TravelMap: React.FC<mapProps> = (props) => {
         for (const loc of locs) {
             if (loc.arrive == null || loc.arrive < now) {
                 traveledPath.push({
-                    lat: loc.lat,
-                    lng: loc.lng
+                    lat: loc.coords.latitude,
+                    lng: loc.coords.longitude
                 });
             }
             if (loc.depart == null || loc.depart > now) {
                 upcomingPath.push({
-                    lat: loc.lat,
-                    lng: loc.lng
+                    lat: loc.coords.latitude,
+                    lng: loc.coords.longitude
                 });
             }
 
@@ -72,8 +65,8 @@ const TravelMap: React.FC<mapProps> = (props) => {
         const markers: any = props.locations.map(loc => {
             return (
                 <MapMarker
-                    lat={loc.lat}
-                    lng={loc.lng}
+                    lat={loc.coords.latitude}
+                    lng={loc.coords.longitude}
                     text={loc.name}
                     key={loc.name}
                 />
