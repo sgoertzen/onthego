@@ -1,9 +1,11 @@
 Infrastructure:
 Support back button and deep links
-Support fire datastore
-Support firehosting
-Integrate with CI
-Support auto formatting
+Auto merge PRs (https://alexwlchan.net/2019/03/creating-a-github-action-to-auto-merge-pull-requests/)
+Run eject and see if we want it (npm run eject)
+[done] Support fire datastore
+[done] Support firehosting
+[done] Integrate with CI
+[done] Support auto formatting
 [done] Support TypeScript
 
 Add:
