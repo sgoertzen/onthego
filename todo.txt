@@ -1,21 +1,23 @@
 Infrastructure:
 Support back button and deep links
 Auto merge PRs (https://alexwlchan.net/2019/03/creating-a-github-action-to-auto-merge-pull-requests/)
-Run eject and see if we want it (npm run eject)
+Support storybook
 [done] Support fire datastore
 [done] Support firehosting
 [done] Integrate with CI
 [done] Support auto formatting
 [done] Support TypeScript
+[done] Run eject and see if we want it (Don't need to eject for now)
 
 Add:
+View Posts per location
 Add labels underneath map
 Move currently selected country out of map and into page state
 Total miles traveled (do using cloud functions)
 Days on the road
 Ability to add photos
 Filter by family member
-Ability to post blog entry
+Ability to add Post
 Ability to comment
 Make site responsive
 Ability to shrink/hide/fullscreen map

@@ -37,12 +37,12 @@ class App extends React.Component {
         super(props);
         var arr: TravelLocation[] = [];
         this.state = { locs: arr }
-        this.loadData()
+        this.loadLocations()
     }
 
-    loadData(): void {
+    loadLocations(): void {
         var db = firebase.firestore();
-        db.collection("locations").get().then((querySnapshot) => {
+        db.collection("locations").orderBy("arrive").get().then((querySnapshot) => {
             // Loop over the results and update our travel locations array
             querySnapshot.forEach((doc) => {
                 const tl: ITravelLocation = new TravelLocation();
