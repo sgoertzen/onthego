@@ -51,7 +51,6 @@ class App extends React.Component {
                 tl.arrive = doc.get("arrive")
                 tl.depart = doc.get("depart")
                 locations.push(tl);
-                console.log(tl.name);
             });
             this.setState({
                 locs: locations

@@ -12,41 +12,63 @@ interface mapProps {
     locations: ITravelLocation[]
 }
 
-const TravelMap: React.FC<mapProps> = (props) => {
-    const handleApiLoaded = (map: google.maps.Map, maps: any) => {
-        let pathCoords = buildFlightPlanCoordinates(props.locations)
-        let traveledPath = new maps.Polyline({
+class TravelMap extends React.Component<mapProps> {
+
+    public props : mapProps
+    private map : google.maps.Map | null;
+    private maps: any;
+
+    constructor(props: mapProps) {
+        super(props);
+        this.props = props;
+        this.map = null;
+        this.maps = null;
+    }
+
+    handleApiLoaded(map: google.maps.Map, maps: any) {
+        this.map = map;
+        this.maps = maps;
+        this.drawPaths();
+    }
+    drawPaths() {
+        if (this.map == null){
+            console.log("Skipping draw as no maps loaded")
+            return;
+        }
+        console.log("Drawing paths")
+        let pathCoords = this.buildFlightPlanCoordinates(this.props.locations)
+        let traveledPath = new this.maps.Polyline({
             path: pathCoords.traveled,
             geodesic: true,
             strokeColor: '#6c027f',
             strokeOpacity: 1.0,
             strokeWeight: 4
         });
-        traveledPath.setMap(map);
+        traveledPath.setMap(this.map);
 
-        let upcomingPath = new maps.Polyline({
+        let upcomingPath = new this.maps.Polyline({
             path: pathCoords.upcoming,
             geodesic: true,
             strokeColor: '#ffaf05',
             strokeOpacity: 0.4,
             strokeWeight: 3
         });
-        upcomingPath.setMap(map);
+        upcomingPath.setMap(this.map);
     }
 
-    const buildFlightPlanCoordinates = (locs: ITravelLocation[]) => {
+    buildFlightPlanCoordinates(locs: ITravelLocation[]) {
         const now: Date = new Date()
         var traveledPath = [];
         const upcomingPath = [];
 
         for (const loc of locs) {
-            if (loc.arrive == null || loc.arrive < now) {
+            if (loc.arrive == null || loc.arrive.toDate() < now) {
                 traveledPath.push({
                     lat: loc.coords.latitude,
                     lng: loc.coords.longitude
                 });
             }
-            if (loc.depart == null || loc.depart > now) {
+            if (loc.depart == null || loc.depart.toDate() > now) {
                 upcomingPath.push({
                     lat: loc.coords.latitude,
                     lng: loc.coords.longitude
@@ -61,8 +83,8 @@ const TravelMap: React.FC<mapProps> = (props) => {
         };
     }
 
-    const buildMarkers = () => {
-        const markers: any = props.locations.map(loc => {
+    buildMarkers() {
+        const markers: any = this.props.locations.map(loc => {
             return (
                 <MapMarker
                     lat={loc.coords.latitude}
@@ -74,20 +96,23 @@ const TravelMap: React.FC<mapProps> = (props) => {
         });
         return markers;
     }
-    return (
-        // Important! Always set the container height explicitly
-        <div style={{ height: '50vh', width: '100%' }}>
-            <GoogleMapReact
-                yesIWantToUseGoogleMapApiInternals
-                onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
-                bootstrapURLKeys={{ key: 'AIzaSyBDe1KUNj3px_7kkfl7cfkrEpihDwvunt4' }}
-                defaultCenter={{ lat: 21.5001927, lng: -81.8118274 }}
-                defaultZoom={4}
-            >
-                {buildMarkers()}
-            </GoogleMapReact>
-        </div>
-    );
+    render() {
+        return (
+            // Important! Always set the container height explicitly
+            <div style={{ height: '50vh', width: '100%' }}>
+                <GoogleMapReact
+                    yesIWantToUseGoogleMapApiInternals
+                    onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
+                    bootstrapURLKeys={{ key: 'AIzaSyBDe1KUNj3px_7kkfl7cfkrEpihDwvunt4' }}
+                    defaultCenter={{ lat: 21.5001927, lng: -81.8118274 }}
+                    defaultZoom={4}
+                >
+                    {this.buildMarkers()}
+                    {this.drawPaths()}
+                </GoogleMapReact>
+            </div>
+        );
+    }
 }
 
 export default TravelMap;

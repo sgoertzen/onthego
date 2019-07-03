@@ -19,7 +19,7 @@ class LocationButtons extends React.Component {
     render() {
         const buttons = this.props.locs.map(loc => {
             return (
-                <LocationButton location={loc} />
+                <LocationButton location={loc} key={loc.name}/>
             );
         });
         return buttons
