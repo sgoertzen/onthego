@@ -4,7 +4,7 @@ export interface IGeoPoint {
 }
 
 export class GeoPoint implements IGeoPoint {
-    constructor(lat?:number, lng?:number) {
+    constructor(lat?: number, lng?: number) {
         this.latitude = (lat == null) ? 0 : lat
         this.longitude = (lng == null) ? 0 : lng
     }

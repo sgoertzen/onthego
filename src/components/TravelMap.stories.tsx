@@ -2,11 +2,11 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import TravelMap from './TravelMap';
 import { TravelLocation } from '../classes/TravelLocation';
-    import { GeoPoint } from '../classes/GeoPoint';
-    import { TimeStamp } from '../classes/TimeStamp';
+import { GeoPoint } from '../classes/GeoPoint';
+import { TimeStamp } from '../classes/TimeStamp';
 
 
-    storiesOf('Travel Map', module)
+storiesOf('Travel Map', module)
     .add('no locations', () => <TravelMap locations={[]} onLocChange={() => { }} />)
     .add('locations', () => {
         const locs: TravelLocation[] = []

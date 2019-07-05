@@ -19,7 +19,7 @@ export class TravelLocation implements ITravelLocation {
     }
     id: string
     name: string
-    coords:GeoPoint
-    arrive:TimeStamp
-    depart:TimeStamp
+    coords: GeoPoint
+    arrive: TimeStamp
+    depart: TimeStamp
 }

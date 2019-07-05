@@ -4,10 +4,10 @@ export interface ITimestamp {
 }
 
 export class TimeStamp implements ITimestamp {
-    constructor(nanoseconds?:number) {
+    constructor(nanoseconds?: number) {
         this.nanoseconds = (nanoseconds == null) ? 0 : nanoseconds
     }
-    nanoseconds:number;
+    nanoseconds: number;
     toDate = () => {
         return new Date(this.nanoseconds)
     }
