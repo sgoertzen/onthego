@@ -3,6 +3,7 @@ import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import MapMarker from './MapMarker'
 import { ITravelLocation } from '../classes/TravelLocation';
+import { ILocChangeCallback } from './App';
 
 interface paths {
     traveledPath: google.maps.LatLng[],
@@ -10,6 +11,7 @@ interface paths {
 }
 interface mapProps {
     locations: ITravelLocation[]
+    onLocChange: ILocChangeCallback
 }
 
 class TravelMap extends React.Component<mapProps> {
@@ -32,10 +34,8 @@ class TravelMap extends React.Component<mapProps> {
     }
     drawPaths() {
         if (this.map == null) {
-            console.log("Skipping draw as no maps loaded")
             return;
         }
-        console.log("Drawing paths")
         let pathCoords = this.buildFlightPlanCoordinates(this.props.locations)
         let traveledPath = new this.maps.Polyline({
             path: pathCoords.traveled,
@@ -91,6 +91,7 @@ class TravelMap extends React.Component<mapProps> {
                     lng={loc.coords.longitude}
                     text={loc.name}
                     key={loc.name}
+                    onLocChange={this.props.onLocChange}
                 />
             );
         });

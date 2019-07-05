@@ -1,10 +1,12 @@
 import React from 'react';
 import LocationButton from './LocationButton'
 import { ITravelLocation } from '../classes/TravelLocation';
+import { ILocChangeCallback } from './App';
 
 
 interface buttonProps {
     locs: ITravelLocation[]
+    onLocChange: ILocChangeCallback
 }
 
 class LocationButtons extends React.Component {
@@ -19,7 +21,7 @@ class LocationButtons extends React.Component {
     render() {
         const buttons = this.props.locs.map(loc => {
             return (
-                <LocationButton location={loc} key={loc.name} />
+                <LocationButton location={loc} key={loc.name} onLocChange={this.props.onLocChange} />
             );
         });
         return buttons
