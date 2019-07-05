@@ -1,5 +1,6 @@
 import React from 'react';
 import { ITravelLocation } from '../classes/TravelLocation';
+import { ILocChangeCallback } from './App';
 
 
 // TODO: If I don't end up using any other parts of the location object, 
@@ -7,6 +8,7 @@ import { ITravelLocation } from '../classes/TravelLocation';
 // wired up before making this change.
 interface buttonProps {
     location: ITravelLocation
+    onLocChange: ILocChangeCallback
 }
 
 class LocationButton extends React.Component {
@@ -19,7 +21,7 @@ class LocationButton extends React.Component {
     }
 
     render() {
-        return <button>{this.props.location.name}</button>
+        return <button onClick={() => { this.props.onLocChange(this.props.location.id) }}>{this.props.location.name}</button>
     }
 }
 export default LocationButton;
