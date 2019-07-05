@@ -12,8 +12,6 @@ import Posts from './Posts';
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-const locations: ITravelLocation[] = [];
-
 interface IAppState {
     locs: TravelLocation[]
     posts: Post[]
@@ -42,6 +40,7 @@ class App extends React.Component {
 
     loadLocations(): void {
         var db = firebase.firestore();
+        const locations: ITravelLocation[] = [];
         db.collection("locations").orderBy("arrive").get().then((querySnapshot) => {
             // Loop over the results and update our travel locations array
             querySnapshot.forEach((doc) => {
