@@ -1,0 +1,7 @@
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import MapMarker from './MapMarker';
+
+
+storiesOf('Map Marker', module)
+    .add('standard', () => <MapMarker text="marker name" lat={0} lng={0} onLocChange={() => { }} />)
