@@ -10,6 +10,7 @@ Auto merge PRs (https://alexwlchan.net/2019/03/creating-a-github-action-to-auto-
 [done] Run eject and see if we want it (Don't need to eject for now)
 
 Add:
+Support authentication for edit pages
 View Posts per location
 Add labels underneath map
 Move currently selected country out of map and into page state
