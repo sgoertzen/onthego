@@ -5,7 +5,7 @@ import LocationButton from '../components/LocationButton';
 import { TravelLocation } from '../classes/TravelLocation';
 
 storiesOf('Location Button', module)
-    .add('normal', () => {
+    .add('standard', () => {
         return <LocationButton location={new TravelLocation("123", "Antartica")} onLocChange={() => { }} />
     })
     .add('large name', () => {

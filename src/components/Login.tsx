@@ -23,14 +23,14 @@ class Login extends React.Component {
         firebase.auth().getRedirectResult().then(function(result) {
             if (result.credential) {
                 console.log("user " + result.credential.toJSON())
-              // This gives you a Google Access Token. You can use it to access the Google API.
-              //var token = result.credential.accessToken;
-              // ...
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                //var token = result.credential.accessToken;
+                // ...
             }
             // The signed-in user info.
             var user = result.user;
             console.log("User logged in : " + user)
-          }).catch(function(error) {
+        }).catch(function(error) {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
@@ -40,14 +40,14 @@ class Login extends React.Component {
             var credential = error.credential;
             // ...
             console.log("Error during auth: " + errorCode + ", " + errorMessage + ", " + email + ", " + credential)
-          });
+        });
     }
 
-    render () {
+    render() {
         return <div>
             <button onClick={this.show}>Login</button>
             <div id="firebaseui-auth-container"></div>
-            </div>
+        </div>
     }
 }
 
