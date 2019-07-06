@@ -17,7 +17,8 @@ class Login extends React.Component {
     show() {
         console.log("auth name: " + firebase.auth.name);
         var provider = new firebase.auth.GoogleAuthProvider();
-        //provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+        // If uncommenting this line, make sure you look into: https://developers.google.com/identity/protocols/googlescopes?authuser=0
+        //provider.addScope('https://www.googleapis.com/auth/drive.photos.readonly');
         firebase.auth().signInWithRedirect(provider);
         firebase.auth().getRedirectResult().then(function(result) {
             if (result.credential) {
