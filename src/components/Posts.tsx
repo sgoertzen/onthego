@@ -17,12 +17,15 @@ class Posts extends React.Component {
     }
 
     render() {
-        const buttons = this.props.posts.map(post => {
+        if (this.props.posts.length === 0) {
+            return <div>Nothing shared for this location yet</div>
+        }
+        const tiles = this.props.posts.map(post => {
             return (
                 <div key="{post.title}"><img className="Post-Image" src={post.photo} alt="{post.title}" />{post.title}</div>
             );
         });
-        return buttons
+        return tiles
     }
 }
 export default Posts;
