@@ -46,7 +46,6 @@ class Login extends React.Component {
     render() {
         return <div>
             <button onClick={this.show}>Login</button>
-            <div id="firebaseui-auth-container"></div>
         </div>
     }
 }
