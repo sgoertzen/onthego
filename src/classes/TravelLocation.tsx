@@ -10,13 +10,16 @@ export interface ITravelLocation {
 }
 
 export class TravelLocation implements ITravelLocation {
-    constructor(id: string, name: string) {
+    constructor(id: string, name: string, coords?: GeoPoint, arrive?: TimeStamp, depart?: TimeStamp) {
         this.id = id
         this.name = name
+        this.coords = (coords == null) ? new GeoPoint() : coords
+        this.arrive = (arrive == null) ? new TimeStamp() : arrive
+        this.depart = (depart == null) ? new TimeStamp() : depart
     }
     id: string
     name: string
-    coords = new GeoPoint()
-    arrive = new TimeStamp()
-    depart = new TimeStamp()
+    coords: GeoPoint
+    arrive: TimeStamp
+    depart: TimeStamp
 }
