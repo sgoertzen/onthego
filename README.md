@@ -6,12 +6,23 @@ Custom website for tracking and sharing a year long travel.  Main features inclu
 * Show photos, videos and descriptions of each travel location
 * Allow users to post comments
 
-Development stack
-* Hosted on Google firebase
-* Uses Cloud firestore for data storage
-
 ## Development
 Status: [![Build Status](https://travis-ci.com/sgoertzen/onthego.svg?branch=master)](https://travis-ci.com/sgoertzen/onthego) 
+
+### Development stack
+* Written in TypeScript
+* Hosted on Google firebase
+* Uses Cloud firestore for data storage
+* Tests and storybook stories live next to the code
+
+### Directory Structure
+```
+/public - Public assests deployed to webserver
+/src
+    /classes - POTOs (plain old TypeScript objects)
+    /components - UI Components
+    /config - Configuration files
+```
 
 ### Building
 ```
