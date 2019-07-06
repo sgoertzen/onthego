@@ -39,6 +39,7 @@ This will auto format all the code.
 ```
 firebase deploy
 ```
+More details at [https://firebase.google.com/docs/web/setup?authuser=0#install-cli_deploy](https://firebase.google.com/docs/web/setup?authuser=0#install-cli_deploy)
 
 ### Testing
 For manual testing
