@@ -1,6 +1,7 @@
 Infrastructure:
 Support back button and deep links
 Auto merge PRs (https://alexwlchan.net/2019/03/creating-a-github-action-to-auto-merge-pull-requests/)
+Update state to be readonly in TypeScript (https://levelup.gitconnected.com/ultimate-react-component-patterns-with-typescript-2-8-82990c516935)
 [done] Support storybook
 [done] Support fire datastore
 [done] Support firehosting
@@ -29,4 +30,3 @@ Subscribe to blog?
 Family contribution
 
 Want a way to look at each persons things
-

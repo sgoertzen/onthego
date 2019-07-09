@@ -8,6 +8,7 @@ import LocationButtons from './LocationButtons';
 import { firebaseConfig } from '../config/firebase.config'
 import { IPost, Post } from '../classes/Post';
 import Posts from './Posts';
+import Login from './Login';
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -48,6 +49,7 @@ class App extends React.Component {
                 loc.id = doc.id
                 locations.push(loc)
             });
+            // TODO: Make the respond to the selected location
             this.loadPosts("320gdIkX54IKNqRoFHpE")
             this.setState({ locs: locations });
         });
@@ -68,12 +70,14 @@ class App extends React.Component {
     }
 
     locationChanged(locationId: string): void {
+        // TODO: Recenter the map on this location
         this.loadPosts(locationId)
     }
 
     render() {
         return (
             <div className="App">
+                <Login/>
                 <TravelMap locations={this.state.locs} onLocChange={this.locationChanged} />
                 <LocationButtons locs={this.state.locs} onLocChange={this.locationChanged} />
                 <Posts posts={this.state.posts} />
