@@ -1,6 +1,6 @@
 import React from 'react';
 //import * as firebase from "firebase/app";
-import "firebase/firebase-auth";
+//import "firebase/firebase-auth";
 
 interface loginProps {
 }
