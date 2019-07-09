@@ -45,7 +45,7 @@ class Login extends React.Component {
 
     render() {
         return <div>
-            <button onClick={this.show}>Login</button>
+            <button>Login</button>
         </div>
     }
 }
