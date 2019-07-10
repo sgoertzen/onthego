@@ -1,6 +1,5 @@
 import React from 'react';
 import * as firebase from "firebase/app";
-//import "firebase/firebase-auth";
 
 interface loginProps {
 }
@@ -42,9 +41,6 @@ class Login extends React.Component {
             console.log("Error during auth: " + errorCode + ", " + errorMessage + ", " + email + ", " + credential)
         });
     }
-    /*
-            
-    */
 
     render() {
         return <div>
