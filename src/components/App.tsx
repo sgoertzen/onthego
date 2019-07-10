@@ -77,7 +77,7 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <Login/>
+                <Login />
                 <TravelMap locations={this.state.locs} onLocChange={this.locationChanged} />
                 <LocationButtons locs={this.state.locs} onLocChange={this.locationChanged} />
                 <Posts posts={this.state.posts} />

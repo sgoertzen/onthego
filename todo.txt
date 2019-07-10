@@ -17,6 +17,7 @@ View Posts per location
 Add labels underneath map
 Move currently selected country out of map and into page state
 Total miles traveled (do using cloud functions)
+Pick photos from google photots (https://developers.google.com/picker/docs/) and (https://developers.google.com/photos/library/guides/access-media-items)
 Days on the road
 Ability to add photos
 Filter by family member
