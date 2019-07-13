@@ -78,7 +78,7 @@ class App extends React.Component {
         return (
             <div className="App">
                 <Login />
-                <TravelMap locations={this.state.locs} onLocChange={this.locationChanged} />
+                <TravelMap locations={this.state.locs} onLocChange={this.locationChanged} center={this.state.locs[0].coords} />
                 <LocationButtons locs={this.state.locs} onLocChange={this.locationChanged} />
                 <Posts posts={this.state.posts} />
             </div>
