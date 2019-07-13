@@ -25,14 +25,15 @@ class LocationButtons extends React.Component {
     }
 
     render() {
+        let counter = 0
         const buttons = this.props.locs.map(loc => {
             return (
-                <Tab label={loc.name}></Tab>
+                <Tab label={loc.name} key={"tab_" + counter++}></Tab>
             );
         });
         if (this.props.locs.length === 0) {
             buttons.push(
-                <Tab label="No locations added yet" disabled={true}></Tab>
+                <Tab label="No locations added yet" disabled={true} key="nolocs"></Tab>
             )
         }
         return (

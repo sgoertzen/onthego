@@ -9,6 +9,7 @@ import { firebaseConfig } from '../config/firebase.config'
 import { IPost, Post } from '../classes/Post';
 import Posts from './Posts';
 import Login from './Login';
+import { IGeoPoint, GeoPoint } from '../classes/GeoPoint';
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -75,10 +76,16 @@ class App extends React.Component {
     }
 
     render() {
+        let center: IGeoPoint
+        if (this.state.locs.length > 0) {
+            center = this.state.locs[0].coords
+        } else {
+            center = new GeoPoint()
+        }
         return (
             <div className="App">
                 <Login />
-                <TravelMap locations={this.state.locs} onLocChange={this.locationChanged} center={this.state.locs[0].coords} />
+                <TravelMap locations={this.state.locs} onLocChange={this.locationChanged} center={center} />
                 <LocationButtons locs={this.state.locs} onLocChange={this.locationChanged} />
                 <Posts posts={this.state.posts} />
             </div>
