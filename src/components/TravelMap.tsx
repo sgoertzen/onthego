@@ -4,6 +4,7 @@ import GoogleMapReact from 'google-map-react';
 import MapMarker from './MapMarker'
 import { ITravelLocation } from '../classes/TravelLocation';
 import { ILocChangeCallback } from './App';
+import { IGeoPoint } from '../classes/GeoPoint';
 
 interface paths {
     traveledPath: google.maps.LatLng[],
@@ -11,7 +12,8 @@ interface paths {
 }
 interface mapProps {
     locations: ITravelLocation[]
-    onLocChange: ILocChangeCallback
+    onLocChange: ILocChangeCallback,
+    center: IGeoPoint
 }
 
 class TravelMap extends React.Component<mapProps> {
@@ -105,7 +107,7 @@ class TravelMap extends React.Component<mapProps> {
                     yesIWantToUseGoogleMapApiInternals
                     onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
                     bootstrapURLKeys={{ key: 'AIzaSyBDe1KUNj3px_7kkfl7cfkrEpihDwvunt4' }}
-                    defaultCenter={{ lat: 21.5001927, lng: -81.8118274 }}
+                    defaultCenter={{ lat: this.props.center.latitude, lng: this.props.center.longitude }}
                     defaultZoom={4}
                 >
                     {this.buildMarkers()}

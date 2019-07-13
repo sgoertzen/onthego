@@ -1,6 +1,7 @@
 import React from 'react';
 import { ITravelLocation } from '../classes/TravelLocation';
 import { ILocChangeCallback } from './App';
+import Tab from '@material-ui/core/Tab';
 
 interface buttonProps {
     location: ITravelLocation
@@ -17,7 +18,7 @@ class LocationButton extends React.Component {
     }
 
     render() {
-        return <button onClick={() => { this.props.onLocChange(this.props.location.id) }}>{this.props.location.name}</button>
+        return <Tab onClick={() => { this.props.onLocChange(this.props.location.id) }}>{this.props.location.name}</Tab>
     }
 }
 export default LocationButton;
