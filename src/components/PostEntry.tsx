@@ -23,9 +23,6 @@ class PostEntry extends React.Component {
     }
 
     render() {
-        let inputStyle = {
-            display: 'none',
-        }
         return (
             <div>
                 <Container maxWidth="md">

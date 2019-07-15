@@ -39,6 +39,7 @@
     "@types/node": "12.0.10",
     "@types/react": "16.8.22",
     "@types/react-dom": "16.8.4",
+    "@types/react-material-ui-form-validator": "^2.0.2",
     "@types/storybook__react": "^4.0.2",
     "date-fns": "^2.0.0-beta.2",
     "firebase": "^6.3.0",
