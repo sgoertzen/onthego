@@ -6,12 +6,21 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/picker
 import DateFnsUtils from '@date-io/date-fns';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
+import * as firebase from "firebase/app";
+import "firebase/firestore";
+
+
 // Todo: may want to move this out of this class later
 export interface ILocationCreated {
     (): void;
 }
 
-interface buttonProps {
+export interface locationEntryProps {
+    name?: string
+    latitude?: number
+    longitude?: number
+    arrival?: Date
+    departure?: Date
     onLocationCreated: ILocationCreated
 }
 
@@ -26,52 +35,68 @@ interface ILocationEntryState {
 class LocationEntry extends React.Component {
 
     public state: ILocationEntryState;
-    public props: buttonProps
+    public props: locationEntryProps
 
-    constructor(props: buttonProps) {
+    constructor(props: locationEntryProps) {
         super(props);
         this.props = props;
         this.state = {
-            name: "",
-            latitude: 0,
-            longitude: 0,
-            arrival: new Date(),
-            departure: new Date()
+            name: this.props.name ? this.props.name : "",
+            latitude: this.props.latitude ? this.props.latitude : 0,
+            longitude: this.props.longitude ? this.props.longitude : 0,
+            arrival: this.props.arrival ? this.props.arrival : new Date(),
+            departure: this.props.departure ? this.props.departure : new Date()
         }
         this.handleChange = this.handleChange.bind(this);
+        this.handleArrivalDateChange = this.handleArrivalDateChange.bind(this);
+        this.handleDepartureDateChange = this.handleDepartureDateChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(event:any): void {
+    handleChange(event: any): void {
         const id = event.target.id;
         const value = event.target.value;
         let stateChange: any
-        switch (id) 
-        {
+        switch (id) {
             case "location-entry-name": {
                 stateChange = { name: value }
                 break;
             }
             case "location-entry-latitude": {
-                stateChange = { latitude: value}
+                stateChange = { latitude: value }
                 break;
             }
             case "location-entry-longitude": {
-                stateChange = { longitude: value}
+                stateChange = { longitude: value }
                 break;
             }
         }
         this.setState(stateChange);
     }
-    handleDateChange(): void {
-        console.log("date changed")
+    handleArrivalDateChange(event: any): void {
+        this.setState({ arrival: event })
+    }
+    handleDepartureDateChange(event: any): void {
+        this.setState({ arrival: event })
     }
     handleSubmit(): void {
         console.log('form submitted')
+        var db = firebase.firestore();
+        db.collection("locations").add({
+            name: this.state.name,
+            coords: { Latitude: this.state.latitude, Longitude: this.state.longitude },
+            arrive: this.state.arrival,
+            depart: this.state.departure
+        })
+            .then(function(docRef) {
+                console.log("Document written with ID: ", docRef.id);
+            })
+            .catch(function(error) {
+                console.error("Error adding document: ", error);
+            });
     }
 
     render() {
-        let arrivalDate = new Date()
-        let departureDate = new Date()
         return (
             <ValidatorForm
                 ref="form"
@@ -100,7 +125,7 @@ class LocationEntry extends React.Component {
                                 value={this.state.latitude}
                                 onChange={this.handleChange}
                                 margin="normal"
-                                validators={['required', 'isNumber', 'minNumber:-90', 'maxNumber:90']}
+                                validators={['required', 'isFloat', 'minNumber:-90', 'maxNumber:90']}
                                 errorMessages={['field required', 'Must be a number', 'Value should be greater then -90', 'Value should be less then 90']}
                                 required
                             />
@@ -111,36 +136,40 @@ class LocationEntry extends React.Component {
                                 value={this.state.longitude}
                                 onChange={this.handleChange}
                                 margin="normal"
-                                validators={['required', 'isNumber', 'minNumber:-180', 'maxNumber:180']}
+                                validators={['required', 'isFloat', 'minNumber:-180', 'maxNumber:180']}
                                 errorMessages={['field required', 'Must be a number', 'Value should be greater then -180', 'Value should be less then 180']}
                             />
                             <KeyboardDatePicker
                                 margin="normal"
                                 id="location-entry-arrive"
                                 label="Arrive"
-                                value={arrivalDate}
-                                onChange={this.handleDateChange}
+                                value={this.state.arrival}
+                                onChange={this.handleArrivalDateChange}
                                 KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                 }}
+                                minDate={new Date()}
+                                format="MM/dd/yyyy"
                                 required
                             />
                             <KeyboardDatePicker
                                 margin="normal"
                                 id="location-entry-depart"
                                 label="Depart"
-                                value={departureDate}
-                                onChange={this.handleDateChange}
+                                value={this.state.departure}
+                                onChange={this.handleDepartureDateChange}
                                 KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                 }}
+                                minDate={new Date()}
+                                format="MM/dd/yyyy"
                                 required
                             />
                         </Grid>
                     </MuiPickersUtilsProvider>
-                    <Button 
-                        variant="contained" 
-                        id="location-entry-submit" 
+                    <Button
+                        variant="contained"
+                        id="location-entry-submit"
                         type="submit"
                         fullWidth
                     >
@@ -149,40 +178,6 @@ class LocationEntry extends React.Component {
                 </Container>
             </ValidatorForm>
         );
-        // return(
-        // <ValidatorForm
-        //         ref="form"
-        //         onSubmit={this.handleSubmit}
-        //     >
-        //         <h2>Location Entry</h2>
-        //         <TextValidator
-        //             label="Email"
-        //             onChange={this.handleChange}
-        //             name="email"
-        //             value=""
-        //             validators={['required', 'isEmail']}
-        //             errorMessages={['this field is required', 'email is not valid']}
-        //             autoComplete
-        //         />
-        //         <br />
-        //         <TextValidator
-        //             label="Password"
-        //             onChange={this.handleChange}
-        //             name="password"
-        //             value=""
-        //             validators={['required']}
-        //             errorMessages={['this field is required']}
-        //         />
-        //         <br />
-        //         <Button
-        //             color="primary"
-        //             variant="contained"
-        //             type="submit"
-        //         >
-        //             Submit
-        //         </Button>
-        //     </ValidatorForm>
-        // );
     }
 }
 export default LocationEntry;
