@@ -2,5 +2,5 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Title from './Title';
 
-storiesOf('Travel Map', module)
+storiesOf('Title', module)
     .add('Default', () => <Title />)

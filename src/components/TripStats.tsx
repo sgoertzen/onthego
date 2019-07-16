@@ -3,6 +3,9 @@ import { Card, CardActions, CardContent, Typography, Button } from '@material-ui
 import './TripStats.css'
 
 interface statsProps {
+    daysOnTheRoad: number
+    countriesVisited: number
+    milesTraveled: number
 }
 
 class TripStats extends React.Component {
@@ -19,28 +22,25 @@ class TripStats extends React.Component {
         return (
             <Card className="card">
                 <CardContent>
-                    <Typography className="title" color="textSecondary" gutterBottom>
-                        Word of the Day
-                    </Typography>
+
                     <Typography variant="h5" component="h2">
-                        be
-                    {bull}
-                        nev
-                    {bull}o{bull}
-                        lent
+                        Trip Stats:
                     </Typography>
-                    <Typography className="pos" color="textSecondary">
-                        adjective
+                    <Typography variant="body2" component="span">
+                        Days on the road:
                     </Typography>
-                    <Typography variant="body2" component="p">
-                        well meaning and kindly.
+                    <Typography component="span" gutterBottom>{this.props.daysOnTheRoad}</Typography>
                     <br />
-                        {'"a benevolent smile"'}
+                    <Typography variant="body2" component="span">
+                        Countries Visited:
                     </Typography>
+                    <Typography component="span" gutterBottom>{this.props.countriesVisited}</Typography>
+                    <br />
+                    <Typography variant="body2" component="span">
+                        Miles Traveled:
+                    </Typography>
+                    <Typography component="span" gutterBottom>{this.props.milesTraveled}</Typography>
                 </CardContent>
-                <CardActions>
-                    <Button size="small">Learn More</Button>
-                </CardActions>
             </Card>
         );
     }
