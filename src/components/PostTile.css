@@ -1,5 +1,7 @@
 .card {
   max-width: 345px;
+  display: 'flex';
+  flex-direction: 'column';
 }
 .media {
   height: 140px;

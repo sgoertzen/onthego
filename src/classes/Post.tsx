@@ -7,7 +7,7 @@ export interface IPost {
 }
 
 export class Post implements IPost {
-    constructor(title: string, mediaURLs: string[], commentCount: number, author:string, posted: Date) {
+    constructor(title: string, mediaURLs: string[], commentCount: number, author: string, posted: Date) {
         this.title = title
         this.mediaURLs = mediaURLs
         this.commentCount = commentCount
