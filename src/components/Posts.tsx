@@ -1,6 +1,8 @@
 import React from 'react';
 import './Posts.css';
 import { IPost } from '../classes/Post';
+import PostTile from './PostTile';
+import { Box } from '@material-ui/core';
 
 
 interface postProps {
@@ -22,10 +24,10 @@ class Posts extends React.Component {
         }
         const tiles = this.props.posts.map(post => {
             return (
-                <div key="{post.title}"><img className="Post-Image" src={post.photo} alt="{post.title}" />{post.title}</div>
+                <PostTile post={post}/>
             );
         });
-        return tiles
+        return <Box>{tiles}</Box>
     }
 }
 export default Posts;
