@@ -8,8 +8,10 @@ import LocationButtons from './LocationButtons';
 import { firebaseConfig } from '../config/firebase.config'
 import { IPost, Post } from '../classes/Post';
 import Posts from './Posts';
-import Login from './Login';
 import { IGeoPoint, GeoPoint } from '../classes/GeoPoint';
+import Title from './Title';
+// import Login from './Login';
+// import TripStats from './TripStats';
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -84,10 +86,12 @@ class App extends React.Component {
         }
         return (
             <div className="App">
-                <Login />
-                <TravelMap locations={this.state.locs} onLocChange={this.locationChanged} center={center} />
+                <Title />
                 <LocationButtons locs={this.state.locs} onLocChange={this.locationChanged} />
+                <TravelMap locations={this.state.locs} onLocChange={this.locationChanged} center={center} />
+                {/* <TripStats/> */}
                 <Posts posts={this.state.posts} />
+                {/* <Login /> */}
             </div>
         );
     }
