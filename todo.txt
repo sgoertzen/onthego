@@ -12,7 +12,7 @@ Update state to be readonly in TypeScript (https://levelup.gitconnected.com/ulti
 Unit test database access rules (firebase setup:emulators:firestore) (https://console.firebase.google.com/project/goertzensonthego/database/firestore/rules) 
 
 Add:
-Support authentication for edit pages
+[done] Support authentication for edit pages
 View Posts per location
 Add labels underneath map
 Move currently selected country out of map and into page state
