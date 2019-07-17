@@ -9,7 +9,6 @@ import { firebaseConfig } from '../config/firebase.config'
 import { IPost, Post } from '../classes/Post';
 import Posts from './Posts';
 import { IGeoPoint, GeoPoint } from '../classes/GeoPoint';
-import Title from './Title';
 // import Login from './Login';
 // import TripStats from './TripStats';
 
@@ -86,7 +85,6 @@ class App extends React.Component {
         }
         return (
             <div className="App">
-                <Title />
                 <LocationButtons locs={this.state.locs} onLocChange={this.locationChanged} />
                 <TravelMap locations={this.state.locs} onLocChange={this.locationChanged} center={center} />
                 {/* <TripStats/> */}
