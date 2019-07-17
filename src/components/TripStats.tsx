@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardActions, CardContent, Typography, Button } from '@material-ui/core';
+import { Card, CardContent, Typography } from '@material-ui/core';
 import './TripStats.css'
 
 interface statsProps {
@@ -18,7 +18,6 @@ class TripStats extends React.Component {
     }
 
     render() {
-        const bull = <span className="bullet">•</span>;
         return (
             <Card className="card">
                 <CardContent>

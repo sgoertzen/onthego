@@ -1,6 +1,8 @@
 import React from 'react';
 import './Posts.css';
 import { IPost } from '../classes/Post';
+import PostTile from './PostTile';
+import { Grid, Container } from '@material-ui/core';
 
 
 interface postProps {
@@ -22,10 +24,19 @@ class Posts extends React.Component {
         }
         const tiles = this.props.posts.map(post => {
             return (
-                <div key="{post.title}"><img className="Post-Image" src={post.photo} alt="{post.title}" />{post.title}</div>
+                <Grid item key={post.title} xs={12} sm={6} md={4}>
+                    <PostTile post={post} />
+                </Grid>
             );
         });
-        return tiles
+        //return {tiles}
+        return (
+            <Container className="cardGrid" maxWidth="md">
+                <Grid container spacing={4}>
+                    {tiles}
+                </Grid>
+            </Container>
+        )
     }
 }
 export default Posts;

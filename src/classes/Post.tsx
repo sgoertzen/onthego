@@ -1,13 +1,22 @@
 export interface IPost {
     title: string
-    photo: string
+    mediaURLs: string[]
+    commentCount: number
+    author: string
+    posted: Date
 }
 
 export class Post implements IPost {
-    constructor(title: string, photo: string) {
+    constructor(title: string, mediaURLs: string[], commentCount: number, author: string, posted: Date) {
         this.title = title
-        this.photo = photo
+        this.mediaURLs = mediaURLs
+        this.commentCount = commentCount
+        this.author = author
+        this.posted = posted
     }
     title = ""
-    photo = ""
+    mediaURLs = [""]
+    commentCount = 0
+    author = ""
+    posted = new Date("12/12/2012")
 }
