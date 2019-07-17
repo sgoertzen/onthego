@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import TravelMap from './TravelMap';
 import * as firebase from "firebase/app";
-import "firebase/firestore";
+//import "firebase/firestore";
 import { ITravelLocation, TravelLocation } from '../classes/TravelLocation';
 import LocationButtons from './LocationButtons';
 import { IPost, Post } from '../classes/Post';

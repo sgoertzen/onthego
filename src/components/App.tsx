@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import * as firebase from "firebase/app";
-import "firebase/auth";
+//import "firebase/auth";
 import { TravelLocation } from '../classes/TravelLocation';
 import { firebaseConfig } from '../config/firebase.config'
 import { Post } from '../classes/Post';
@@ -34,7 +34,7 @@ class App extends React.Component {
 
         this.listenForUser = this.listenForUser.bind(this);
         this.state = { locs: arr, posts: arr2 }
-        firebase.auth().onAuthStateChanged(this.listenForUser);
+        //firebase.auth().onAuthStateChanged(this.listenForUser);
     }
 
     listenForUser(user: any) {
