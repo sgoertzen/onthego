@@ -40,6 +40,7 @@
     "@types/react": "16.8.22",
     "@types/react-dom": "16.8.4",
     "@types/react-material-ui-form-validator": "^2.0.2",
+    "@types/react-router-dom": "^4.3.4",
     "@types/storybook__react": "^4.0.2",
     "date-fns": "^2.0.0-beta.2",
     "firebase": "^6.3.0",
@@ -47,6 +48,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-material-ui-form-validator": "^2.0.9",
+    "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1"
   },
   "devDependencies": {
