@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import * as firebase from "firebase/app";
+import "firebase/auth";
 import { TravelLocation } from '../classes/TravelLocation';
 import { firebaseConfig } from '../config/firebase.config'
 import { Post } from '../classes/Post';
