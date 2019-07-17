@@ -10,9 +10,14 @@ import Posts from './Posts';
 import { IGeoPoint, GeoPoint } from '../classes/GeoPoint';
 // import TripStats from './TripStats';
 
-interface IAppState {
+interface ILocationPageProps {
+    id?: string
+}
+
+interface ILocationPageState {
     locs: TravelLocation[]
     posts: Post[]
+    id?: string
 }
 // const initialState = {
 //   locs : TravelLocation[] = [];
@@ -21,15 +26,21 @@ interface IAppState {
 
 class LocationPage extends React.Component {
 
-    public state: IAppState;
+    public state: ILocationPageState;
+    public props: ILocationPageProps
 
-    constructor(props: any) {
+    constructor(props: ILocationPageProps) {
         super(props);
+        this.props = props;
         var arr: TravelLocation[] = [];
         var arr2: Post[] = [];
         this.state = { locs: arr, posts: arr2 }
         this.loadLocations()
         this.locationChanged = this.locationChanged.bind(this);
+        if (this.props.id) {
+            console.log(this.props.id)
+        }
+        //this.props.id
     }
 
     loadLocations(): void {

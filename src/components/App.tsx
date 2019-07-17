@@ -11,6 +11,7 @@ import PostEntry from './PostEntry'
 import LocationEntry from './LocationEntry'
 import Title from './Title'
 import Footer from './Footer';
+import NotFound from './NotFound';
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -52,6 +53,7 @@ class App extends React.Component {
                     <Route exact path="/location/:id" component={LocationPage} />
                     <Route path="/postentry" component={PostEntry} />
                     <Route path="/locationentry" component={LocationEntry} />
+                    <Route component={NotFound} />
                     <Footer username={this.state.username} />
                 </div>
             </Router>

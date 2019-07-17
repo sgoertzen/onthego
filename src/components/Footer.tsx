@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, Box, Link } from '@material-ui/core';
-import * as firebase from "firebase/app";
-import "firebase/auth";
+// import * as firebase from "firebase/app";
+// import "firebase/auth";
 
 
 interface footerProps {
@@ -18,14 +18,14 @@ class Footer extends React.Component {
     }
 
 
-    adminLogin() {
-        var provider = new firebase.auth.GoogleAuthProvider();
-        // If uncommenting this line, make sure you look into: https://developers.google.com/identity/protocols/googlescopes?authuser=0
-        provider.addScope('https://www.googleapis.com/auth/drive.photos.readonly');
-        firebase.auth().signInWithPopup(provider).catch(function(error) {
-            console.log("Error during auth: " + error.code + ", " + error.message + ", " + error.email + ", " + error.credential)
-        });
-    }
+    // adminLogin() {
+    //     var provider = new firebase.auth.GoogleAuthProvider();
+    //     // If uncommenting this line, make sure you look into: https://developers.google.com/identity/protocols/googlescopes?authuser=0
+    //     provider.addScope('https://www.googleapis.com/auth/drive.photos.readonly');
+    //     firebase.auth().signInWithPopup(provider).catch(function(error) {
+    //         console.log("Error during auth: " + error.code + ", " + error.message + ", " + error.email + ", " + error.credential)
+    //     });
+    // }
 
     render() {
         let link: any
@@ -36,7 +36,8 @@ class Footer extends React.Component {
                 <Link>Logout</Link>
             </span>
         } else {
-            link = <Link onClick={this.adminLogin}>Admin Login</Link>
+            // link = <Link onClick={this.adminLogin}>Admin Login</Link>
+            link = <Link>Admin Login</Link>
         }
         return (
             <Box display="flex" justifyContent="center" width="100%">
