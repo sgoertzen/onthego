@@ -1,6 +1,6 @@
 import React from 'react';
 //import './MapMarker.css';
-import { ILocChangeCallback } from './App';
+import { ILocChangeCallback } from '../classes/ILocChangeCallback';
 import { Paper } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 

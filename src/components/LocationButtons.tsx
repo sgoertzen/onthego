@@ -1,6 +1,6 @@
 import React from 'react';
 import { ITravelLocation } from '../classes/TravelLocation';
-import { ILocChangeCallback } from './App';
+import { ILocChangeCallback } from '../classes/ILocChangeCallback';
 import Tabs from '@material-ui/core/Tabs';
 import { Tab, AppBar } from '@material-ui/core';
 
