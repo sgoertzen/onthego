@@ -4,16 +4,12 @@ import GoogleMapReact from 'google-map-react';
 import MapMarker from './MapMarker'
 import { ITravelLocation } from '../classes/TravelLocation';
 import { ILocChangeCallback } from '../classes/ILocChangeCallback';
-import { IGeoPoint } from '../classes/GeoPoint';
+import { GeoPoint, IGeoPoint } from '../classes/GeoPoint';
 
-interface paths {
-    traveledPath: google.maps.LatLng[],
-    upcomingPath: google.maps.LatLng[]
-}
 interface mapProps {
     locations: ITravelLocation[]
-    onLocChange: ILocChangeCallback,
-    center: IGeoPoint
+    selectedLocation?: ITravelLocation
+    onLocChange: ILocChangeCallback
 }
 
 class TravelMap extends React.Component<mapProps> {
@@ -100,6 +96,13 @@ class TravelMap extends React.Component<mapProps> {
         return markers;
     }
     render() {
+        let center: IGeoPoint
+        if (this.props.selectedLocation) {
+            center = this.props.selectedLocation.coords
+        } else {
+            // Defaults to San Francisco
+            center = new GeoPoint(37.7749, -122.4194)
+        }
         return (
             // Important! Always set the container height explicitly
             <div style={{ height: '50vh', width: '100%' }}>
@@ -107,7 +110,7 @@ class TravelMap extends React.Component<mapProps> {
                     yesIWantToUseGoogleMapApiInternals
                     onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
                     bootstrapURLKeys={{ key: 'AIzaSyBDe1KUNj3px_7kkfl7cfkrEpihDwvunt4' }}
-                    defaultCenter={{ lat: this.props.center.latitude, lng: this.props.center.longitude }}
+                    center={{ lat: center.latitude, lng: center.longitude }}
                     defaultZoom={4}
                 >
                     {this.buildMarkers()}
