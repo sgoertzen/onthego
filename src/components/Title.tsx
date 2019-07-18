@@ -1,5 +1,6 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
+// import { Link } from 'react-router-dom'
 
 interface titleProps {
 }
@@ -14,8 +15,13 @@ class Title extends React.Component {
     }
 
     render() {
+        // TODO: Move out of here and into App 
         return (
-            <Typography variant="h3" color="textSecondary">Goertzens on the go</Typography>
+            <Typography variant="h3" color="textSecondary">
+                {/* <Link replace={true} to="/"> */}
+                Goertzens on the go
+                {/* </Link> */}
+            </Typography>
         );
     }
 }

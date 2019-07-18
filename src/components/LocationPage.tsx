@@ -2,22 +2,28 @@ import React from 'react';
 import './App.css';
 import TravelMap from './TravelMap';
 import * as firebase from "firebase/app";
-//import "firebase/firestore";
 import { ITravelLocation, TravelLocation } from '../classes/TravelLocation';
 import LocationButtons from './LocationButtons';
 import { IPost, Post } from '../classes/Post';
 import Posts from './Posts';
 import { IGeoPoint, GeoPoint } from '../classes/GeoPoint';
-// import TripStats from './TripStats';
+import TripStats from './TripStats';
+import { TimeStamp } from '../classes/TimeStamp';
+import { differenceInDays } from 'date-fns';
 
 interface ILocationPageProps {
-    id?: string
+    match?: {
+        params?: {
+            locationName?: string
+        }
+    }
 }
 
 interface ILocationPageState {
     locs: TravelLocation[]
     posts: Post[]
-    id?: string
+    selectedLocationName?: string
+    selectedLocation?: ITravelLocation
 }
 // const initialState = {
 //   locs : TravelLocation[] = [];
@@ -31,33 +37,66 @@ class LocationPage extends React.Component {
 
     constructor(props: ILocationPageProps) {
         super(props);
+        console.log(props)
         this.props = props;
-        var arr: TravelLocation[] = [];
-        var arr2: Post[] = [];
-        this.state = { locs: arr, posts: arr2 }
-        this.loadLocations()
+        var emptyLocations: TravelLocation[] = [];
+        var emptyPosts: Post[] = [];
         this.locationChanged = this.locationChanged.bind(this);
-        console.log(props.id)
-        if (this.props.id) {
-            console.log(this.props.id)
+        this.loadLocations = this.loadLocations.bind(this);
+        this.locationsLoaded = this.locationsLoaded.bind(this);
+        // console.log(props.selectedLocation)
+        // if (this.props.selectedLocation) {
+        //     console.log(this.props.selectedLocation)
+        // }
+        let locName: string | undefined
+        if (this.props.match && this.props.match.params) {
+            locName = this.props.match.params.locationName;
         }
-        //this.props.id
+        this.state = { locs: emptyLocations, posts: emptyPosts, selectedLocationName: locName }
+        this.loadLocations()
     }
 
     loadLocations(): void {
-        var db = firebase.firestore();
+        firebase.firestore().collection("locations").orderBy("arrive").get().then(this.locationsLoaded);
+    }
+
+    locationsLoaded(querySnapshot: firebase.firestore.QuerySnapshot): void {
         const locations: ITravelLocation[] = [];
-        db.collection("locations").orderBy("arrive").get().then((querySnapshot) => {
-            // Loop over the results and update our travel locations array
-            querySnapshot.forEach((doc) => {
-                let loc = doc.data() as ITravelLocation
-                loc.id = doc.id
-                locations.push(loc)
+        querySnapshot.forEach((doc) => {
+            let loc = doc.data() as ITravelLocation
+            loc.id = doc.id
+            locations.push(loc)
+        })
+        this.setState({ locs: locations })
+
+        if (this.state.selectedLocationName) {
+            console.log("Looking for: " + this.state.selectedLocationName)
+            // Loop over locations and find the one matching this name
+            locations.forEach(loc => {
+                console.log("Searching: " + loc.name)
+                if (this.state.selectedLocationName && loc.name.toLowerCase() === this.state.selectedLocationName.toLowerCase()) {
+                    this.setState({ selectedLocation: loc })
+                }
             });
-            // TODO: Make the respond to the selected location
-            this.loadPosts("320gdIkX54IKNqRoFHpE")
-            this.setState({ locs: locations });
-        });
+        }
+        if (!this.state.selectedLocation) {
+            // Find the location we are in and use it
+            let now = new TimeStamp()
+            locations.forEach(loc => {
+                if (loc.arrive < now && loc.depart > now) {
+                    this.setState({ selectedLocation: loc })
+                }
+            });
+            //let currentLocation = this.state.locs[0];
+            //this.setState({selectedLocation: currentLocation})
+        }
+        if (!this.state.selectedLocation) {
+            console.log("No location specified or no matching location.  Setting default")
+        }
+        if (this.state.selectedLocation) {
+            //this.loadPosts("320gdIkX54IKNqRoFHpE")
+            this.loadPosts(this.state.selectedLocation.id)
+        }
     }
 
     loadPosts(locationId: string): void {
@@ -75,22 +114,30 @@ class LocationPage extends React.Component {
     }
 
     locationChanged(locationId: string): void {
-        // TODO: Recenter the map on this location
-        this.loadPosts(locationId)
+        console.log("Selected location of: " + locationId)
+        let locations = this.state.locs
+        locations.forEach(loc => {
+            if (loc.id === locationId) {
+                this.setState({ selectedLocation: loc })
+            }
+        });
     }
 
     render() {
         let center: IGeoPoint
-        if (this.state.locs.length > 0) {
-            center = this.state.locs[0].coords
+        if (this.state.selectedLocation) {
+            center = this.state.selectedLocation.coords
         } else {
             center = new GeoPoint()
         }
+
+        let daysOnTheRoad = differenceInDays(new Date(), new Date(2019, 6, 27))
+
         return (
             <div className="App">
                 <LocationButtons locs={this.state.locs} onLocChange={this.locationChanged} />
                 <TravelMap locations={this.state.locs} onLocChange={this.locationChanged} center={center} />
-                {/* <TripStats/> */}
+                <TripStats daysOnTheRoad={daysOnTheRoad} countriesVisited={1} milesTraveled={1456} />
                 <Posts posts={this.state.posts} />
             </div>
         );

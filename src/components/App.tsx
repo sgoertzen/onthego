@@ -6,7 +6,7 @@ import { TravelLocation } from '../classes/TravelLocation';
 import { firebaseConfig } from '../config/firebase.config'
 import { Post } from '../classes/Post';
 
-import { Route, BrowserRouter as Router } from 'react-router-dom'
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import LocationPage from './LocationPage';
 import PostEntry from './PostEntry'
 import LocationEntry from './LocationEntry'
@@ -50,11 +50,13 @@ class App extends React.Component {
             <Router>
                 <div>
                     <Title />
-                    <Route exact path="/" component={LocationPage} />
-                    <Route exact path="/location/:id" component={LocationPage} />
-                    <Route path="/postentry" component={PostEntry} />
-                    <Route path="/locationentry" component={LocationEntry} />
-                    <Route component={NotFound} />
+                    <Switch>
+                        <Route exact path="/" component={LocationPage} />
+                        <Route exact path="/location/:locationName" component={LocationPage} />
+                        <Route path="/postentry" component={PostEntry} />
+                        <Route path="/locationentry" component={LocationEntry} />
+                        <Route component={NotFound} />
+                    </Switch>
                     <Footer username={this.state.username} />
                 </div>
             </Router>
