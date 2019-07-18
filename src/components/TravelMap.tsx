@@ -3,7 +3,7 @@ import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import MapMarker from './MapMarker'
 import { ITravelLocation } from '../classes/TravelLocation';
-import { ILocChangeCallback } from './App';
+import { ILocChangeCallback } from '../classes/ILocChangeCallback';
 import { IGeoPoint } from '../classes/GeoPoint';
 
 interface paths {

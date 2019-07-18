@@ -29,6 +29,7 @@ class PostEntry extends React.Component {
 
     constructor(props: postEntryProps) {
         super(props);
+        console.log(props)
         this.props = props;
         this.state = {
             title: this.props.title ? this.props.title : "",

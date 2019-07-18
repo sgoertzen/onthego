@@ -19,6 +19,10 @@ class PostTile extends React.Component {
         this.props = props;
     }
 
+    onClick(event: any): void {
+        console.log("Post tile clicked")
+    }
+
     getPostImageURL(post: IPost): string {
         if (post.mediaURLs && post.mediaURLs.length > 0) {
             return post.mediaURLs[0]
@@ -38,7 +42,7 @@ class PostTile extends React.Component {
         let imageURL = this.getPostImageURL(post)
         return (
             <Card className="card">
-                <CardActionArea>
+                <CardActionArea onClick={this.onClick}>
                     <CardMedia
                         className="media"
                         image={imageURL}
@@ -57,7 +61,7 @@ class PostTile extends React.Component {
                     <Typography component="span">{mediaCount}</Typography>
                     <IconButton aria-label="Media">
                         <SvgIcon>
-                            <path d="M0 0h24v24H0z" fill="none" /><path d="M2 6H0v5h.01L0 20c0 1.1.9 2 2 2h18v-2H2V6zm20-2h-8l-2-2H6c-1.1 0-1.99.9-1.99 2L4 16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM7 15l4.5-6 3.5 4.51 2.5-3.01L21 15H7z" />
+                            <path d="M0 0h24v24H0z" fill="none" /><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
                         </SvgIcon>
                     </IconButton>
                     <Typography component="span">0</Typography>
@@ -66,8 +70,8 @@ class PostTile extends React.Component {
                             <path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z" /><path d="M0 0h24v24H0z" fill="none" />
                         </SvgIcon>
                     </IconButton>
-                    <Button size="small" color="primary">
-                        View Full Post
+                    <Button size="small" color="primary" onClick={this.onClick}>
+                        View Details
               </Button>
                 </CardActions>
             </Card>

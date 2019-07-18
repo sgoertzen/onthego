@@ -53,8 +53,7 @@ class Login extends React.Component {
             <Button
                 onClick={this.show}
                 id="login_button"
-                variant="contained"
-            >Login</Button>
+            >Admin Login</Button>
         </div>
     }
 }

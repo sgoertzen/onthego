@@ -4,6 +4,9 @@ import { storiesOf } from '@storybook/react';
 import Footer from './Footer';
 
 storiesOf('Footer', module)
-    .add('default', () => {
+    .add('Default', () => {
         return <Footer />
+    })
+    .add('Logged In', () => {
+        return <Footer username="Bob" />
     })

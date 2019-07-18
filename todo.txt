@@ -2,23 +2,12 @@ Infrastructure:
 Support back button and deep links
 Auto merge PRs (https://alexwlchan.net/2019/03/creating-a-github-action-to-auto-merge-pull-requests/)
 Update state to be readonly in TypeScript (https://levelup.gitconnected.com/ultimate-react-component-patterns-with-typescript-2-8-82990c516935)
-[done] Support storybook
-[done] Support fire datastore
-[done] Support firehosting
-[done] Integrate with CI
-[done] Support auto formatting
-[done] Support TypeScript
-[done] Run eject and see if we want it (Don't need to eject for now)
 Unit test database access rules (firebase setup:emulators:firestore) (https://console.firebase.google.com/project/goertzensonthego/database/firestore/rules) 
 
 Add:
-[done] Support authentication for edit pages
-[done] View Posts per location
-[done] Add location tabs above map
 Move currently selected country out of map and into page state
 Total miles traveled (do using cloud functions)
 Pick photos from google photots (https://developers.google.com/picker/docs/) and (https://developers.google.com/photos/library/guides/access-media-items)
-Days on the road
 Ability to add photos
 Filter by family member
 Ability to add Post
@@ -29,5 +18,17 @@ RSS Feed of blog?
 Subscribe to blog?
 
 Family contribution
-
 Want a way to look at each persons things
+
+Done:
+[done] Support storybook
+[done] Support fire datastore
+[done] Support firehosting
+[done] Integrate with CI
+[done] Support auto formatting
+[done] Support TypeScript
+[done] Run eject and see if we want it (Don't need to eject for now)
+[done] Support authentication for edit pages
+[done] View Posts per location
+[done] Add location tabs above map
+[done] Days on the road
