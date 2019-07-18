@@ -7,6 +7,7 @@ import { Tab, AppBar } from '@material-ui/core';
 
 interface buttonProps {
     locs: ITravelLocation[]
+    selectedLocation?: ITravelLocation
     onLocChange: ILocChangeCallback
 }
 
@@ -26,7 +27,11 @@ class LocationButtons extends React.Component {
 
     render() {
         let counter = 0
+        let selected = 0;
         const buttons = this.props.locs.map(loc => {
+            if (loc === this.props.selectedLocation) {
+                selected = counter
+            }
             return (
                 <Tab label={loc.name} key={"tab_" + counter++}></Tab>
             );
@@ -38,7 +43,7 @@ class LocationButtons extends React.Component {
         }
         return (
             <AppBar position="static">
-                <Tabs value={0} onChange={this.handleChange}>
+                <Tabs value={selected} onChange={this.handleChange}>
                     {buttons}
                 </Tabs>
             </AppBar>

@@ -40,8 +40,6 @@ class App extends React.Component {
     listenForUser(user: any) {
         if (user) {
             this.setState({ username: user.displayName })
-        } else {
-            console.log("No user logged in")
         }
     }
 

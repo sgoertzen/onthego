@@ -6,7 +6,6 @@ import { ITravelLocation, TravelLocation } from '../classes/TravelLocation';
 import LocationButtons from './LocationButtons';
 import { IPost, Post } from '../classes/Post';
 import Posts from './Posts';
-import { IGeoPoint, GeoPoint } from '../classes/GeoPoint';
 import TripStats from './TripStats';
 import { TimeStamp } from '../classes/TimeStamp';
 import { differenceInDays } from 'date-fns';
@@ -44,10 +43,6 @@ class LocationPage extends React.Component {
         this.locationChanged = this.locationChanged.bind(this);
         this.loadLocations = this.loadLocations.bind(this);
         this.locationsLoaded = this.locationsLoaded.bind(this);
-        // console.log(props.selectedLocation)
-        // if (this.props.selectedLocation) {
-        //     console.log(this.props.selectedLocation)
-        // }
         let locName: string | undefined
         if (this.props.match && this.props.match.params) {
             locName = this.props.match.params.locationName;
@@ -70,10 +65,8 @@ class LocationPage extends React.Component {
         this.setState({ locs: locations })
 
         if (this.state.selectedLocationName) {
-            console.log("Looking for: " + this.state.selectedLocationName)
             // Loop over locations and find the one matching this name
             locations.forEach(loc => {
-                console.log("Searching: " + loc.name)
                 if (this.state.selectedLocationName && loc.name.toLowerCase() === this.state.selectedLocationName.toLowerCase()) {
                     this.setState({ selectedLocation: loc })
                 }
@@ -114,7 +107,6 @@ class LocationPage extends React.Component {
     }
 
     locationChanged(locationId: string): void {
-        console.log("Selected location of: " + locationId)
         let locations = this.state.locs
         locations.forEach(loc => {
             if (loc.id === locationId) {
@@ -124,19 +116,12 @@ class LocationPage extends React.Component {
     }
 
     render() {
-        let center: IGeoPoint
-        if (this.state.selectedLocation) {
-            center = this.state.selectedLocation.coords
-        } else {
-            center = new GeoPoint()
-        }
-
         let daysOnTheRoad = differenceInDays(new Date(), new Date(2019, 6, 27))
 
         return (
             <div className="App">
-                <LocationButtons locs={this.state.locs} onLocChange={this.locationChanged} />
-                <TravelMap locations={this.state.locs} onLocChange={this.locationChanged} center={center} />
+                <LocationButtons locs={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} />
+                <TravelMap locations={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} />
                 <TripStats daysOnTheRoad={daysOnTheRoad} countriesVisited={1} milesTraveled={1456} />
                 <Posts posts={this.state.posts} />
             </div>
