@@ -37,6 +37,7 @@ class LocationPage extends React.Component {
         this.state = { locs: arr, posts: arr2 }
         this.loadLocations()
         this.locationChanged = this.locationChanged.bind(this);
+        console.log(props.id)
         if (this.props.id) {
             console.log(this.props.id)
         }
