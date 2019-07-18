@@ -1,0 +1,8 @@
+.root {
+    width: '100%';
+    margin-top: 1em;
+    overflow-x: auto;
+}
+.location-table {
+    min-width: 650px;
+  }

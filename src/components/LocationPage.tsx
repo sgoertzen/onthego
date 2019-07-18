@@ -36,7 +36,6 @@ class LocationPage extends React.Component {
 
     constructor(props: ILocationPageProps) {
         super(props);
-        console.log(props)
         this.props = props;
         var emptyLocations: TravelLocation[] = [];
         var emptyPosts: Post[] = [];
@@ -111,6 +110,7 @@ class LocationPage extends React.Component {
         locations.forEach(loc => {
             if (loc.id === locationId) {
                 this.setState({ selectedLocation: loc })
+                this.loadPosts(loc.id)
             }
         });
     }
