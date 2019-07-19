@@ -2,9 +2,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import LocationPage from '../components/LocationPage';
-import { TravelLocation } from '../classes/TravelLocation';
-import { GeoPoint } from '../classes/GeoPoint';
-import { TimeStamp } from '../classes/TimeStamp';
 
 storiesOf('Location Page', module)
     .add('no selection', () => <LocationPage />)

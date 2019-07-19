@@ -3,7 +3,7 @@ import './App.css';
 import TravelMap from './TravelMap';
 import * as firebase from "firebase/app";
 import { ITravelLocation, TravelLocation } from '../classes/TravelLocation';
-import LocationButtons from './LocationButtons';
+import MenuBar from './MenuBar';
 import { IPost, Post } from '../classes/Post';
 import Posts from './Posts';
 import TripStats from './TripStats';
@@ -36,7 +36,6 @@ class LocationPage extends React.Component {
 
     constructor(props: ILocationPageProps) {
         super(props);
-        console.log(props)
         this.props = props;
         var emptyLocations: TravelLocation[] = [];
         var emptyPosts: Post[] = [];
@@ -111,6 +110,7 @@ class LocationPage extends React.Component {
         locations.forEach(loc => {
             if (loc.id === locationId) {
                 this.setState({ selectedLocation: loc })
+                this.loadPosts(loc.id)
             }
         });
     }
@@ -120,7 +120,7 @@ class LocationPage extends React.Component {
 
         return (
             <div className="App">
-                <LocationButtons locs={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} />
+                <MenuBar locs={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} />
                 <TravelMap locations={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} />
                 <TripStats daysOnTheRoad={daysOnTheRoad} countriesVisited={1} milesTraveled={1456} />
                 <Posts posts={this.state.posts} />
