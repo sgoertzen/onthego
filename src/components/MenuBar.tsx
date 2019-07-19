@@ -11,7 +11,7 @@ interface buttonProps {
     onLocChange: ILocChangeCallback
 }
 
-class LocationButtons extends React.Component {
+class MenuBar extends React.Component {
 
     public props: buttonProps
 
@@ -38,7 +38,7 @@ class LocationButtons extends React.Component {
         });
         if (this.props.locs.length === 0) {
             buttons.push(
-                <Tab label="No locations added yet" disabled={true} key="nolocs"></Tab>
+                <Tab label="Loading locations" disabled={true} key="nolocs"></Tab>
             )
         }
         return (
@@ -50,4 +50,4 @@ class LocationButtons extends React.Component {
         );
     }
 }
-export default LocationButtons;
+export default MenuBar;
