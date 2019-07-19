@@ -1,6 +1,6 @@
 import React from 'react';
 import './LocationEntry.css';
-import { ITravelLocation } from '../classes/TravelLocation';
+import { ITravelLocation } from '../../classes/TravelLocation';
 import { TextField, Button, Divider, Container } from '@material-ui/core';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 

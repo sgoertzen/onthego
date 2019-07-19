@@ -2,7 +2,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import LocationEntry from './LocationEntry';
-import { firebaseConfig } from '../config/firebase.config'
+import { firebaseConfig } from '../../config/firebase.config'
 import * as firebase from "firebase/app";
 import "firebase/firestore";
 

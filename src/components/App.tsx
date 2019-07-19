@@ -7,9 +7,9 @@ import { firebaseConfig } from '../config/firebase.config'
 import { Post } from '../classes/Post';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import LocationPage from './LocationPage';
-import LocationList from './LocationList';
-import PostEntry from './PostEntry'
-import LocationEntry from './LocationEntry'
+import LocationList from './admin/LocationList';
+import PostEntry from './admin/PostEntry'
+import LocationEntry from './admin/LocationEntry'
 import Title from './Title'
 import Footer from './Footer';
 import NotFound from './NotFound';
