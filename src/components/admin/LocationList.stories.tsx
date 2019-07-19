@@ -2,9 +2,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import LocationList from './LocationList';
-import { TravelLocation } from '../classes/TravelLocation';
-import { GeoPoint } from '../classes/GeoPoint';
-import { TimeStamp } from '../classes/TimeStamp';
+import { TravelLocation } from '../../classes/TravelLocation';
+import { GeoPoint } from '../../classes/GeoPoint';
+import { TimeStamp } from '../../classes/TimeStamp';
 
 storiesOf('Location List', module)
     .add('No entries', () => {

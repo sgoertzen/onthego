@@ -1,9 +1,9 @@
 /// <reference types="storybook__react" />
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { TravelLocation } from '../classes/TravelLocation';
-import { GeoPoint } from '../classes/GeoPoint';
-import { TimeStamp } from '../classes/TimeStamp';
+import { TravelLocation } from '../../classes/TravelLocation';
+import { GeoPoint } from '../../classes/GeoPoint';
+import { TimeStamp } from '../../classes/TimeStamp';
 import PostEntry from './PostEntry';
 
 storiesOf('Post Entry', module)
