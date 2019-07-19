@@ -1,5 +1,5 @@
-import React, { MouseEvent } from 'react';
-import { Paper, Table, TableHead, TableRow, TableCell, TableBody, IconButton, SvgIcon, Checkbox } from '@material-ui/core';
+import React from 'react';
+import { Paper, Table, TableHead, TableRow, TableCell, TableBody, IconButton, SvgIcon } from '@material-ui/core';
 import "./LocationList.css"
 import { ITravelLocation } from '../../classes/TravelLocation';
 import { format } from 'date-fns';
