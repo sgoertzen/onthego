@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './LocationPage.css';
 import TravelMap from './TravelMap';
 import * as firebase from "firebase/app";
 import { ITravelLocation, TravelLocation } from '../classes/TravelLocation';
@@ -120,10 +120,10 @@ class LocationPage extends React.Component {
 
         return (
             <div className="App">
-                <MenuBar locs={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} />
-                <TravelMap locations={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} />
-                <TripStats daysOnTheRoad={daysOnTheRoad} countriesVisited={1} milesTraveled={1456} />
-                <Posts posts={this.state.posts} />
+                <div className="App-header"><MenuBar locs={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} /></div>
+                <div className="App-map"><TravelMap locations={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} /></div>
+                <div className="App-stats"><TripStats daysOnTheRoad={daysOnTheRoad} countriesVisited={1} milesTraveled={2566.63} /></div>
+                <div className="App-posts"><Posts posts={this.state.posts} /></div>
             </div>
         );
     }

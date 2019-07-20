@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  display: grid;
+  grid-template-columns: 75% 25%;
+  grid-gap: 0;
 }
 
 .App-logo {
@@ -9,14 +12,20 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  grid-column: 1 / 3;
+  grid-row: 1;
+}
+.App-map {
+  grid-column: 1;
+  grid-row: 2;
+}
+.App-stats {
+  grid-column: 2;
+  grid-row: 2;
+}
+.App-posts {
+  grid-column: 1 / 3;
+  grid-row: 3;
 }
 
 .App-link {

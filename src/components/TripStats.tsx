@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import './TripStats.css'
 
 interface statsProps {
@@ -17,30 +17,41 @@ class TripStats extends React.Component {
         this.props = props;
     }
 
+    formatMiles(value: number): string {
+        let km = value * 1.60934;
+        return this.formatNumber(value) + " miles (" + this.formatNumber(km) + " km)"
+    }
+    formatNumber(value: number): string {
+        return value.toLocaleString(undefined, {
+            maximumFractionDigits: 0
+        })
+    }
+
     render() {
         return (
-            <Card className="card">
-                <CardContent>
-
-                    <Typography variant="h5" component="h2">
-                        Trip Stats:
-                    </Typography>
-                    <Typography variant="body2" component="span">
-                        Days on the road:
-                    </Typography>
-                    <Typography component="span" gutterBottom>{this.props.daysOnTheRoad}</Typography>
-                    <br />
-                    <Typography variant="body2" component="span">
-                        Countries Visited:
-                    </Typography>
-                    <Typography component="span" gutterBottom>{this.props.countriesVisited}</Typography>
-                    <br />
-                    <Typography variant="body2" component="span">
-                        Miles Traveled:
-                    </Typography>
-                    <Typography component="span" gutterBottom>{this.props.milesTraveled}</Typography>
-                </CardContent>
-            </Card>
+            <div className="statsPanel">
+                <Typography variant="h5" component="h5" className="titleRow">
+                    Trip Stats:
+                </Typography>
+                <Typography variant="body2" component="span" className="statsLabel">
+                    On the road:
+                </Typography>
+                <Typography component="span" className="statsContent">
+                    {this.props.daysOnTheRoad} days
+                </Typography>
+                <Typography variant="body2" component="span" className="statsLabel">
+                    Visited:
+                </Typography>
+                <Typography component="span" className="statsContent">
+                    {this.props.countriesVisited} countries
+                </Typography>
+                <Typography variant="body2" component="span" className="statsLabel">
+                    Traveled:
+                </Typography>
+                <Typography component="span" className="statsContent">
+                    {this.formatMiles(this.props.milesTraveled)}
+                </Typography>
+            </div>
         );
     }
 }
