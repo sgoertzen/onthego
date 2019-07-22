@@ -1,13 +1,15 @@
 import React from 'react';
-import { Paper, Table, TableHead, TableRow, TableCell, TableBody, IconButton, SvgIcon } from '@material-ui/core';
+import { Paper, Table, TableHead, TableRow, TableCell, TableBody, IconButton, SvgIcon, Button } from '@material-ui/core';
 import "./LocationList.css"
 import { ITravelLocation } from '../../classes/TravelLocation';
 import { format } from 'date-fns';
 import * as firebase from "firebase/app";
+import { IHistoryProps } from './AdminMenuBar';
 
 
 interface ILocationListProps {
     locs?: ITravelLocation[]
+    history: IHistoryProps
 }
 interface ILocationListState {
     locs: ITravelLocation[]
@@ -48,6 +50,11 @@ class LocationList extends React.Component {
         this.setState({ locs: locations })
     }
 
+    addPost(loc: ITravelLocation){
+        console.log("Creating post for ", loc.name)
+        this.props.history.push("/admin/postentry/" + loc.id)
+    }
+
     edit(loc: ITravelLocation): void {
         console.log("Would edit: " + loc.name);
     }
@@ -67,7 +74,8 @@ class LocationList extends React.Component {
                             <TableCell align="right">Depart</TableCell>
                             <TableCell align="right">Latitude</TableCell>
                             <TableCell align="right">Longitude</TableCell>
-                            <TableCell align="right">Actions</TableCell>
+                            <TableCell align="center">Posts</TableCell>
+                            <TableCell align="center">Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -80,7 +88,12 @@ class LocationList extends React.Component {
                                 <TableCell align="right">{format(loc.depart.toDate(), "MMM do, yyyy")}</TableCell>
                                 <TableCell align="right">{loc.coords.latitude}</TableCell>
                                 <TableCell align="right">{loc.coords.longitude}</TableCell>
-                                <TableCell align="right">
+                                <TableCell align="center">
+                                    <Button onClick={() => { this.addPost(loc)}}>
+                                        Add Post
+                                    </Button>
+                                    </TableCell>
+                                <TableCell align="center">
                                     <IconButton aria-label="Edit" onClick={() => { this.edit(loc) }}>
                                         <SvgIcon>
                                             <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" /><path d="M0 0h24v24H0z" fill="none" />

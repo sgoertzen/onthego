@@ -1,5 +1,6 @@
 import React from 'react';
 import './LocationEntry.css';
+//import * as firebase from "firebase/app";
 import { ITravelLocation } from '../../classes/TravelLocation';
 import { TextField, Button, Divider, Container } from '@material-ui/core';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
@@ -61,8 +62,15 @@ class PostEntry extends React.Component {
         this.setState(stateChange);
     }
 
-    handleSubmit() {
-        // toodo
+    handleSubmit(form:any) {
+        console.log("submitting")
+        console.log(form)
+        // var storageRef = firebase.storage().ref();
+        // let image1 = storageRef.child("postimages/make_random_name")
+        // storageRef.put(file).then((snapshot) => {
+        //     console.log("Uploaded a file: ", snapshot.downloadURL)
+        //     console.log(snapshot)
+        // })
     }
 
     render() {
