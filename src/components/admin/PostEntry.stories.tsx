@@ -12,7 +12,8 @@ storiesOf('Post Entry', module)
         return (
             <PostEntry
                 loc={tl}
-                onPostCreated={() => { alert('post created') }} />
+                onPostCreated={() => { alert('post created') }} 
+                match={{ params: {locationid: "locid1"} }}/>
         )
     })
     .add('Filled in Form', () => {
@@ -22,6 +23,7 @@ storiesOf('Post Entry', module)
                 title="test title"
                 details="test details"
                 loc={tl}
-                onPostCreated={() => { alert('post created') }} />
+                onPostCreated={() => { alert('post created') }} 
+                match={{ params: {locationid: "locid1"} }}/>
         )
     })
