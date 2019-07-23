@@ -71,7 +71,7 @@ class PostEntry extends React.Component {
         this.setState(stateChange);
     }
 
-    uploadFile(file:any) {
+    uploadFile(file: any) {
         let storageRef = firebase.storage().ref();
         var uploadTask = storageRef.child("postimages/" + file.name).put(file);
         let self = this
@@ -80,18 +80,18 @@ class PostEntry extends React.Component {
         // 1. 'state_changed' observer, called any time the state changes
         // 2. Error observer, called on failure
         // 3. Completion observer, called on successful completion
-        uploadTask.on('state_changed', function(snapshot){
+        uploadTask.on('state_changed', function(snapshot) {
             // Observe state change events such as progress, pause, and resume
             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             console.log('Upload is ' + progress + '% done');
             switch (snapshot.state) {
                 case firebase.storage.TaskState.PAUSED: // or 'paused'
-                console.log('Upload is paused');
-                break;
+                    console.log('Upload is paused');
+                    break;
                 case firebase.storage.TaskState.RUNNING: // or 'running'
-                console.log('Upload is running');
-                break;
+                    console.log('Upload is running');
+                    break;
             }
         }, function(error) {
             // Handle unsuccessful uploads
@@ -101,7 +101,7 @@ class PostEntry extends React.Component {
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
             uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
                 console.log('File available at', downloadURL);
-                
+
                 let pastMedia: string[] = self.state.media || [];
                 pastMedia.push(downloadURL)
                 self.setState({ media: pastMedia })
@@ -120,15 +120,15 @@ class PostEntry extends React.Component {
             locationid: this.state.locationid,
             author: "Trav El",
             created: new Date(),
-            mediaURLs: this.state.media ||  []
+            mediaURLs: this.state.media || []
         }).then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);
             alert('Success!')
         })
-        .catch(function(error) {
-            console.error("Error adding document: ", error);
-            alert('failed uploading, check logs')
-        });
+            .catch(function(error) {
+                console.error("Error adding document: ", error);
+                alert('failed uploading, check logs')
+            });
     }
 
     render() {
