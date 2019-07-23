@@ -1,9 +1,7 @@
 import React from 'react';
-import "./Footer.css"
 import { Typography, Box, Link } from '@material-ui/core';
 import * as firebase from "firebase/app";
 import "firebase/auth";
-
 
 interface footerProps {
     username?: string
@@ -35,7 +33,7 @@ class Footer extends React.Component {
         let link: any
         let username = this.props.username
         if (username) {
-            link = 
+            link =
                 <Typography>Logged in as {username} &nbsp;-&nbsp; <Link onClick={this.logout}>Logout</Link></Typography>
         } else {
             link = <Typography><Link onClick={this.adminLogin}>Admin Login</Link></Typography>

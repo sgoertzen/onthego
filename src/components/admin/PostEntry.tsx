@@ -37,7 +37,6 @@ class PostEntry extends React.Component {
 
     constructor(props: postEntryProps) {
         super(props);
-        console.log(props)
         this.props = props;
         this.state = {
             title: this.props.title || "",
@@ -62,21 +61,9 @@ class PostEntry extends React.Component {
                 break;
             }
             case "post-entry-media": {
-
                 if (event.target.files) {
-                    let storageRef = firebase.storage().ref();
-                    console.log(event.target.files)
                     for (let file of event.target.files) {
-                        let image = storageRef.child("postimages/" + file.name)
-                        image.put(file).then((snapshot) => {
-                            console.log("Uploaded a file: ", snapshot.downloadURL)
-                            if (snapshot.downloadURL) {
-                                // TODO: Race condition here! Fix!
-                                let pastMedia: string[] = this.state.media || [];
-                                pastMedia.push(snapshot.downloadURL)
-                                this.setState({ media: pastMedia })
-                            }
-                        })
+                        this.uploadFile(file)
                     }
                 }
             }
@@ -84,9 +71,48 @@ class PostEntry extends React.Component {
         this.setState(stateChange);
     }
 
+    uploadFile(file:any) {
+        let storageRef = firebase.storage().ref();
+        var uploadTask = storageRef.child("postimages/" + file.name).put(file);
+        let self = this
+
+        // Register three observers:
+        // 1. 'state_changed' observer, called any time the state changes
+        // 2. Error observer, called on failure
+        // 3. Completion observer, called on successful completion
+        uploadTask.on('state_changed', function(snapshot){
+            // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+                case firebase.storage.TaskState.PAUSED: // or 'paused'
+                console.log('Upload is paused');
+                break;
+                case firebase.storage.TaskState.RUNNING: // or 'running'
+                console.log('Upload is running');
+                break;
+            }
+        }, function(error) {
+            // Handle unsuccessful uploads
+            console.log("Unable to upload the file ", error)
+        }, function() {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                console.log('File available at', downloadURL);
+                
+                let pastMedia: string[] = self.state.media || [];
+                pastMedia.push(downloadURL)
+                self.setState({ media: pastMedia })
+            });
+        });
+    }
+
     handleSubmit() {
-        alert('uploading')
         console.log("submitting post entry")
+
+
         var db = firebase.firestore();
         db.collection("posts").add({
             title: this.state.title,
@@ -94,16 +120,15 @@ class PostEntry extends React.Component {
             locationid: this.state.locationid,
             author: "Trav El",
             created: new Date(),
-            photos: this.state.media
+            mediaURLs: this.state.media ||  []
+        }).then(function(docRef) {
+            console.log("Document written with ID: ", docRef.id);
+            alert('Success!')
         })
-            .then(function(docRef) {
-                console.log("Document written with ID: ", docRef.id);
-                alert('Success!')
-            })
-            .catch(function(error) {
-                console.error("Error adding document: ", error);
-                alert('failed uploading, check logs')
-            });
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+            alert('failed uploading, check logs')
+        });
     }
 
     render() {
@@ -133,7 +158,6 @@ class PostEntry extends React.Component {
                         multiline
                         fullWidth
                         rows="3"
-                        defaultValue=""
                         margin="normal"
                         onChange={this.handleChange}
                     />
