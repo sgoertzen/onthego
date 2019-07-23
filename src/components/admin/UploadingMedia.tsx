@@ -1,5 +1,7 @@
 import React from 'react';
-import './LocationEntry.css';
+import './UploadingMedia.css';
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 
 export interface IUploadingMedia {
@@ -27,6 +29,7 @@ class UploadingMedia extends React.Component {
         var ext = this.getExtension(filename);
         switch (ext.toLowerCase()) {
             case 'jpg':
+            case 'jpeg':
             case 'gif':
             case 'bmp':
             case 'png':
@@ -52,16 +55,10 @@ class UploadingMedia extends React.Component {
         if (this.props.error) {
             return <div>Error while uploading: {this.props.error}</div>
         }
-        if (this.props.percentUploaded < 100) {
-            // TODO: LIMIT THIS TO 2 decimal places or put in place a progress pie chart
-            return (
-                <div>Uploading {this.props.filename} - {this.props.percentUploaded.toFixed(1)}% done.</div>
-            )
-        }
         if (this.props.url) {
             if (this.isImage(this.props.filename)) {
                 return (
-                    <img src={this.props.url} alt={this.props.filename} width="100px" />
+                    <img src={this.props.url} alt={this.props.filename} width="250px" />
                 )
             } else if (this.isVideo(this.props.filename)) {
                 return (
@@ -72,8 +69,12 @@ class UploadingMedia extends React.Component {
             }
         }
         else {
+            const text = (this.props.percentUploaded < 100) ? "Uploading " : "Loading thumbnail for "
             return (
-                <div>Upload complete, loading thumbnail</div>
+                <div className="UploadingMedia">
+                    <CircularProgressbar value={this.props.percentUploaded} text={`${this.props.percentUploaded}%`}/>
+                    {text} {this.props.filename}
+                </div>
             )
         }
     }

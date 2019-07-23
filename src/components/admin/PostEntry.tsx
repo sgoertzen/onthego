@@ -55,7 +55,6 @@ class PostEntry extends React.Component {
     handleChange(event: any) {
         const id = event.target.id;
         const value = event.target.value;
-        let stateChange: any
         switch (id) {
             case "post-entry-title": {
                 this.setState({ title: value })
@@ -67,31 +66,31 @@ class PostEntry extends React.Component {
             }
             case "post-entry-media": {
                 if (event.target.files) {
+                    let uploads: IUploadingMedia[] = []
+                    console.log("Processing " + event.target.files.length + " files")
                     for (let file of event.target.files) {
-                        this.uploadFile(file)
+                        console.log("processing file ", file.name)
+                        uploads.push(this.uploadFile(file))
                     }
+                    this.setState({
+                        media: uploads
+                    })
                 }
             }
         }
-        this.setState(stateChange);
     }
 
-    uploadFile(file: any) {
+    uploadFile(file: any): IUploadingMedia {
         let storageRef = firebase.storage().ref();
         var uploadTask = storageRef.child("postimages/" + file.name).put(file);
         let self = this
-        let uploadingMedia: IUploadingMedia = {
-            filename: file.name,
-            percentUploaded: 0
-        }
-        this.setState({
-            media: [...self.state.media, uploadingMedia]
-        })
-
+        let uploadingMedia = {filename: file.name, percentUploaded: 0}
+        
         // Register three observers:
         // 1. 'state_changed' observer, called any time the state changes
         // 2. Error observer, called on failure
         // 3. Completion observer, called on successful completion
+
         uploadTask.on('state_changed', function(snapshot) {
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             self.updateUploadState(uploadingMedia.filename, progress)
@@ -104,6 +103,7 @@ class PostEntry extends React.Component {
                 self.updateUploadState(uploadingMedia.filename, undefined, downloadURL)
             });
         });
+        return uploadingMedia
     }
 
     updateUploadState(filename: string, percentUploaded?: number, url?: string, error?: Error) {
@@ -124,6 +124,8 @@ class PostEntry extends React.Component {
             }
         }
         this.setState({ media: uploads })
+        console.log("Update for " +filename + ". State has " +  this.state.media.length + ' files')
+        console.log(this.state.media)
     }
 
     handleSubmit() {

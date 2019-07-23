@@ -19,7 +19,14 @@ storiesOf('Admin/Uploading Media', module)
                 percentUploaded={75} />
         )
     })
-    .add('Completed Image', () => {
+    .add('Completed No URL', () => {
+        return (
+            <UploadingMedia
+                filename="something.png"
+                percentUploaded={100} />
+        )
+    })
+    .add('Completed with URL', () => {
         return (
             <UploadingMedia
                 filename="something.png"
