@@ -37,10 +37,13 @@ class App extends React.Component {
         firebase.auth().onAuthStateChanged(this.listenForUser);
     }
 
-    listenForUser(user: any) {
+    listenForUser(user: firebase.User | null) {
         if (user) {
             this.setState({ username: user.displayName })
+        } else {
+            this.setState({ username: null })
         }
+
     }
 
     render() {
@@ -55,7 +58,7 @@ class App extends React.Component {
                         <Route exact path="/" component={LocationPage} />
                         <Route exact path="/location/:locationName" component={LocationPage} />
                         <Route exact path="/admin" component={LocationList} />
-                        <Route path="/admin/postentry" component={PostEntry} />
+                        <Route path="/admin/postentry/:locationid" component={PostEntry} />
                         <Route path="/admin/locationentry" component={LocationEntry} />
                         <Route component={NotFound} />
                     </Switch>

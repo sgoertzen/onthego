@@ -8,7 +8,7 @@ import "firebase/firestore";
 
 firebase.initializeApp(firebaseConfig);
 
-storiesOf('Location Entry', module)
+storiesOf('Admin/Location Entry', module)
     .add('Basic Form', () => {
         return <LocationEntry onLocationCreated={() => { alert('location created') }} />
     })

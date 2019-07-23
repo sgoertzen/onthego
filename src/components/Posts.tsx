@@ -29,9 +29,8 @@ class Posts extends React.Component {
                 </Grid>
             );
         });
-        //return {tiles}
         return (
-            <Container className="cardGrid" maxWidth="md">
+            <Container className="cardGrid" maxWidth="lg">
                 <Grid container spacing={4}>
                     {tiles}
                 </Grid>

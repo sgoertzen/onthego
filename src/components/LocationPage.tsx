@@ -84,6 +84,7 @@ class LocationPage extends React.Component {
         }
         if (!this.state.selectedLocation) {
             console.log("No location specified or no matching location.  Setting default")
+            this.setState({ selectedLocation: locations[0] })
         }
         if (this.state.selectedLocation) {
             //this.loadPosts("320gdIkX54IKNqRoFHpE")
