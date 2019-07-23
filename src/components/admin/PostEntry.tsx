@@ -40,8 +40,8 @@ class PostEntry extends React.Component {
         console.log(props)
         this.props = props;
         this.state = {
-            title: this.props.title ? this.props.title : "",
-            details: this.props.details ? this.props.details : "",
+            title: this.props.title || "",
+            details: this.props.details || "",
             locationid: this.props.match.params.locationid
         }
         this.handleChange = this.handleChange.bind(this);
@@ -129,6 +129,7 @@ class PostEntry extends React.Component {
                     <TextField
                         id="post-entry-details"
                         label="Details"
+                        value={this.state.details}
                         multiline
                         fullWidth
                         rows="3"

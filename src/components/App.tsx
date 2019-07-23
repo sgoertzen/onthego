@@ -40,7 +40,10 @@ class App extends React.Component {
     listenForUser(user: firebase.User | null) {
         if (user) {
             this.setState({ username: user.displayName })
+        } else {
+            this.setState({ username: null })
         }
+
     }
 
     render() {
