@@ -4,6 +4,7 @@ import { IPost } from '../classes/Post';
 import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, IconButton, SvgIcon } from '@material-ui/core';
 import { formatDistance } from 'date-fns';
 import defaultImage from '../images/default.png'
+import { MediaHelper } from '../util/MediaHelper';
 
 
 interface postTileProps {
@@ -24,8 +25,12 @@ class PostTile extends React.Component {
     }
 
     getPostImageURL(post: IPost): string {
-        if (post.mediaURLs && post.mediaURLs.length > 0) {
-            return post.mediaURLs[0]
+        if (post.media) {
+            for (let media of post.media) {
+                if (MediaHelper.isImage(media.filename)) {
+                    return media.url;
+                }
+            }
         }
         return defaultImage
     }
@@ -38,7 +43,7 @@ class PostTile extends React.Component {
 
     render() {
         let post = this.props.post
-        let mediaCount = post.mediaURLs ? post.mediaURLs.length : 0
+        let mediaCount = post.media ? post.media.length : 0
         let imageURL = this.getPostImageURL(post)
         return (
             <Card className="card">

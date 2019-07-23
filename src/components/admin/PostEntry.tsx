@@ -28,7 +28,7 @@ interface postEntryProps {
 interface IPostEntryState {
     title: string
     details: string
-    media: IUploadingMedia[]
+    uploads: IUploadingMedia[]
     locationid: string
 }
 
@@ -44,7 +44,7 @@ class PostEntry extends React.Component {
             title: this.props.title || "",
             details: this.props.details || "",
             locationid: this.props.match.params.locationid,
-            media: [],
+            uploads: [],
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -66,14 +66,14 @@ class PostEntry extends React.Component {
             }
             case "post-entry-media": {
                 if (event.target.files) {
-                    let uploads: IUploadingMedia[] = []
+                    let uploadings: IUploadingMedia[] = []
                     console.log("Processing " + event.target.files.length + " files")
                     for (let file of event.target.files) {
                         console.log("processing file ", file.name)
-                        uploads.push(this.uploadFile(file))
+                        uploadings.push(this.uploadFile(file))
                     }
                     this.setState({
-                        media: uploads
+                        uploads: uploadings
                     })
                 }
             }
@@ -84,8 +84,8 @@ class PostEntry extends React.Component {
         let storageRef = firebase.storage().ref();
         var uploadTask = storageRef.child("postimages/" + file.name).put(file);
         let self = this
-        let uploadingMedia = {filename: file.name, percentUploaded: 0}
-        
+        let uploadingMedia = { filename: file.name, percentUploaded: 0 }
+
         // Register three observers:
         // 1. 'state_changed' observer, called any time the state changes
         // 2. Error observer, called on failure
@@ -108,8 +108,8 @@ class PostEntry extends React.Component {
 
     updateUploadState(filename: string, percentUploaded?: number, url?: string, error?: Error) {
 
-        let uploads = this.state.media
-        for (let upload of uploads) {
+        let uploadings = this.state.uploads
+        for (let upload of uploadings) {
             if (upload.filename === filename) {
                 if (error) {
                     upload.error = error
@@ -123,9 +123,9 @@ class PostEntry extends React.Component {
                 break;
             }
         }
-        this.setState({ media: uploads })
-        console.log("Update for " +filename + ". State has " +  this.state.media.length + ' files')
-        console.log(this.state.media)
+        this.setState({ uploads: uploadings })
+        console.log("Update for " + filename + ". State has " + this.state.uploads.length + ' files')
+        console.log(this.state.uploads)
     }
 
     handleSubmit() {
@@ -138,7 +138,7 @@ class PostEntry extends React.Component {
             locationid: this.state.locationid,
             author: "Trav El",
             created: new Date(),
-            mediaURLs: this.state.media || []
+            mediaURLs: this.state.uploads
         }).then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);
             alert('Success!')
@@ -150,7 +150,7 @@ class PostEntry extends React.Component {
     }
 
     isUploading() {
-        for (let file of this.state.media) {
+        for (let file of this.state.uploads) {
             if (file.percentUploaded < 100) {
                 return true
             }
@@ -160,7 +160,7 @@ class PostEntry extends React.Component {
 
     render() {
         let counter = 0
-        let uploadDisplays = this.state.media.map(obj => {
+        let uploadDisplays = this.state.uploads.map(obj => {
             return (<UploadingMedia
                 filename={obj.filename}
                 percentUploaded={obj.percentUploaded}
