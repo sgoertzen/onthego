@@ -63,6 +63,7 @@ class LocationPage extends React.Component {
         })
         this.setState({ locs: locations })
 
+        // Try to find the location based on the name passed in
         if (this.state.selectedLocationName) {
             // Loop over locations and find the one matching this name
             locations.forEach(loc => {
@@ -71,6 +72,7 @@ class LocationPage extends React.Component {
                 }
             });
         }
+        // Find the location where arrival/departure is around current date
         if (!this.state.selectedLocation) {
             // Find the location we are in and use it
             let now = new TimeStamp()
@@ -79,15 +81,12 @@ class LocationPage extends React.Component {
                     this.setState({ selectedLocation: loc })
                 }
             });
-            //let currentLocation = this.state.locs[0];
-            //this.setState({selectedLocation: currentLocation})
         }
+        // Default to the first location if nothing found yet
         if (!this.state.selectedLocation) {
-            console.log("No location specified or no matching location.  Setting default")
             this.setState({ selectedLocation: locations[0] })
         }
         if (this.state.selectedLocation) {
-            //this.loadPosts("320gdIkX54IKNqRoFHpE")
             this.loadPosts(this.state.selectedLocation.id)
         }
     }

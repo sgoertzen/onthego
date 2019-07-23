@@ -107,7 +107,7 @@ class LocationList extends React.Component {
                                 <TableCell align="right">{loc.coords.latitude}</TableCell>
                                 <TableCell align="right">{loc.coords.longitude}</TableCell>
                                 <TableCell align="center">
-                                    <Button onClick={() => { this.addPost(loc) }}>
+                                    <Button variant="outlined" onClick={() => { this.addPost(loc) }}>
                                         Add Post
                                     </Button>
                                 </TableCell>

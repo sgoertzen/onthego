@@ -5,6 +5,7 @@ import "firebase/storage"
 import { ITravelLocation } from '../../classes/TravelLocation';
 import { TextField, Button, Divider, Container } from '@material-ui/core';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import UploadingMedia, { IUploadingMedia } from './UploadingMedia';
 
 // Todo: may want to move this out of this class later
 export interface IPostCreated {
@@ -23,10 +24,11 @@ interface postEntryProps {
     }
 }
 
+
 interface IPostEntryState {
     title: string
     details: string
-    media?: [string]
+    media: IUploadingMedia[]
     locationid: string
 }
 
@@ -41,10 +43,13 @@ class PostEntry extends React.Component {
         this.state = {
             title: this.props.title || "",
             details: this.props.details || "",
-            locationid: this.props.match.params.locationid
+            locationid: this.props.match.params.locationid,
+            media: [],
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.isUploading = this.isUploading.bind(this);
+        this.updateUploadState = this.updateUploadState.bind(this);
     }
 
     handleChange(event: any) {
@@ -75,43 +80,54 @@ class PostEntry extends React.Component {
         let storageRef = firebase.storage().ref();
         var uploadTask = storageRef.child("postimages/" + file.name).put(file);
         let self = this
+        let uploadingMedia: IUploadingMedia = {
+            filename: file.name,
+            percentUploaded: 0
+        }
+        this.setState({
+            media: [...self.state.media, uploadingMedia]
+        })
 
         // Register three observers:
         // 1. 'state_changed' observer, called any time the state changes
         // 2. Error observer, called on failure
         // 3. Completion observer, called on successful completion
         uploadTask.on('state_changed', function(snapshot) {
-            // Observe state change events such as progress, pause, and resume
-            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log('Upload is ' + progress + '% done');
-            switch (snapshot.state) {
-                case firebase.storage.TaskState.PAUSED: // or 'paused'
-                    console.log('Upload is paused');
-                    break;
-                case firebase.storage.TaskState.RUNNING: // or 'running'
-                    console.log('Upload is running');
-                    break;
-            }
+            self.updateUploadState(uploadingMedia.filename, progress)
         }, function(error) {
-            // Handle unsuccessful uploads
             console.log("Unable to upload the file ", error)
+            self.updateUploadState(uploadingMedia.filename, undefined, undefined, error)
         }, function() {
-            // Handle successful uploads on complete
-            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
             uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
                 console.log('File available at', downloadURL);
-
-                let pastMedia: string[] = self.state.media || [];
-                pastMedia.push(downloadURL)
-                self.setState({ media: pastMedia })
+                self.updateUploadState(uploadingMedia.filename, undefined, downloadURL)
             });
         });
     }
 
+    updateUploadState(filename: string, percentUploaded?: number, url?: string, error?: Error) {
+
+        let uploads = this.state.media
+        for (let upload of uploads) {
+            if (upload.filename === filename) {
+                if (error) {
+                    upload.error = error
+                }
+                if (url) {
+                    upload.url = url
+                }
+                if (percentUploaded) {
+                    upload.percentUploaded = percentUploaded
+                }
+                break;
+            }
+        }
+        this.setState({ media: uploads })
+    }
+
     handleSubmit() {
         console.log("submitting post entry")
-
 
         var db = firebase.firestore();
         db.collection("posts").add({
@@ -131,7 +147,27 @@ class PostEntry extends React.Component {
             });
     }
 
+    isUploading() {
+        for (let file of this.state.media) {
+            if (file.percentUploaded < 100) {
+                return true
+            }
+        }
+        return false
+    }
+
     render() {
+        let counter = 0
+        let uploadDisplays = this.state.media.map(obj => {
+            return (<UploadingMedia
+                filename={obj.filename}
+                percentUploaded={obj.percentUploaded}
+                url={obj.url}
+                error={obj.error}
+                key={"upload_" + counter++}
+            />)
+        })
+
         return (
             <ValidatorForm
                 ref="form"
@@ -161,24 +197,28 @@ class PostEntry extends React.Component {
                         margin="normal"
                         onChange={this.handleChange}
                     />
-                    <input
-                        id="post-entry-media"
-                        className="PostEntryInput"
-                        type="file"
-                        multiple
-                        accept="image/*|video/*"
-                        onChange={this.handleChange}
-                    />
-                    <label htmlFor="post-entry-media">
-                        <Button variant="outlined" component="span">
-                            Add Images and Videos
+                    <div>
+                        {uploadDisplays}
+                        <input
+                            id="post-entry-media"
+                            className="PostEntryInput"
+                            type="file"
+                            multiple
+                            accept="image/*|video/*"
+                            onChange={this.handleChange}
+                        />
+                        <label htmlFor="post-entry-media">
+                            <Button variant="outlined" component="span">
+                                Add Images and Videos
                         </Button>
-                    </label>
+                        </label>
+                    </div>
                     <Divider />
                     <Button
                         variant="contained"
                         id="post-entry-submit"
                         type="submit"
+                        disabled={this.isUploading()}
                         fullWidth>
                         Create Post
                     </Button>
