@@ -52,7 +52,7 @@ class LocationList extends React.Component {
         this.setState({ locs: locations })
     }
 
-    addPost(loc: ITravelLocation){
+    addPost(loc: ITravelLocation) {
         console.log("Creating post for ", loc.name)
         this.props.history.push("/admin/postentry/" + loc.id)
     }
@@ -107,10 +107,10 @@ class LocationList extends React.Component {
                                 <TableCell align="right">{loc.coords.latitude}</TableCell>
                                 <TableCell align="right">{loc.coords.longitude}</TableCell>
                                 <TableCell align="center">
-                                    <Button onClick={() => { this.addPost(loc)}}>
+                                    <Button onClick={() => { this.addPost(loc) }}>
                                         Add Post
                                     </Button>
-                                    </TableCell>
+                                </TableCell>
                                 <TableCell align="center">
                                     <IconButton aria-label="Edit" onClick={() => { this.edit(loc) }}>
                                         <SvgIcon>

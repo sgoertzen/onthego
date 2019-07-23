@@ -16,7 +16,7 @@ class Footer extends React.Component {
         super(props);
         this.props = props;
     }
-    
+
     adminLogin() {
         var provider = new firebase.auth.GoogleAuthProvider();
         // If uncommenting this line, make sure you look into: https://developers.google.com/identity/protocols/googlescopes?authuser=0

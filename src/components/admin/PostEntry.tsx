@@ -62,7 +62,7 @@ class PostEntry extends React.Component {
                 break;
             }
             case "post-entry-media": {
-                
+
                 if (event.target.files) {
                     let storageRef = firebase.storage().ref();
                     console.log(event.target.files)
@@ -74,7 +74,7 @@ class PostEntry extends React.Component {
                                 // TODO: Race condition here! Fix!
                                 let pastMedia: string[] = this.state.media || [];
                                 pastMedia.push(snapshot.downloadURL)
-                                this.setState( { media: pastMedia } )
+                                this.setState({ media: pastMedia })
                             }
                         })
                     }
@@ -94,16 +94,16 @@ class PostEntry extends React.Component {
             locationid: this.state.locationid,
             author: "Trav El",
             created: new Date(),
-            photos:this.state.media
+            photos: this.state.media
         })
-        .then(function(docRef) {
-            console.log("Document written with ID: ", docRef.id);
-            alert('Success!')
-        })
-        .catch(function(error) {
-            console.error("Error adding document: ", error);
-            alert('failed uploading, check logs')
-        });
+            .then(function(docRef) {
+                console.log("Document written with ID: ", docRef.id);
+                alert('Success!')
+            })
+            .catch(function(error) {
+                console.error("Error adding document: ", error);
+                alert('failed uploading, check logs')
+            });
     }
 
     render() {
@@ -150,9 +150,9 @@ class PostEntry extends React.Component {
                         </Button>
                     </label>
                     <Divider />
-                    <Button 
-                        variant="contained" 
-                        id="post-entry-submit" 
+                    <Button
+                        variant="contained"
+                        id="post-entry-submit"
                         type="submit"
                         fullWidth>
                         Create Post

@@ -3,12 +3,12 @@ import Tabs from '@material-ui/core/Tabs';
 import { Tab, AppBar } from '@material-ui/core';
 
 export interface IHistoryProps {
-    push(location:string): void
+    push(location: string): void
 }
 interface IAdminMenuProps {
     history: IHistoryProps
 }
- 
+
 
 class AdminMenuBar extends React.Component {
 
