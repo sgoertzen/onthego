@@ -104,12 +104,6 @@ class PostEntry extends React.Component {
             console.error("Error adding document: ", error);
             alert('failed uploading, check logs')
         });
-        // var storageRef = firebase.storage().ref();
-        // let image1 = storageRef.child("postimages/make_random_name")
-        // storageRef.put(file).then((snapshot) => {
-        //     console.log("Uploaded a file: ", snapshot.downloadURL)
-        //     console.log(snapshot)
-        // })
     }
 
     render() {

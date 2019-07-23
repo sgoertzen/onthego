@@ -33,7 +33,9 @@ class LocationList extends React.Component {
         }
         this.loadLocations = this.loadLocations.bind(this);
         this.locationsLoaded = this.locationsLoaded.bind(this);
-        this.loadLocations();
+        if (locs.length === 0) {
+            this.loadLocations()
+        }
     }
 
     loadLocations(): void {
@@ -57,9 +59,25 @@ class LocationList extends React.Component {
 
     edit(loc: ITravelLocation): void {
         console.log("Would edit: " + loc.name);
+        this.props.history.push("/admin/locationentry/" + loc.id)
     }
 
     delete(loc: ITravelLocation): void {
+        let name = loc.name
+        // TODO: Figure out how to show a confirmation dialog
+        if (false) {
+            // if this one doens't work, use the one commented out below
+            firebase.firestore().collection("locations").doc(loc.id).delete().then(function() {
+                console.log("Location '" + name + "' removed")
+            }).catch(function(error) {
+                console.error("Error removing location", error)
+            })
+            // firebase.firestore().collection("locations").where("id", "==", loc.id).get().then(function(querySnapshot) {
+            //     querySnapshot.forEach(function(doc) {
+            //         doc.ref.delete();
+            //     })
+            // })
+        }
         console.log("Would delete: " + loc.name);
     }
 
