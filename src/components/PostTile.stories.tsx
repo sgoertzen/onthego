@@ -4,14 +4,17 @@ import PostTile from './PostTile';
 import { Post, Media } from '../classes/Post';
 import travelImage from "../../testdata/Travel.jpg";
 
-storiesOf('PostTile', module)
+storiesOf('Post Tile', module)
     .add('Single Image', () => {
         return <PostTile post={
             new Post("Sample title",
                 [new Media("travel.png", travelImage)],
                 0,
                 "Sally",
-                new Date("06/06/2019"))} />
+                new Date("06/06/2019"),
+                ""
+            )
+        } />
     })
     .add('Multiple Image', () => {
         return <PostTile post={
@@ -19,7 +22,10 @@ storiesOf('PostTile', module)
                 [new Media("travel.png", travelImage), new Media("travel.png", travelImage), new Media("travel.png", travelImage)],
                 0,
                 "Sally",
-                new Date("12/12/2018"))} />
+                new Date("12/12/2018"),
+                ""
+            )
+        } />
     })
     .add('No Images', () => {
         return <PostTile post={
@@ -27,6 +33,9 @@ storiesOf('PostTile', module)
                 [],
                 0,
                 "Sally",
-                new Date("12/12/2018"))} />
+                new Date("12/12/2018"),
+                ""
+            )
+        } />
     })
 
