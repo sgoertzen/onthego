@@ -8,6 +8,7 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 import * as firebase from "firebase/app";
 import "firebase/firestore";
+import { IHistoryProps } from '../../classes/IHistoryProps';
 
 
 // Todo: may want to move this out of this class later
@@ -21,7 +22,7 @@ export interface locationEntryProps {
     longitude?: number
     arrival?: Date
     departure?: Date
-    onLocationCreated: ILocationCreated
+    history?: IHistoryProps
 }
 
 interface ILocationEntryState {
@@ -51,6 +52,7 @@ class LocationEntry extends React.Component {
         this.handleArrivalDateChange = this.handleArrivalDateChange.bind(this);
         this.handleDepartureDateChange = this.handleDepartureDateChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.returnToList = this.returnToList.bind(this);
     }
 
     handleChange(event: any): void {
@@ -88,13 +90,16 @@ class LocationEntry extends React.Component {
             arrive: this.state.arrival,
             depart: this.state.departure
         })
-            .then(function(docRef) {
-                console.log("Document written with ID: ", docRef.id);
-                alert("Location created!")
-            })
-            .catch(function(error) {
-                console.error("Error adding document: ", error);
-            });
+            .then(this.returnToList)
+            .catch((error) => console.error("Error adding document: ", error));
+    }
+
+    returnToList() {
+        if (this.props.history) {
+            this.props.history.push('/admin/locationslist')
+        } else {
+            console.log('Would return to location list.')
+        }
     }
 
     render() {

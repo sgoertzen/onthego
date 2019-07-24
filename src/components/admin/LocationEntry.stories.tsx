@@ -10,7 +10,7 @@ firebase.initializeApp(firebaseConfig);
 
 storiesOf('Admin/Location Entry', module)
     .add('Basic Form', () => {
-        return <LocationEntry onLocationCreated={() => { alert('location created') }} />
+        return <LocationEntry />
     })
     .add('Filled Form', () => {
         return <LocationEntry
@@ -19,6 +19,5 @@ storiesOf('Admin/Location Entry', module)
             longitude={31.156}
             arrival={new Date("12/15/2025")}
             departure={new Date("12/15/2026")}
-            onLocationCreated={() => { alert('location created') }}
         />
     })
