@@ -3,21 +3,16 @@ import './UploadingMedia.css';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { MediaHelper } from '../../util/MediaHelper';
+import { IMedia } from '../../classes/Media';
 
 
 
-export interface IUploadingMedia {
-    filename: string
-    url?: string
-    percentUploaded: number
-    error?: Error
-}
 
 class UploadingMedia extends React.Component {
 
-    public props: IUploadingMedia
+    public props: IMedia
 
-    constructor(props: IUploadingMedia) {
+    constructor(props: IMedia) {
         super(props);
         this.props = props
     }

@@ -2,9 +2,11 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import PostPage from './PostPage';
-import { Post, Media } from '../classes/Post';
-import defaultImage from '../images/default.png'
+import { Post } from '../classes/Post';
+import travelImage from "../../testdata/Travel.jpg";
+import thumbImage from "../../testdata/thumb_Travel.jpg";
 import { TimeStamp } from '../classes/TimeStamp';
+import { Media, MediaType } from '../classes/Media';
 
 
 storiesOf('Post Page', module)
@@ -12,7 +14,7 @@ storiesOf('Post Page', module)
     .add('single post', () => {
         let post = new Post(
             "Test Post",
-            [new Media("default.png", defaultImage)],
+            [new Media("default.png", travelImage, thumbImage, MediaType.Image)],
             0,
             "Jane Doe",
             new TimeStamp(new Date("12/15/2020").getTime()),

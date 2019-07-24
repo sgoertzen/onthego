@@ -3,20 +3,12 @@ import ImageGallery, { ReactImageGalleryItem } from 'react-image-gallery';
 //import ReactPlayer from 'react-player'
 import FilePlayer from 'react-player'
 import './PostMedia.css'
+import { IMedia, MediaType } from '../classes/Media';
 require('react-image-gallery/styles/css/image-gallery.css')
 
 
 interface postMediaProps {
-    items: IGalleryItem[]
-}
-export interface IGalleryItem {
-    url: string
-    thumbnail: string
-    type: MediaType
-}
-export enum MediaType {
-    Image,
-    Video
+    items: IMedia[]
 }
 
 class PostMedia extends React.Component {
@@ -35,15 +27,15 @@ class PostMedia extends React.Component {
         );
     }
 
-    buildItems(media: IGalleryItem[]): ReactImageGalleryItem[] {
+    buildItems(media: IMedia[]): ReactImageGalleryItem[] {
         let items: ReactImageGalleryItem[] = []
         for (let med of media) {
-            if (med.type === MediaType.Image) {
+            if (med.filetype === MediaType.Image) {
                 items.push({
                     original: med.url,
                     thumbnail: med.thumbnail
                 })
-            } else if (med.type === MediaType.Video) {
+            } else if (med.filetype === MediaType.Video) {
                 items.push({
                     thumbnail: med.thumbnail,
                     original: med.url,

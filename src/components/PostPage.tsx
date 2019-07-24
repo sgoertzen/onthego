@@ -2,9 +2,7 @@ import React from 'react';
 import './PostTile.css';
 import { IPost } from '../classes/Post';
 import PostHeader from './PostHeader';
-import PostMedia, { IGalleryItem, MediaType } from './PostMedia';
-import PostComments from './PostComments';
-import { MediaHelper } from '../util/MediaHelper'
+import PostMedia from './PostMedia';
 
 import * as firebase from "firebase/app";
 import "firebase/firestore";
@@ -44,12 +42,10 @@ class PostPage extends React.Component {
     }
 
     fetchPost(postID: string): void {
-        console.log("Fetching post for ", postID)
         firebase.firestore().collection("posts").doc(postID).get().then(this.postLoaded)
     }
 
     postLoaded(docSnapshot: firebase.firestore.DocumentSnapshot): void {
-        console.log("post fetched")
         let post = docSnapshot.data() as IPost
         post.id = docSnapshot.id
 
@@ -66,23 +62,6 @@ class PostPage extends React.Component {
         return new Date();
     }
 
-    buildMediaItems(post: IPost): IGalleryItem[] {
-        let galleryItems: IGalleryItem[] = []
-        if (post.media) {
-            for (let media of post.media) {
-                galleryItems.push(
-                    {
-                        url: media.url,
-                        thumbnail: media.url,
-                        type: MediaHelper.isImage(media.filename) ? MediaType.Image : MediaType.Video
-
-                    }
-                )
-            }
-        }
-        return galleryItems
-    }
-
     render() {
         console.log(this.state)
         if (this.state.loading) {
@@ -95,8 +74,8 @@ class PostPage extends React.Component {
         return (
             <div>
                 <PostHeader title={post.title} author={post.author} date={post.posted.toDate()} details={post.details} />
-                <PostMedia items={this.buildMediaItems(post)} />
-                <PostComments />
+                <PostMedia items={post.media} />
+                {/* <PostComments /> */}
             </div>
         );
     }

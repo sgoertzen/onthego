@@ -1,3 +1,6 @@
+import { MediaType } from "../classes/Media";
+
+
 export class MediaHelper {
     static getExtension(filename: string) {
         var parts = filename.split('.');
@@ -27,5 +30,15 @@ export class MediaHelper {
                 return true;
         }
         return false;
+    }
+
+    static getFiletype(filename: string) {
+        if (this.isImage(filename)) {
+            return MediaType.Image
+        } else if (this.isVideo(filename)) {
+            return MediaType.Video
+        } else {
+            return MediaType.Unknown
+        }
     }
 }

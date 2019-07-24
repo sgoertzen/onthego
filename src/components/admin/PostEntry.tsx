@@ -5,7 +5,9 @@ import "firebase/storage"
 import { ITravelLocation } from '../../classes/TravelLocation';
 import { TextField, Button, Divider, Container } from '@material-ui/core';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import UploadingMedia, { IUploadingMedia } from './UploadingMedia';
+import UploadingMedia from './UploadingMedia';
+import { MediaHelper } from '../../util/MediaHelper';
+import { IMedia, Media } from '../../classes/Media';
 
 // Todo: may want to move this out of this class later
 export interface IPostCreated {
@@ -28,7 +30,7 @@ interface postEntryProps {
 interface IPostEntryState {
     title: string
     details: string
-    uploads: IUploadingMedia[]
+    uploads: IMedia[]
     locationid: string
 }
 
@@ -66,7 +68,7 @@ class PostEntry extends React.Component {
             }
             case "post-entry-media": {
                 if (event.target.files) {
-                    let uploadings: IUploadingMedia[] = []
+                    let uploadings: IMedia[] = []
                     console.log("Processing " + event.target.files.length + " files")
                     for (let file of event.target.files) {
                         console.log("processing file ", file.name)
@@ -80,11 +82,14 @@ class PostEntry extends React.Component {
         }
     }
 
-    uploadFile(file: any): IUploadingMedia {
+    uploadFile(file: any): IMedia {
+
+        let folder = MediaHelper.isImage(file.name) ? "postimages" : "postvideos"
+
         let storageRef = firebase.storage().ref();
-        var uploadTask = storageRef.child("postimages/" + file.name).put(file);
+        var uploadTask = storageRef.child(folder + "/" + file.name).put(file);
         let self = this
-        let uploadingMedia = { filename: file.name, percentUploaded: 0 }
+        let uploadingMedia = new Media(file.name, "", "", MediaHelper.getFiletype(file.name))
 
         // Register three observers:
         // 1. 'state_changed' observer, called any time the state changes
@@ -112,10 +117,12 @@ class PostEntry extends React.Component {
         for (let upload of uploadings) {
             if (upload.filename === filename) {
                 if (error) {
-                    upload.error = error
+                    upload.error = error.message
                 }
                 if (url) {
                     upload.url = url
+                    upload.thumbnail = url.replace("postimages%2F", "postimages%2Fthumb_")
+                    upload.filetype = MediaHelper.getFiletype(filename)
                 }
                 if (percentUploaded) {
                     upload.percentUploaded = percentUploaded
@@ -127,18 +134,35 @@ class PostEntry extends React.Component {
         console.log("Update for " + filename + ". State has " + this.state.uploads.length + ' files')
         console.log(this.state.uploads)
     }
+    prepMediaForSaving(media: IMedia[]): any[] {
+        // Convert the enum to a string
+        let items: any[] = []
+        for (let obj of media) {
+            items.push(
+                {
+                    url: obj.url,
+                    thumbnail: obj.thumbnail,
+                    filename: obj.filename,
+                    filetype: obj.filetype.toString()
+                }
+            )
+        }
+        return items
+    }
 
     handleSubmit() {
         console.log("submitting post entry")
+
+        let user = firebase.auth().currentUser
 
         var db = firebase.firestore();
         db.collection("posts").add({
             title: this.state.title,
             details: this.state.details,
             locationid: this.state.locationid,
-            author: "Trav El",
-            created: new Date(),
-            mediaURLs: this.state.uploads
+            author: user ? user.displayName : "(unknown)",
+            posted: new Date(),
+            media: this.prepMediaForSaving(this.state.uploads)
         }).then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);
             alert('Success!')
@@ -165,8 +189,10 @@ class PostEntry extends React.Component {
                 filename={obj.filename}
                 percentUploaded={obj.percentUploaded}
                 url={obj.url}
+                thumbnail={obj.thumbnail}
                 error={obj.error}
                 key={"upload_" + counter++}
+                filetype={obj.filetype}
             />)
         })
 
