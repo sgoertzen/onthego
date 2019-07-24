@@ -2,7 +2,7 @@ import React from 'react';
 import './PostTile.css';
 import { IPost } from '../classes/Post';
 import PostHeader from './PostHeader';
-import PostMedia, { IGalleryItem } from './PostMedia';
+import PostMedia, { IGalleryItem, MediaType } from './PostMedia';
 import PostComments from './PostComments';
 
 
@@ -37,8 +37,9 @@ class PostPage extends React.Component {
 
     buildMediaItems(post: IPost): IGalleryItem[] {
         return [{
-            original: "test",
-            thumbnail: "test2"
+            url: "test",
+            thumbnail: "test2",
+            type: MediaType.Image
         }]
     }
 

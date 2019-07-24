@@ -28,18 +28,18 @@ storiesOf('Post Media', module)
     })
     .add('Single Video', () => {
         let items = [
-            {url:"/test.mp4", thumbnail:travelThumbnail, type: MediaType.Video}
+            { url: "/SampleVideo_720x480_1mb.mp4", thumbnail: travelThumbnail, type: MediaType.Video }
         ]
         return (
-            <PostMedia items={items}/>
+            <PostMedia items={items} />
         )
     })
     .add('Image and Video', () => {
         let items = [
             { url: travelImage, thumbnail: travelThumbnail, type: MediaType.Image },
-            {url:"/test.mp4", thumbnail:travelThumbnail, type: MediaType.Video}
+            { url: "/SampleVideo_720x480_1mb.mp4", thumbnail: travelThumbnail, type: MediaType.Video }
         ]
         return (
-            <PostMedia items={items}/>
+            <PostMedia items={items} />
         )
     })

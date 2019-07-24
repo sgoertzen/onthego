@@ -1,7 +1,10 @@
 import React from 'react';
 import ImageGallery, { ReactImageGalleryItem } from 'react-image-gallery';
+//import ReactPlayer from 'react-player'
+import FilePlayer from 'react-player'
 import './PostMedia.css'
 require('react-image-gallery/styles/css/image-gallery.css')
+
 
 interface postMediaProps {
     items: IGalleryItem[]
@@ -9,7 +12,7 @@ interface postMediaProps {
 export interface IGalleryItem {
     url: string
     thumbnail: string
-    type: MediaType 
+    type: MediaType
 }
 export enum MediaType {
     Image,
@@ -26,46 +29,13 @@ class PostMedia extends React.Component {
     }
 
     _renderVideo(item: ReactImageGalleryItem) {
-        console.log("Rendering video")
+        console.log("Rendering video", item.original)
         return (
-          <div className='image-gallery-image'>
-            {/* {
-              this.state.showVideo[item.embedUrl] ?
-                <div className='video-wrapper'>
-                    <a
-                      className='close-video'
-                      onClick={this._toggleShowVideo.bind(this, item.embedUrl)}
-                    >
-                    </a>
-                    <iframe
-                      width='560'
-                      height='315'
-                      src={item.embedUrl}
-                      frameBorder='0'
-                      allowFullScreen
-                    >
-                    </iframe>
-                </div>
-              :
-                <a onClick={this._toggleShowVideo.bind(this, item.embedUrl)}>
-                  <div className='play-button'></div>
-                  <img src={item.original}/>
-                  {
-                    item.description &&
-                      <span
-                        className='image-gallery-description'
-                        style={{right: '0', left: 'initial'}}
-                      >
-                        {item.description}
-                      </span>
-                  }
-                </a>
-            } */}
-          </div>
+            <FilePlayer url={item.original} controls={true} width="98%" height="98%" />
         );
-      }
+    }
 
-    buildItems(media:IGalleryItem[]): ReactImageGalleryItem[] {
+    buildItems(media: IGalleryItem[]): ReactImageGalleryItem[] {
         let items: ReactImageGalleryItem[] = []
         for (let med of media) {
             if (med.type === MediaType.Image) {
@@ -88,7 +58,7 @@ class PostMedia extends React.Component {
     render() {
         return (
             <div className="MediaViewer">
-                <ImageGallery items={this.buildItems(this.props.items)} />
+                <ImageGallery items={this.buildItems(this.props.items)} thumbnailPosition="top" showPlayButton={false} />
             </div>
         )
     }
