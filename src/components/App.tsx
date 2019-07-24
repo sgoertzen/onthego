@@ -58,10 +58,10 @@ class App extends React.Component {
                     <Switch>
                         <Route exact path="/" component={LocationPage} />
                         <Route exact path="/location/:locationName" component={LocationPage} />
+                        <Route exact path="/post/:postid" component={PostPage} />
                         <Route exact path="/admin" component={LocationList} />
                         <Route path="/admin/postentry/:locationid" component={PostEntry} />
                         <Route path="/admin/locationentry" component={LocationEntry} />
-                        <Route path="post/:postid" component={PostPage} />
                         <Route component={NotFound} />
                     </Switch>
                     <Footer username={this.state.username} />

@@ -4,7 +4,7 @@ import "./LocationList.css"
 import { ITravelLocation } from '../../classes/TravelLocation';
 import { format } from 'date-fns';
 import * as firebase from "firebase/app";
-import { IHistoryProps } from './AdminMenuBar';
+import { IHistoryProps } from '../../classes/IHistoryProps';
 
 
 interface ILocationListProps {

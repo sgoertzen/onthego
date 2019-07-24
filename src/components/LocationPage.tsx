@@ -9,6 +9,7 @@ import Posts from './Posts';
 import TripStats from './TripStats';
 import { TimeStamp } from '../classes/TimeStamp';
 import { differenceInDays } from 'date-fns';
+import { IHistoryProps } from '../classes/IHistoryProps';
 
 interface ILocationPageProps {
     match?: {
@@ -16,6 +17,7 @@ interface ILocationPageProps {
             locationName?: string
         }
     }
+    history?: IHistoryProps
 }
 
 interface ILocationPageState {
@@ -40,6 +42,7 @@ class LocationPage extends React.Component {
         var emptyLocations: TravelLocation[] = [];
         var emptyPosts: Post[] = [];
         this.locationChanged = this.locationChanged.bind(this);
+        this.postClick = this.postClick.bind(this);
         this.loadLocations = this.loadLocations.bind(this);
         this.locationsLoaded = this.locationsLoaded.bind(this);
         let locName: string | undefined
@@ -97,7 +100,9 @@ class LocationPage extends React.Component {
         postsRef.where("locationid", "==", locationId).get().then((querySnapshot) => {
             let posts: IPost[] = [];
             querySnapshot.forEach(function(doc) {
-                posts.push(doc.data() as IPost)
+                let post:IPost = doc.data() as IPost
+                post.id = doc.id
+                posts.push(post)
             });
             this.setState({
                 posts: posts
@@ -115,6 +120,14 @@ class LocationPage extends React.Component {
         });
     }
 
+    postClick(postID:string): void {
+        if (this.props.history){
+            this.props.history.push("/post/" + postID)
+        } else {
+            alert("NO HISTORY")
+        }
+    }
+
     render() {
         let daysOnTheRoad = differenceInDays(new Date(), new Date(2019, 6, 27))
 
@@ -123,7 +136,7 @@ class LocationPage extends React.Component {
                 <div className="App-header"><MenuBar locs={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} /></div>
                 <div className="App-map"><TravelMap locations={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} /></div>
                 <div className="App-stats"><TripStats daysOnTheRoad={daysOnTheRoad} countriesVisited={1} milesTraveled={2566.63} /></div>
-                <div className="App-posts"><Posts posts={this.state.posts} /></div>
+                <div className="App-posts"><Posts posts={this.state.posts} onPostClick={this.postClick}/></div>
             </div>
         );
     }

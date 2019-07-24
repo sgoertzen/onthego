@@ -13,8 +13,9 @@ storiesOf('Post Tile', module)
                 "Sally",
                 new Date("06/06/2019"),
                 ""
-            )
-        } />
+            )} 
+            onPostClick={() => {}}
+        />
     })
     .add('Multiple Image', () => {
         return <PostTile post={
@@ -24,8 +25,9 @@ storiesOf('Post Tile', module)
                 "Sally",
                 new Date("12/12/2018"),
                 ""
-            )
-        } />
+            )}
+            onPostClick={() => {}} 
+        />
     })
     .add('No Images', () => {
         return <PostTile post={
@@ -35,7 +37,8 @@ storiesOf('Post Tile', module)
                 "Sally",
                 new Date("12/12/2018"),
                 ""
-            )
-        } />
+            )}
+            onPostClick={() => {}} 
+        />
     })
 

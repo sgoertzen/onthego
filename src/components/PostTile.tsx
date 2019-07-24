@@ -5,10 +5,11 @@ import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, 
 import { formatDistance } from 'date-fns';
 import defaultImage from '../images/default.png'
 import { MediaHelper } from '../util/MediaHelper';
-
+import { IPostClickCallback } from '../classes/IPostClickCallback'
 
 interface postTileProps {
-    post: IPost
+    post: IPost   
+    onPostClick: IPostClickCallback
 }
 
 class PostTile extends React.Component {
@@ -18,10 +19,12 @@ class PostTile extends React.Component {
     constructor(props: postTileProps) {
         super(props);
         this.props = props;
+        this.onClick = this.onClick.bind(this)
+        console.log(this.props.post)
     }
 
-    onClick(event: any): void {
-        console.log("Post tile clicked")
+    onClick(): void {
+        this.props.onPostClick(this.props.post.id)
     }
 
     getPostImageURL(post: IPost): string {

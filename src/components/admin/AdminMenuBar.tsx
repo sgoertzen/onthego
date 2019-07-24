@@ -1,10 +1,8 @@
 import React from 'react';
 import Tabs from '@material-ui/core/Tabs';
 import { Tab, AppBar } from '@material-ui/core';
+import { IHistoryProps } from '../../classes/IHistoryProps';
 
-export interface IHistoryProps {
-    push(location: string): void
-}
 interface IAdminMenuProps {
     history: IHistoryProps
 }

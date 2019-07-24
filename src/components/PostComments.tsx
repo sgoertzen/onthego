@@ -17,7 +17,7 @@ class PostComments extends React.Component {
         return (
             <div className="statsPanel">
                 <Typography>
-                    Comments comming soon.
+                    Comments coming soon.
                 </Typography>
             </div>
         );

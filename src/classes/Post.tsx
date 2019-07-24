@@ -1,4 +1,5 @@
 export interface IPost {
+    id: string
     title: string
     media: IMedia[]
     commentCount: number
@@ -29,6 +30,7 @@ export class Post implements IPost {
         this.posted = posted
         this.details = details
     }
+    id = ""
     title = ""
     media = [new Media("", "")]
     commentCount = 0

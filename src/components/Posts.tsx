@@ -3,10 +3,12 @@ import './Posts.css';
 import { IPost } from '../classes/Post';
 import PostTile from './PostTile';
 import { Grid, Container } from '@material-ui/core';
+import { IPostClickCallback } from '../classes/IPostClickCallback'
 
 
 interface postProps {
     posts: IPost[]
+    onPostClick: IPostClickCallback
 }
 
 class Posts extends React.Component {
@@ -25,7 +27,7 @@ class Posts extends React.Component {
         const tiles = this.props.posts.map(post => {
             return (
                 <Grid item key={post.title} xs={12} sm={6} md={4}>
-                    <PostTile post={post} />
+                    <PostTile post={post} onPostClick={this.props.onPostClick}/>
                 </Grid>
             );
         });
