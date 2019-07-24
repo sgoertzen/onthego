@@ -10,8 +10,8 @@
     "testonly": "cross-env CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "format": "tsfmt -r",
-    "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public",
+    "storybook": "start-storybook -p 9009 -s testdata",
+    "build-storybook": "build-storybook -s testdata",
     "deploy-storybook": "storybook-to-ghpages"
   },
   "eslintConfig": {
@@ -39,6 +39,7 @@
     "@types/node": "12.0.10",
     "@types/react": "16.8.22",
     "@types/react-dom": "16.8.4",
+    "@types/react-image-gallery": "^0.8.4",
     "@types/react-material-ui-form-validator": "^2.0.2",
     "@types/react-router-dom": "^4.3.4",
     "@types/storybook__react": "^4.0.2",
@@ -46,8 +47,11 @@
     "firebase": "^6.3.1",
     "google-map-react": "^1.1.4",
     "react": "^16.8.6",
+    "react-circular-progressbar": "^2.0.1",
     "react-dom": "^16.8.6",
+    "react-image-gallery": "^0.8.18",
     "react-material-ui-form-validator": "^2.0.9",
+    "react-player": "^1.11.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1"
   },

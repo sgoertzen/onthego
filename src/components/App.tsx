@@ -13,6 +13,7 @@ import Title from './Title'
 import Footer from './Footer';
 import NotFound from './NotFound';
 import AdminMenuBar from './admin/AdminMenuBar';
+import PostPage from './PostPage';
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -60,6 +61,7 @@ class App extends React.Component {
                         <Route exact path="/admin" component={LocationList} />
                         <Route path="/admin/postentry/:locationid" component={PostEntry} />
                         <Route path="/admin/locationentry" component={LocationEntry} />
+                        <Route path="post/:postid" component={PostPage} />
                         <Route component={NotFound} />
                     </Switch>
                     <Footer username={this.state.username} />
