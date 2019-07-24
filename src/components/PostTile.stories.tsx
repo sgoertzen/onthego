@@ -13,8 +13,8 @@ storiesOf('Post Tile', module)
                 "Sally",
                 new Date("06/06/2019"),
                 ""
-            )} 
-            onPostClick={() => {}}
+            )}
+            onPostClick={() => { }}
         />
     })
     .add('Multiple Image', () => {
@@ -26,7 +26,7 @@ storiesOf('Post Tile', module)
                 new Date("12/12/2018"),
                 ""
             )}
-            onPostClick={() => {}} 
+            onPostClick={() => { }}
         />
     })
     .add('No Images', () => {
@@ -38,7 +38,7 @@ storiesOf('Post Tile', module)
                 new Date("12/12/2018"),
                 ""
             )}
-            onPostClick={() => {}} 
+            onPostClick={() => { }}
         />
     })
 

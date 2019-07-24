@@ -8,7 +8,7 @@ import { MediaHelper } from '../util/MediaHelper';
 import { IPostClickCallback } from '../classes/IPostClickCallback'
 
 interface postTileProps {
-    post: IPost   
+    post: IPost
     onPostClick: IPostClickCallback
 }
 

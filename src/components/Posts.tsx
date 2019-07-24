@@ -27,7 +27,7 @@ class Posts extends React.Component {
         const tiles = this.props.posts.map(post => {
             return (
                 <Grid item key={post.title} xs={12} sm={6} md={4}>
-                    <PostTile post={post} onPostClick={this.props.onPostClick}/>
+                    <PostTile post={post} onPostClick={this.props.onPostClick} />
                 </Grid>
             );
         });

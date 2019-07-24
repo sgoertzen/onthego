@@ -100,7 +100,7 @@ class LocationPage extends React.Component {
         postsRef.where("locationid", "==", locationId).get().then((querySnapshot) => {
             let posts: IPost[] = [];
             querySnapshot.forEach(function(doc) {
-                let post:IPost = doc.data() as IPost
+                let post: IPost = doc.data() as IPost
                 post.id = doc.id
                 posts.push(post)
             });
@@ -120,8 +120,8 @@ class LocationPage extends React.Component {
         });
     }
 
-    postClick(postID:string): void {
-        if (this.props.history){
+    postClick(postID: string): void {
+        if (this.props.history) {
             this.props.history.push("/post/" + postID)
         } else {
             alert("NO HISTORY")
@@ -136,7 +136,7 @@ class LocationPage extends React.Component {
                 <div className="App-header"><MenuBar locs={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} /></div>
                 <div className="App-map"><TravelMap locations={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} /></div>
                 <div className="App-stats"><TripStats daysOnTheRoad={daysOnTheRoad} countriesVisited={1} milesTraveled={2566.63} /></div>
-                <div className="App-posts"><Posts posts={this.state.posts} onPostClick={this.postClick}/></div>
+                <div className="App-posts"><Posts posts={this.state.posts} onPostClick={this.postClick} /></div>
             </div>
         );
     }

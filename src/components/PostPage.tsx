@@ -33,7 +33,7 @@ class PostPage extends React.Component {
         this.state = { post: undefined, loading: true }
         this.fetchPost = this.fetchPost.bind(this)
         this.postLoaded = this.postLoaded.bind(this)
-        
+
         if (this.props.match && this.props.match.params && this.props.match.params.postid) {
             this.fetchPost(this.props.match.params.postid)
         } else {
@@ -41,16 +41,16 @@ class PostPage extends React.Component {
         }
     }
 
-    fetchPost(postID:string): void {
+    fetchPost(postID: string): void {
         console.log("Fetching post for ", postID)
         firebase.firestore().collection("posts").doc(postID).get().then(this.postLoaded)
     }
 
-    postLoaded(docSnapshot: firebase.firestore.DocumentSnapshot):void {
+    postLoaded(docSnapshot: firebase.firestore.DocumentSnapshot): void {
         console.log("post fetched")
         let post = docSnapshot.data() as IPost
         post.id = docSnapshot.id
-        
+
         this.setState({
             post: post,
             loading: false
@@ -73,7 +73,7 @@ class PostPage extends React.Component {
                         url: media.url,
                         thumbnail: media.url,
                         type: MediaHelper.isImage(media.filename) ? MediaType.Image : MediaType.Video
-                        
+
                     }
                 )
             }

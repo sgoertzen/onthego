@@ -25,7 +25,7 @@ class PostHeader extends React.Component {
                     {this.props.title}
                 </Typography>
                 <Typography>
-                    By {this.props.author} on [fix date] 
+                    By {this.props.author} on [fix date]
                     {/* { By {this.props.author} on {format(this.props.date, "MMM d yyyy hh:mm a")} } */}
                 </Typography>
                 <Typography>
