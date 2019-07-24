@@ -30,11 +30,13 @@ class PostPage extends React.Component {
     constructor(props: postDetailsProps) {
         super(props);
         this.props = props;
-        this.state = { post: undefined, loading: true }
         this.fetchPost = this.fetchPost.bind(this)
         this.postLoaded = this.postLoaded.bind(this)
 
-        if (this.props.match && this.props.match.params && this.props.match.params.postid) {
+        let needToLoad = (!this.props.post && this.props.match && this.props.match.params && this.props.match.params.postid) as boolean;
+        this.state = { post: this.props.post, loading: needToLoad }
+
+        if (!this.props.post && this.props.match && this.props.match.params && this.props.match.params.postid) {
             this.fetchPost(this.props.match.params.postid)
         } else {
             console.log("No post id provided")
@@ -59,7 +61,7 @@ class PostPage extends React.Component {
 
     getPostDate(post: IPost): Date {
         if (post.posted) {
-            return post.posted
+            return post.posted.toDate()
         }
         return new Date();
     }
@@ -92,7 +94,7 @@ class PostPage extends React.Component {
         let post = this.state.post
         return (
             <div>
-                <PostHeader title={post.title} author={post.author} date={post.posted} details={post.details} />
+                <PostHeader title={post.title} author={post.author} date={post.posted.toDate()} details={post.details} />
                 <PostMedia items={this.buildMediaItems(post)} />
                 <PostComments />
             </div>

@@ -1,3 +1,5 @@
+import { TimeStamp } from "./TimeStamp";
+
 export interface IPost {
     id: string
     title: string
@@ -5,7 +7,7 @@ export interface IPost {
     commentCount: number
     author: string
     details: string
-    posted: Date
+    posted: TimeStamp
 }
 export interface IMedia {
     filename: string
@@ -22,7 +24,7 @@ export class Media implements IMedia {
 }
 
 export class Post implements IPost {
-    constructor(title: string, media: IMedia[], commentCount: number, author: string, posted: Date, details: string) {
+    constructor(title: string, media: IMedia[], commentCount: number, author: string, posted: TimeStamp, details: string) {
         this.title = title
         this.media = media
         this.commentCount = commentCount
@@ -35,6 +37,6 @@ export class Post implements IPost {
     media = [new Media("", "")]
     commentCount = 0
     author = ""
-    posted = new Date("12/12/2012")
+    posted = new TimeStamp()
     details = ""
 }
