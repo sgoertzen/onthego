@@ -1,4 +1,5 @@
 import { TimeStamp } from "./TimeStamp";
+import { IMedia, Media, MediaType } from "./Media"
 
 export interface IPost {
     id: string
@@ -8,19 +9,6 @@ export interface IPost {
     author: string
     details: string
     posted: TimeStamp
-}
-export interface IMedia {
-    filename: string
-    url: string
-}
-
-export class Media implements IMedia {
-    constructor(filename: string, url: string) {
-        this.filename = filename
-        this.url = url
-    }
-    filename = ""
-    url = ""
 }
 
 export class Post implements IPost {
@@ -34,7 +22,7 @@ export class Post implements IPost {
     }
     id = ""
     title = ""
-    media = [new Media("", "")]
+    media: IMedia[] = [new Media("", "", "", MediaType.Unknown)]
     commentCount = 0
     author = ""
     posted = new TimeStamp()

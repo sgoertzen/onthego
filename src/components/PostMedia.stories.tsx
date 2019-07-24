@@ -1,16 +1,15 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import PostMedia, { MediaType } from './PostMedia';
-//import defaultImage from '../images/default.png'
+import PostMedia from './PostMedia';
 import travelImage from "../../testdata/Travel.jpg";
-import travelThumbnail from "../../testdata/Travel-Thumbnail.jpg"
-//import testVideo from "../../testdata/test.mp4"
+import travelThumbnail from "../../testdata/thumb_Travel.jpg"
+import { MediaType, Media } from '../classes/Media';
 
 storiesOf('Post Media', module)
     .add('Empty', () => <PostMedia items={[]} />)
     .add('Single Image', () => {
         let items = [
-            { url: travelImage, thumbnail: travelThumbnail, type: MediaType.Image }
+            new Media("travel.jpg", travelImage, travelThumbnail, MediaType.Image)
         ]
         return (
             <PostMedia items={items} />
@@ -18,9 +17,9 @@ storiesOf('Post Media', module)
     })
     .add('Multiple Images', () => {
         let items = [
-            { url: travelImage, thumbnail: travelThumbnail, type: MediaType.Image },
-            { url: travelImage, thumbnail: travelThumbnail, type: MediaType.Image },
-            { url: travelImage, thumbnail: travelThumbnail, type: MediaType.Image }
+            new Media("travel.jpg", travelImage, travelThumbnail, MediaType.Image),
+            new Media("travel.jpg", travelImage, travelThumbnail, MediaType.Image),
+            new Media("travel.jpg", travelImage, travelThumbnail, MediaType.Image)
         ]
         return (
             <PostMedia items={items} />
@@ -28,7 +27,7 @@ storiesOf('Post Media', module)
     })
     .add('Single Video', () => {
         let items = [
-            { url: "/SampleVideo_720x480_1mb.mp4", thumbnail: travelThumbnail, type: MediaType.Video }
+            new Media("SampleVideo_720x480_1mb.mp4", "/SampleVideo_720x480_1mb.mp4", travelThumbnail, MediaType.Video)
         ]
         return (
             <PostMedia items={items} />
@@ -36,8 +35,8 @@ storiesOf('Post Media', module)
     })
     .add('Image and Video', () => {
         let items = [
-            { url: travelImage, thumbnail: travelThumbnail, type: MediaType.Image },
-            { url: "/SampleVideo_720x480_1mb.mp4", thumbnail: travelThumbnail, type: MediaType.Video }
+            new Media("travel.jpg", travelImage, travelThumbnail, MediaType.Image),
+            new Media("SampleVideo_720x480_1mb.mp4", "/SampleVideo_720x480_1mb.mp4", travelThumbnail, MediaType.Video)
         ]
         return (
             <PostMedia items={items} />

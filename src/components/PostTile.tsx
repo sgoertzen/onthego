@@ -31,7 +31,7 @@ class PostTile extends React.Component {
         if (post.media) {
             for (let media of post.media) {
                 if (MediaHelper.isImage(media.filename)) {
-                    return media.url;
+                    return media.thumbnail;
                 }
             }
         }
