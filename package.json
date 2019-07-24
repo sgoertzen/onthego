@@ -12,7 +12,8 @@
     "format": "tsfmt -r",
     "storybook": "start-storybook -p 9009 -s testdata",
     "build-storybook": "build-storybook -s testdata",
-    "deploy-storybook": "storybook-to-ghpages"
+    "deploy-storybook": "storybook-to-ghpages",
+    "deploy-functions": "firebase deploy --only functions"
   },
   "eslintConfig": {
     "extends": "react-app"
