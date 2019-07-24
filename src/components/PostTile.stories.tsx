@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import PostTile from './PostTile';
 import { Post, Media } from '../classes/Post';
 import travelImage from "../../testdata/Travel.jpg";
+import { TimeStamp } from '../classes/TimeStamp';
 
 storiesOf('Post Tile', module)
     .add('Single Image', () => {
@@ -11,7 +12,7 @@ storiesOf('Post Tile', module)
                 [new Media("travel.png", travelImage)],
                 0,
                 "Sally",
-                new Date("06/06/2019"),
+                new TimeStamp(new Date("06/06/2019").getTime()),
                 ""
             )}
             onPostClick={() => { }}
@@ -23,7 +24,7 @@ storiesOf('Post Tile', module)
                 [new Media("travel.png", travelImage), new Media("travel.png", travelImage), new Media("travel.png", travelImage)],
                 0,
                 "Sally",
-                new Date("12/12/2018"),
+                new TimeStamp(new Date("12/12/2018").getTime()),
                 ""
             )}
             onPostClick={() => { }}
@@ -35,7 +36,7 @@ storiesOf('Post Tile', module)
                 [],
                 0,
                 "Sally",
-                new Date("12/12/2018"),
+                new TimeStamp(new Date("12/12/2018").getTime()),
                 ""
             )}
             onPostClick={() => { }}

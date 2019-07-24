@@ -1,5 +1,5 @@
 import React from 'react';
-//import { format } from 'date-fns';
+import { format } from 'date-fns';
 import { Typography } from '@material-ui/core';
 
 interface postHeaderProps {
@@ -25,8 +25,7 @@ class PostHeader extends React.Component {
                     {this.props.title}
                 </Typography>
                 <Typography>
-                    By {this.props.author} on [fix date]
-                    {/* { By {this.props.author} on {format(this.props.date, "MMM d yyyy hh:mm a")} } */}
+                    By {this.props.author} on {format(this.props.date, "MMM d yyyy hh:mm a")}
                 </Typography>
                 <Typography>
                     {this.props.details}

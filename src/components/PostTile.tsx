@@ -39,7 +39,7 @@ class PostTile extends React.Component {
     }
     getPostDate(post: IPost): Date {
         if (post.posted) {
-            return post.posted
+            return post.posted.toDate()
         }
         return new Date();
     }
@@ -61,6 +61,7 @@ class PostTile extends React.Component {
                             {post.title}
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">
+                            {console.log(post.posted)}
                             By {post.author} {formatDistance(this.getPostDate(post), new Date())} ago
                 </Typography>
                     </CardContent>

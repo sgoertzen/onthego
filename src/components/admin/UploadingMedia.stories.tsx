@@ -5,13 +5,6 @@ import UploadingMedia from './UploadingMedia';
 import travel from '../../images/default.png'
 
 storiesOf('Admin/Uploading Media', module)
-    .add('10% Upload', () => {
-        return (
-            <UploadingMedia
-                filename="something.png"
-                percentUploaded={10} />
-        )
-    })
     .add('75% Upload', () => {
         return (
             <UploadingMedia
