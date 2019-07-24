@@ -40,7 +40,7 @@ class Footer extends React.Component {
         }
         return (
             <Box display="flex" justifyContent="center" width="100%">
-                <Typography>&copy; 2019 Shawn Goertzen</Typography>
+                <Typography>&copy;2019 Goertzen Family</Typography>
                 <Typography> &nbsp;-&nbsp; </Typography>
                 {link}
             </Box>

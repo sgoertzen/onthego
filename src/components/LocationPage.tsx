@@ -25,11 +25,8 @@ interface ILocationPageState {
     posts: Post[]
     selectedLocationName?: string
     selectedLocation?: ITravelLocation
+    countriesVisited: number
 }
-// const initialState = {
-//   locs : TravelLocation[] = [];
-// };
-// type State = Readonly<typeof initialState>;
 
 class LocationPage extends React.Component {
 
@@ -49,7 +46,7 @@ class LocationPage extends React.Component {
         if (this.props.match && this.props.match.params) {
             locName = this.props.match.params.locationName;
         }
-        this.state = { locs: emptyLocations, posts: emptyPosts, selectedLocationName: locName }
+        this.state = { locs: emptyLocations, posts: emptyPosts, selectedLocationName: locName, countriesVisited: 0 }
         this.loadLocations()
     }
 
@@ -92,6 +89,9 @@ class LocationPage extends React.Component {
         if (this.state.selectedLocation) {
             this.loadPosts(this.state.selectedLocation.id)
         }
+        this.setState({
+            countriesVisited: this.computeCountriesVisited(locations)
+        })
     }
 
     loadPosts(locationId: string): void {
@@ -128,14 +128,26 @@ class LocationPage extends React.Component {
         }
     }
 
+    computeCountriesVisited(locs:ITravelLocation[]):number {
+        let today = new Date()
+        let visited = 0;
+        for (let loc of locs) {
+            if (today > loc.arrive.toDate()) {
+                visited++;
+            }
+        }
+        return visited;
+    }
+
     render() {
         let daysOnTheRoad = differenceInDays(new Date(), new Date(2019, 6, 27))
+        let milesTraveled = daysOnTheRoad > 0 ? 2566.63 : 0
 
         return (
             <div className="App">
                 <div className="App-header"><MenuBar locs={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} /></div>
                 <div className="App-map"><TravelMap locations={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} /></div>
-                <div className="App-stats"><TripStats daysOnTheRoad={daysOnTheRoad} countriesVisited={1} milesTraveled={2566.63} /></div>
+                <div className="App-stats"><TripStats daysOnTheRoad={daysOnTheRoad} countriesVisited={this.state.countriesVisited} milesTraveled={milesTraveled} /></div>
                 <div className="App-posts"><Posts posts={this.state.posts} onPostClick={this.postClick} /></div>
             </div>
         );

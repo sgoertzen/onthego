@@ -7,6 +7,8 @@ Todo:
 (3-medium) Total miles traveled (do using cloud functions)
 (3-medium) Ability to comment
 (3-medium) Pick photos from google photots (https://developers.google.com/picker/docs/) and (https://developers.google.com/photos/library/guides/access-media-items)
+(4-low) Edit locations
+(4-low) Delete locations
 (4-low) Filter by family member
 (4-low) Auto merge PRs (https://alexwlchan.net/2019/03/creating-a-github-action-to-auto-merge-pull-requests/)
 (4-low) Update state to be readonly in TypeScript (https://levelup.gitconnected.com/ultimate-react-component-patterns-with-typescript-2-8-82990c516935)
@@ -33,3 +35,4 @@ Done:
 [done] Ability to add Post
 [done] Ability to shrink/hide/fullscreen map
 [done] Family contribution
+[done] (2-high) Make stats good enough for now
