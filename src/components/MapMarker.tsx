@@ -13,7 +13,7 @@ interface markerProps {
 
 const MapMarker: React.FC<markerProps> = (markerProps) => {
     return (
-        <Paper>
+        <Paper className="MapMarker">
             <Typography variant="h5" component="h3">
                 {markerProps.text}
             </Typography>

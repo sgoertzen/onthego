@@ -1,5 +1,5 @@
 import React from 'react';
-import './Posts.css';
+import './PostTiles.css';
 import { IPost } from '../classes/Post';
 import PostTile from './PostTile';
 import { Grid, Container } from '@material-ui/core';
@@ -11,7 +11,7 @@ interface postProps {
     onPostClick: IPostClickCallback
 }
 
-class Posts extends React.Component {
+class PostTiles extends React.Component {
 
     public props: postProps
 
@@ -22,7 +22,7 @@ class Posts extends React.Component {
 
     render() {
         if (this.props.posts.length === 0) {
-            return <div>Nothing shared for this location yet</div>
+            return <div className="no-posts">Nothing shared for this location yet</div>
         }
         const tiles = this.props.posts.map(post => {
             return (
@@ -33,6 +33,7 @@ class Posts extends React.Component {
         });
         return (
             <Container className="cardGrid" maxWidth="lg">
+                <hr/>
                 <Grid container spacing={4}>
                     {tiles}
                 </Grid>
@@ -40,4 +41,4 @@ class Posts extends React.Component {
         )
     }
 }
-export default Posts;
+export default PostTiles;

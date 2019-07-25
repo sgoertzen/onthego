@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Posts from './Posts';
+import PostTiles from './PostTiles';
 import { Post } from '../classes/Post';
 import travelImage from "../../testdata/Travel.jpg";
 import thumbImage from "../../testdata/thumb_Travel.jpg";
@@ -8,7 +8,7 @@ import { TimeStamp } from '../classes/TimeStamp';
 import { Media, MediaType } from '../classes/Media';
 
 
-storiesOf('Posts', module)
+storiesOf('Post Tiles', module)
     .add('Single Post', () => {
         let posts = [
             new Post(
@@ -19,7 +19,7 @@ storiesOf('Posts', module)
                 new TimeStamp(new Date(6 / 6 / 2019).getTime()),
                 ""
             )]
-        return <Posts posts={posts} onPostClick={() => { }} />
+        return <PostTiles posts={posts} onPostClick={() => { }} />
     })
     .add("Multiple Posts", () => {
         // We use dates based off the current day/time, as the labels will remain consistent then 
@@ -38,7 +38,7 @@ storiesOf('Posts', module)
             new Post("Charlie", [new Media("travel.png", travelImage, thumbImage, MediaType.Image)], 3, "bob", oneHourAgo, ""),
             new Post("Delta", [new Media("travel.png", travelImage, thumbImage, MediaType.Image)], 3, "bob", oneHourAgo, "")
         ]
-        return <Posts posts={tiles} onPostClick={() => { }} />
+        return <PostTiles posts={tiles} onPostClick={() => { }} />
 
     })
-    .add('No Posts', () => <Posts posts={[]} onPostClick={() => { }} />)
+    .add('No Posts', () => <PostTiles posts={[]} onPostClick={() => { }} />)
