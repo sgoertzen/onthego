@@ -5,11 +5,12 @@ import * as firebase from "firebase/app";
 import { ITravelLocation, TravelLocation } from '../classes/TravelLocation';
 import MenuBar from './MenuBar';
 import { IPost, Post } from '../classes/Post';
-import Posts from './Posts';
+import PostTiles from './PostTiles';
 import TripStats from './TripStats';
 import { TimeStamp } from '../classes/TimeStamp';
 import { differenceInDays } from 'date-fns';
 import { IHistoryProps } from '../classes/IHistoryProps';
+import LocationDetails from './LocationDetails';
 
 interface ILocationPageProps {
     match?: {
@@ -146,9 +147,10 @@ class LocationPage extends React.Component {
         return (
             <div className="App">
                 <div className="App-header"><MenuBar locs={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} /></div>
+                <div className="App-details"><LocationDetails location={this.state.selectedLocation}/></div>
                 <div className="App-map"><TravelMap locations={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} /></div>
                 <div className="App-stats"><TripStats daysOnTheRoad={daysOnTheRoad} countriesVisited={this.state.countriesVisited} milesTraveled={milesTraveled} /></div>
-                <div className="App-posts"><Posts posts={this.state.posts} onPostClick={this.postClick} /></div>
+                <div className="App-posts"><PostTiles posts={this.state.posts} onPostClick={this.postClick} /></div>
             </div>
         );
     }

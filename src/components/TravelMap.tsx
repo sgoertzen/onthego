@@ -105,7 +105,7 @@ class TravelMap extends React.Component<mapProps> {
         }
         return (
             // Important! Always set the container height explicitly
-            <div style={{ height: '50vh', width: '100%' }}>
+            <div style={{ height: '400px', width: '100%' }}>
                 <GoogleMapReact
                     yesIWantToUseGoogleMapApiInternals
                     onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
