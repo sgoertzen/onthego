@@ -140,7 +140,7 @@ class LocationPage extends React.Component {
     }
 
     render() {
-        let daysOnTheRoad = differenceInDays(new Date(), new Date(2019, 6, 27))
+        let daysOnTheRoad = Math.max(differenceInDays(new Date(), new Date(2019, 6, 27)), 0)
         let milesTraveled = daysOnTheRoad > 0 ? 2566.63 : 0
 
         return (
