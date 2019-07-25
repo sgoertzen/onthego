@@ -1,8 +1,10 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
+import { IHistoryProps } from '../classes/IHistoryProps';
 // import { Link } from 'react-router-dom'
 
 interface titleProps {
+    history?: IHistoryProps
 }
 
 class Title extends React.Component {
@@ -12,15 +14,19 @@ class Title extends React.Component {
     constructor(props: titleProps) {
         super(props);
         this.props = props;
+        this.goHome = this.goHome.bind(this)
+    }
+
+    goHome() {
+        if(this.props.history) {
+            this.props.history.push("/")
+        }
     }
 
     render() {
-        // TODO: Move out of here and into App 
         return (
-            <Typography variant="h3" color="textSecondary">
-                {/* <Link replace={true} to="/"> */}
+            <Typography variant="h3" color="textSecondary" onClick={this.goHome}>
                 Goertzens on the go
-                {/* </Link> */}
             </Typography>
         );
     }

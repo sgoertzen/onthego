@@ -51,7 +51,7 @@ class App extends React.Component {
         return (
             <Router>
                 <div>
-                    <Title />
+                    <Route path="/" component={Title}/>
                     <Switch>
                         <Route path="/admin" component={AdminMenuBar}></Route>
                     </Switch>
