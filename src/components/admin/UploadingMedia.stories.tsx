@@ -2,8 +2,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import UploadingMedia from './UploadingMedia';
-import travelImage from "../../testdata/Travel.jpg";
-import thumbImage from "../../testdata/thumb_Travel.jpg";
+import travelImage from "../../../testdata/Travel.jpg";
+import thumbImage from "../../../testdata/thumb_Travel.jpg";
 import { MediaType } from '../../classes/Media';
 
 storiesOf('Admin/Uploading Media', module)
