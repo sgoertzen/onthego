@@ -1,12 +1,14 @@
 
 Todo:
+When switching to locations push a new location onto history (i.e. /location/cuba etc.)
+Add menuy bar to post page with back to location button (mimic AdminMenu) (FIX CURRENT HACK)
 (2-high) Style site
-(2-high) Make site responsive
 (2-high) Create thumbnails for videos
 (3-medium) Get analytics on site
 (3-medium) Total miles traveled (do using cloud functions)
 (3-medium) Ability to comment
 (3-medium) Pick photos from google photots (https://developers.google.com/picker/docs/) and (https://developers.google.com/photos/library/guides/access-media-items)
+Fix menu bar to work with a lot of location (mobile and desktop)
 (4-low) Show location on post entry screen
 (4-low) Edit locations
 (4-low) Delete locations
@@ -37,3 +39,4 @@ Done:
 [done] Ability to shrink/hide/fullscreen map
 [done] Family contribution
 [done] (2-high) Make stats good enough for now
+[done] (2-high) Make site responsive

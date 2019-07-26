@@ -3,5 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import {MuiThemeProvider} from '@material-ui/core'
+import {theme} from './theme'
+
+ReactDOM.render(<MuiThemeProvider theme={theme}><App /></MuiThemeProvider>, document.getElementById('root'));
 

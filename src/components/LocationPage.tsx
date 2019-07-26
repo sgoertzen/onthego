@@ -24,7 +24,7 @@ interface ILocationPageProps {
 interface ILocationPageState {
     locs: TravelLocation[]
     posts: Post[]
-    selectedLocationName?: string
+    selectedLocationNameEncoded?: string
     selectedLocation?: ITravelLocation
     countriesVisited: number
 }
@@ -37,8 +37,8 @@ class LocationPage extends React.Component {
     constructor(props: ILocationPageProps) {
         super(props);
         this.props = props;
-        var emptyLocations: TravelLocation[] = [];
-        var emptyPosts: Post[] = [];
+        let emptyLocations: TravelLocation[] = [];
+        let emptyPosts: Post[] = [];
         this.locationChanged = this.locationChanged.bind(this);
         this.postClick = this.postClick.bind(this);
         this.loadLocations = this.loadLocations.bind(this);
@@ -47,7 +47,7 @@ class LocationPage extends React.Component {
         if (this.props.match && this.props.match.params) {
             locName = this.props.match.params.locationName;
         }
-        this.state = { locs: emptyLocations, posts: emptyPosts, selectedLocationName: locName, countriesVisited: 0 }
+        this.state = { locs: emptyLocations, posts: emptyPosts, selectedLocationNameEncoded: locName, countriesVisited: 0 }
         this.loadLocations()
     }
 
@@ -65,10 +65,10 @@ class LocationPage extends React.Component {
         this.setState({ locs: locations })
 
         // Try to find the location based on the name passed in
-        if (this.state.selectedLocationName) {
+        if (this.state.selectedLocationNameEncoded) {
             // Loop over locations and find the one matching this name
             locations.forEach(loc => {
-                if (this.state.selectedLocationName && loc.name.toLowerCase() === this.state.selectedLocationName.toLowerCase()) {
+                if (this.state.selectedLocationNameEncoded && this.encode(loc.name) === this.state.selectedLocationNameEncoded) {
                     this.setState({ selectedLocation: loc })
                 }
             });
@@ -115,10 +115,21 @@ class LocationPage extends React.Component {
         let locations = this.state.locs
         locations.forEach(loc => {
             if (loc.id === locationId) {
-                this.setState({ selectedLocation: loc })
-                this.loadPosts(loc.id)
+                if (this.props.history) {
+                    this.props.history.push('/location/' + this.encode(loc.name))
+                    this.setState({ selectedLocation: loc })
+                    this.loadPosts(loc.id)
+                } else {
+                    console.log('No history object found, falling back')
+                    this.setState({ selectedLocation: loc })
+                    this.loadPosts(loc.id)
+                }
             }
         });
+    }
+
+    encode(name:string):string {
+        return name.replace(' ', '-').toLowerCase()
     }
 
     postClick(postID: string): void {

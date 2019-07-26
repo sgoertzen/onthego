@@ -38,11 +38,11 @@ class LocationDetails extends React.Component {
                     {loc.name}
                 </Typography>
                 <Typography component="span" className="details-arrive">
-                    {loc.arrive.toDate() < now?"Arrived":"Arriving"}: 
+                    {loc.arrive.toDate() < now?"Arrived":"Arriving"}:&nbsp;
                     {this.format2(loc.arrive)}
                 </Typography>
                 <Typography component="span" className="details-depart">
-                    {loc.depart.toDate() < now?"Departed":"Departing"}: 
+                    {loc.depart.toDate() < now?"Departed":"Departing"}:&nbsp;
                     {this.format2(loc.depart)}
                 </Typography>
             </div>
