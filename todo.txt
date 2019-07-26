@@ -2,6 +2,8 @@
 Todo:
 When switching to locations push a new location onto history (i.e. /location/cuba etc.)
 Add menuy bar to post page with back to location button (mimic AdminMenu) (FIX CURRENT HACK)
+Move path off of /admin
+Move sign-in to admin onto admin page
 (2-high) Style site
 (2-high) Create thumbnails for videos
 (3-medium) Get analytics on site
