@@ -48,6 +48,9 @@ class PostMedia extends React.Component {
     }
 
     render() {
+        if (this.props.items.length === 0) {
+            return <div/>
+        }
         return (
             <div className="MediaViewer">
                 <ImageGallery items={this.buildItems(this.props.items)} thumbnailPosition="top" showPlayButton={false} />
