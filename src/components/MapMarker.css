@@ -1,12 +1,10 @@
 .MapMarker {
     text-align: center;
-    border: 1px solid #444444;
-    background: white;
-    color: #1c17b5;
-    box-shadow: 6px 6px #444444;
-    padding: 10px;
-    width: 120px;
+    border: 1px solid #888888;
+    padding: 0 10px 0 10px;
+    padding-top: 0;
+    display: inline-block;
+    
     font-size: 1.2em;
-    z-index: 100;
   }
   

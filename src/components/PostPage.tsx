@@ -1,11 +1,12 @@
 import React from 'react';
 import './PostTile.css';
 import { IPost } from '../classes/Post';
+import PostMenu from './PostMenu';
 import PostHeader from './PostHeader';
 import PostMedia from './PostMedia';
-
 import * as firebase from "firebase/app";
 import "firebase/firestore";
+import { IHistoryProps } from '../classes/IHistoryProps';
 
 interface postDetailsProps {
     post?: IPost
@@ -14,6 +15,7 @@ interface postDetailsProps {
             postid?: string
         }
     }
+    history?: IHistoryProps
 }
 interface postDeatilsState {
     post?: IPost
@@ -72,6 +74,7 @@ class PostPage extends React.Component {
         let post = this.state.post
         return (
             <div>
+                <PostMenu history={this.props.history}/>
                 <PostHeader title={post.title} author={post.author} date={post.posted.toDate()} details={post.details} />
                 <PostMedia items={post.media} />
                 {/* <PostComments /> */}

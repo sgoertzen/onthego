@@ -1,5 +1,5 @@
 import React from 'react';
-//import './MapMarker.css';
+import './MapMarker.css';
 import { ILocChangeCallback } from '../classes/ILocChangeCallback';
 import { Paper } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
@@ -14,7 +14,7 @@ interface markerProps {
 const MapMarker: React.FC<markerProps> = (markerProps) => {
     return (
         <Paper className="MapMarker">
-            <Typography variant="h5" component="h3">
+            <Typography variant="h6" component="h5">
                 {markerProps.text}
             </Typography>
         </Paper>
