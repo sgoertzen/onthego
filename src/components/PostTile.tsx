@@ -20,7 +20,6 @@ class PostTile extends React.Component {
         super(props);
         this.props = props;
         this.onClick = this.onClick.bind(this)
-        console.log(this.props.post)
     }
 
     onClick(): void {
@@ -61,7 +60,6 @@ class PostTile extends React.Component {
                             {post.title}
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">
-                            {console.log(post.posted)}
                             By {post.author} {formatDistance(this.getPostDate(post), new Date())} ago
                 </Typography>
                     </CardContent>

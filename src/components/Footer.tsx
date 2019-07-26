@@ -2,6 +2,7 @@ import React from 'react';
 import { Typography, Box, Link } from '@material-ui/core';
 import * as firebase from "firebase/app";
 import "firebase/auth";
+import './Footer.css'
 
 interface footerProps {
     username?: string
@@ -34,14 +35,14 @@ class Footer extends React.Component {
         let username = this.props.username
         if (username) {
             link =
-                <Typography>Logged in as {username} &nbsp;-&nbsp; <Link onClick={this.logout}>Logout</Link></Typography>
+                <Typography className="footer-user">Logged in as {username} &nbsp;-&nbsp; <Link onClick={this.logout}>Logout</Link></Typography>
         } else {
-            link = <Typography><Link onClick={this.adminLogin}>Admin Login</Link></Typography>
+            link = <Typography className="footer-user"><Link onClick={this.adminLogin}>Admin Login</Link></Typography>
         }
         return (
-            <Box display="flex" justifyContent="center" width="100%">
-                <Typography>&copy;2019 Goertzen Family</Typography>
-                <Typography> &nbsp;-&nbsp; </Typography>
+            <Box className="footer" justifyContent="center" width="100%">
+                <Typography className="footer-copy">&copy;2019 Goertzen Family</Typography>
+                <Typography className="footer-spacer"> &nbsp;-&nbsp; </Typography>
                 {link}
             </Box>
         );
