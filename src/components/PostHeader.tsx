@@ -1,6 +1,7 @@
 import React from 'react';
 import { format } from 'date-fns';
 import { Typography } from '@material-ui/core';
+import './PostHeader.css'
 
 interface postHeaderProps {
     title: string
@@ -20,14 +21,14 @@ class PostHeader extends React.Component {
 
     render() {
         return (
-            <div className="statsPanel">
+            <div className="post-header">
                 <Typography variant="h5" component="h5">
                     {this.props.title}
                 </Typography>
                 <Typography>
                     By {this.props.author} on {format(this.props.date, "MMM d yyyy hh:mm a")}
                 </Typography>
-                <Typography>
+                <Typography className="post-header-details">
                     {this.props.details}
                 </Typography>
             </div>

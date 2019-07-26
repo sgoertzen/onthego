@@ -63,7 +63,6 @@ class PostPage extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         if (this.state.loading) {
             return <div>Loading</div>
         }

@@ -9,7 +9,7 @@ import LocationPage from './LocationPage';
 import LocationList from './admin/LocationList';
 import PostEntry from './admin/PostEntry'
 import LocationEntry from './admin/LocationEntry'
-import Title from './Title'
+import Header from './Header'
 import Footer from './Footer';
 import NotFound from './NotFound';
 import AdminMenuBar from './admin/AdminMenuBar';
@@ -51,7 +51,7 @@ class App extends React.Component {
         return (
             <Router>
                 <div>
-                    <Route path="/" component={Title}/>
+                    <Route path="/" component={Header}/>
                     <Switch>
                         <Route path="/admin" component={AdminMenuBar}></Route>
                     </Switch>
