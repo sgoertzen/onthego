@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-
+import genThumbnail from 'simple-thumbnail'
 import { basename, join, dirname } from 'path'
 import * as sharp from 'sharp';
 import * as Storage from '@google-cloud/storage';
@@ -40,10 +40,39 @@ exports.generateVideoThumbnail = functions.storage.object().onFinalize(async (ob
     }
 
     // TODO: Implement the package from https://www.npmjs.com/package/video-thumbnail-generator
-    // const metadata = {
-    //     contentType: "image/png",
-    // };
-    // const bucket = gcs.bucket(object.bucket)
+    const metadata = {
+        contentType: "image/png",
+    };
+
+    // We add a 'thumb_' prefix to thumbnails file name. That's where we'll upload the thumbnail.
+    const thumbFileName = `${THUMB_PREFIX}${fileName}`;
+    const thumbFilePath = join(dirname(filePath), thumbFileName);
+
+    // Create write stream for uploading thumbnail
+    const bucket = gcs.bucket(object.bucket)
+    const thumbnailUploadStream = bucket.file(thumbFilePath).createWriteStream({metadata});
+
+
+    await bucket.file(filePath).createReadStream()
+        .pipe(genThumbnail(null, null, '250x?'))
+        .pipe(thumbnailUploadStream)
+
+    // genThumbnail('path/to/image.png', 'output/file/path.png', '250x?')
+    //     .then(() => console.log('done!'))
+    //     .catch(err => console.error(err))
+    
+    // // async/await
+    // async function run () {
+    // try {
+    //     await genThumbnail('http://www.example.com/foo.webm', 'output/file/path.png', '250x?')
+    //     console.log('Done!')
+    // } catch (err) {
+    //     console.error(err)
+    // }
+    // }
+    
+    // run()
+
     return false;
 })
 
