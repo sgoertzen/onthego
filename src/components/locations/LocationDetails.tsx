@@ -34,7 +34,7 @@ class LocationDetails extends React.Component {
                 <Typography variant="body1" className="details-intro">
                     {inLocation ? "Currently In:" : " "}
                 </Typography>
-                <Typography variant="h2" className="details-location">
+                <Typography variant="h4" className="details-location">
                     {loc.name}
                 </Typography>
                 <Typography component="span" className="details-arrive">

@@ -5,6 +5,7 @@ import MapMarker from './MapMarker'
 import { ITravelLocation } from '../../classes/TravelLocation';
 import { ILocChangeCallback } from '../../classes/ILocChangeCallback';
 import { GeoPoint, IGeoPoint } from '../../classes/GeoPoint';
+import './TravelMap.css'
 
 interface mapProps {
     locations: ITravelLocation[]
@@ -105,7 +106,7 @@ class TravelMap extends React.Component<mapProps> {
         }
         return (
             // Important! Always set the container height explicitly
-            <div style={{ height: '400px', width: '100%' }}>
+            <div className="TravelMap">
                 <GoogleMapReact
                     yesIWantToUseGoogleMapApiInternals
                     onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}

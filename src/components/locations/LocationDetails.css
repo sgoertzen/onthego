@@ -1,9 +1,8 @@
 .detailsPanel {
     text-align: center;
-    min-width: 275px;
+    min-width: 250px;
     width: 100%;
     display: grid;
-    padding: 1em;
     grid-gap: 10px;
     vertical-align: middle;
 }

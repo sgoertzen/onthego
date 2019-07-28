@@ -3,7 +3,7 @@
     min-width: 275px;
     width: 100%;
     display: grid;
-    padding: 1em;
+    /* padding: 1em; */
     grid-gap: 10px;
     vertical-align: middle;
 }

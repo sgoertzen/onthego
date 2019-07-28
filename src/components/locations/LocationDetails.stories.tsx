@@ -10,7 +10,7 @@ storiesOf('locations/Location Details', module)
     .add('In location', () => {
         let arrive = new TimeStamp(new Date("12/25/1990").getTime())
         let depart = new TimeStamp(new Date("12/25/2290").getTime())
-        let loc = new TravelLocation("1", "Sapathastan", new GeoPoint(45, -93), arrive, depart)
+        let loc = new TravelLocation("1", "San Francisco", new GeoPoint(45, -93), arrive, depart)
         return <LocationDetails location={loc} />
     })
     .add('Past location', () => {
