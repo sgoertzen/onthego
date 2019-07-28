@@ -6,7 +6,7 @@ import travelImage from "../../../testdata/Travel.jpg";
 import thumbImage from "../../../testdata/thumb_Travel.jpg";
 import { MediaType } from '../../classes/Media';
 
-storiesOf('Admin/Uploading Media', module)
+storiesOf('admin/Uploading Media', module)
     .add('75% Upload', () => {
         return (
             <UploadingMedia
