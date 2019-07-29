@@ -6,7 +6,7 @@ import { TravelLocation } from '../../classes/TravelLocation';
 import { GeoPoint } from '../../classes/GeoPoint';
 import { TimeStamp } from '../../classes/TimeStamp';
 
-storiesOf('Admin/Location List', module)
+storiesOf('admin/Location List', module)
     .add('No entries', () => {
         return <LocationList locs={[]} history={{ push: () => { } }} />
     })

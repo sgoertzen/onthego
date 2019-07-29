@@ -8,7 +8,7 @@ import "firebase/firestore";
 
 firebase.initializeApp(firebaseConfig);
 
-storiesOf('Admin/Location Entry', module)
+storiesOf('admin/Location Entry', module)
     .add('Basic Form', () => {
         return <LocationEntry />
     })

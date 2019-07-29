@@ -1,0 +1,21 @@
+.statsPanel {
+    text-align: center;
+    min-width: 275px;
+    width: 100%;
+    display: grid;
+    /* padding: 1em; */
+    grid-gap: 10px;
+    vertical-align: middle;
+}
+.titleRow {
+  grid-column: 1 / 3;
+  grid-row: 1;
+  padding-bottom: 1em;
+}
+.statsLabel {
+    text-align: right;
+}
+.statsContent {
+    text-align: left;
+    font-size: 14pt;
+}

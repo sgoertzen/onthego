@@ -3,7 +3,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import AdminFooter from './AdminFooter';
 
-storiesOf('Admin/Footer', module)
+storiesOf('admin/Footer', module)
     .add('Logged Out', () => {
         return <AdminFooter />
     })
