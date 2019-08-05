@@ -3,7 +3,7 @@ import { ITravelLocation } from '../../classes/TravelLocation';
 import { ILocChangeCallback } from '../../classes/ILocChangeCallback';
 import Tabs from '@material-ui/core/Tabs';
 import { Tab, AppBar, Select, MenuItem } from '@material-ui/core';
-import './MenuBar.css'
+import './LocationSelector.css'
 
 interface buttonProps {
     locs: ITravelLocation[]
@@ -11,7 +11,7 @@ interface buttonProps {
     onLocChange: ILocChangeCallback
 }
 
-class MenuBar extends React.Component {
+class LocationSelector extends React.Component {
 
     public props: buttonProps
 
@@ -77,4 +77,4 @@ class MenuBar extends React.Component {
         );
     }
 }
-export default MenuBar;
+export default LocationSelector;
