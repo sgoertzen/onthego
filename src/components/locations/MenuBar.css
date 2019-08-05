@@ -1,0 +1,19 @@
+@media only screen and (max-width: 800px) {
+    .LocationSelectorDropdown {
+        display: block;
+        
+    }
+    .LocationSelectorTabs {
+        display: none;
+    }
+  }
+  
+  @media only screen and (min-width: 801px) {
+    .LocationSelectorDropdown {
+        display: none;
+    }
+    .LocationSelectorTabs {
+        display: block;
+    }
+  }
+  
