@@ -3,6 +3,8 @@ import * as functions from 'firebase-functions';
 import { basename, join, dirname } from 'path'
 import * as sharp from 'sharp';
 import * as Storage from '@google-cloud/storage';
+// npm i video-thumbnail-generator
+import ThumbnailGenerator from 'video-thumbnail-generator';
 const gcs = new Storage.Storage();
 
 const THUMB_MAX_WIDTH = 200;
@@ -44,6 +46,16 @@ exports.generateVideoThumbnail = functions.storage.object().onFinalize(async (ob
     //     contentType: "image/png",
     // };
     // const bucket = gcs.bucket(object.bucket)
+    const tg = new ThumbnailGenerator({
+        sourcePath: '/tmp/test.mp4',
+        thumbnailPath: '/tmp/',
+        tmpDir: '/some/writeable/directory' //only required if you can't write to /tmp/ and you need to generate gifs
+    });
+
+    tg.generate({
+        size: '200x200'
+    })
+        .then(console.log);
     return false;
 })
 
