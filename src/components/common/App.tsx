@@ -60,8 +60,8 @@ class App extends React.Component {
                         <Route exact path="/location/:locationName" component={LocationPage} />
                         <Route exact path="/post/:postid" component={PostPage} />
                         <Route exact path="/notadmin" component={LocationList} />
-                        <Route path="/notadmin/postentry/:locationid" component={PostEntry} />
-                        <Route path="/notadmin/locationentry" component={LocationEntry} />
+                        <Route exact path="/notadmin/postentry/:locationid" component={PostEntry} />
+                        <Route exact path="/notadmin/locationentry" component={LocationEntry} />
                         <Redirect to="/" />
                     </Switch>
                     <Switch>
