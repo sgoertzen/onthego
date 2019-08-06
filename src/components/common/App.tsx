@@ -41,7 +41,7 @@ class App extends React.Component {
     listenForUser(user: firebase.User | null) {
         if (user) {
             this.setState({ username: user.displayName })
-        } else {
+        } else if (this.state.username !== undefined) {
             this.setState({ username: null })
         }
 
