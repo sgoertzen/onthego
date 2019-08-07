@@ -7,7 +7,6 @@ import LocationSelector from './LocationSelector';
 import { IPost, Post } from '../../classes/Post';
 import PostTiles from './PostTiles';
 import TripStats from './TripStats';
-import { TimeStamp } from '../../classes/TimeStamp';
 import { differenceInDays } from 'date-fns';
 import { IHistoryProps } from '../../classes/IHistoryProps';
 import LocationDetails from './LocationDetails';
@@ -76,9 +75,9 @@ class LocationPage extends React.Component {
         // Find the location where arrival/departure is around current date
         if (!this.state.selectedLocation) {
             // Find the location we are in and use it
-            let now = new TimeStamp()
-            locations.forEach(loc => {
-                if (loc.arrive < now && loc.depart > now) {
+            let now = new Date()
+            locations.forEach(loc => { 
+                if (loc.arrive.toDate() < now && loc.depart.toDate() > now) {
                     this.setState({ selectedLocation: loc })
                 }
             });
@@ -153,7 +152,7 @@ class LocationPage extends React.Component {
 
     render() {
         let daysOnTheRoad = Math.max(differenceInDays(new Date(), new Date(2019, 6, 27)), 0)
-        let milesTraveled = daysOnTheRoad > 0 ? 2566.63 : 0
+        let milesTraveled = daysOnTheRoad > 10 ? (4804 + 2566.63) : 2566.63
 
         return (
             <div className="App">

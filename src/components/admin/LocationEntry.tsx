@@ -96,7 +96,7 @@ class LocationEntry extends React.Component {
 
     returnToList() {
         if (this.props.history) {
-            this.props.history.push('/admin/locationslist')
+            this.props.history.push('/notadmin/locationslist')
         } else {
             console.log('Would return to location list.')
         }
