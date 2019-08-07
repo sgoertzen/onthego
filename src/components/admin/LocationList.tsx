@@ -54,12 +54,12 @@ class LocationList extends React.Component {
 
     addPost(loc: ITravelLocation) {
         console.log("Creating post for ", loc.name)
-        this.props.history.push("/admin/postentry/" + loc.id)
+        this.props.history.push("/notadmin/postentry/" + loc.id)
     }
 
     edit(loc: ITravelLocation): void {
         console.log("Would edit: " + loc.name);
-        this.props.history.push("/admin/locationentry/" + loc.id)
+        this.props.history.push("/notadmin/locationentry/" + loc.id)
     }
 
     delete(loc: ITravelLocation): void {
