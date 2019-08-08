@@ -10,6 +10,7 @@
     "testonly": "cross-env CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "format": "tsfmt -r",
+    "lint": "tslint --project tsconfig.json",
     "storybook": "start-storybook -p 9009 -s testdata",
     "build-storybook": "build-storybook -s testdata",
     "deploy-storybook": "storybook-to-ghpages",
