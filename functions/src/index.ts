@@ -1,15 +1,12 @@
 import * as functions from 'firebase-functions'
 
-import { basename, join, dirname } from 'path'
+import { basename, join, dirname, extname } from 'path'
 import * as sharp from 'sharp'
 import * as Storage from '@google-cloud/storage'
 import * as fs from 'fs-extra';
 import * as ffmpeg from 'fluent-ffmpeg'
 import { tmpdir } from 'os'
 const gcs = new Storage.Storage();
-
-const THUMB_MAX_WIDTH = 200;
-const THUMB_MAX_HEIGHT = 200;
 const THUMB_PREFIX = "thumb_";
 
 exports.generateVideoThumbnail = functions.storage.object().onFinalize(async (object) => {
@@ -20,7 +17,7 @@ exports.generateVideoThumbnail = functions.storage.object().onFinalize(async (ob
         return false
     }
     if (!filePath.includes('postvideos')) {
-        console.log('Skipping non post video: ', filePath)
+        console.log('Skipping file as it is not a video: ', filePath)
         return false;
     }
     if (!contentType.startsWith('video/')) {
@@ -35,53 +32,63 @@ exports.generateVideoThumbnail = functions.storage.object().onFinalize(async (ob
         return false;
     }
 
-    const thumbFileName = `${THUMB_PREFIX}${fileName}`
+    const extension = extname(fileName)
+    const filename_without_extension = basename(filePath, extension)
+    const thumbFileName = `${THUMB_PREFIX}${filename_without_extension}.png`
     const workingDir = join(tmpdir(), 'thumbs')
     const tmpFilePath = join(workingDir, fileName)
-    const tmpThumbPath = join(workingDir, thumbFileName)
     const bucketDir = dirname(filePath);
-    console.log('workingDir: ', workingDir)
-    console.log('tmpThumbPath: ', tmpThumbPath)
-    console.log('bucketDir: ', bucketDir)
 
     // 1. Ensure thumbnail dir exists
     await fs.ensureDir(workingDir).catch((error) => {
         console.log('1. Working directory ' + workingDir + ' unavilable', error)
+        return false
     })
-    console.log("1. Completed")
 
     // 2. Download Source File
     const bucket = gcs.bucket(object.bucket)
     await bucket.file(filePath).download({
         destination: tmpFilePath
-    }).catch((reason:any) => {
-        console.log("2. Error saving video file", reason)
+    }).catch((reason: any) => {
+        console.log("Error saving video file", reason)
     })
-    console.log("2. Completed")
+
+    let thumbnailGeneratedName = ""
 
     // 3. Create the screenshot
     ffmpeg(tmpFilePath)
-        .on('error', (err:any) => {
+        .on('filenames', (filenames:string[]) => {
+            console.log('Will generate ' + filenames.join(', '))
+            thumbnailGeneratedName = filenames[0]
+        })
+        .on('error', (err: any) => {
             console.log('Error while creating video screenshot', err.message)
         })
-        .on('end', () => {
-            console.log('Video screenshot created')
+        .on('end', async () => {
+            const tmpThumbPath = join(workingDir, thumbnailGeneratedName)
+            console.log('Video screenshot conversion ended')
+            console.log("expecting thumbnail at: ", tmpThumbPath)
+            fs.exists(tmpThumbPath, (exists: boolean) => {
+                console.log("Thumbnail exists in temp: ", exists)
+            })
+
+            // 4. Write the file back to firestore
+            await bucket.upload(tmpThumbPath, {
+                destination: join(bucketDir, thumbFileName)
+            })
+            console.log("Thumbnail uploaded: ", thumbnailGeneratedName)
+
+            // 5. Cleanup remove the tmp/thumbs from the filesystem
+            return fs.remove(workingDir)
         })
         .takeScreenshots({
-            count: 1,
-            timemarks: ['5'] // number of seconds
-        }, tmpThumbPath)
-        .run()
-    console.log("3. Completed")
+            timemarks: ['0'], // number of seconds
+            folder: workingDir,
+            filename: thumbFileName,
+            size: '200x200'
+        })
 
-    // 4. Write the file back to firestore
-    await bucket.upload(tmpThumbPath, {
-        destination: join(bucketDir, thumbFileName)
-    });
-    console.log("4. Completed")
-
-    // 5. Cleanup remove the tmp/thumbs from the filesystem
-    return fs.remove(workingDir)
+    return true
 })
 
 exports.generateThumbnail = functions.storage.object().onFinalize(async (object) => {
@@ -92,14 +99,11 @@ exports.generateThumbnail = functions.storage.object().onFinalize(async (object)
         console.log('No filepath or content type.')
         return false
     }
-
     if (!filePath.includes('postimages')) {
-        console.log('Skipping non post image: ', filePath)
+        console.log('Skipping file as it is not an image: ', filePath)
         return false;
     }
-
     const fileName = basename(filePath)
-
     if (!contentType.startsWith('image/')) {
         console.log('Not an image: ', contentType)
         return false;
@@ -109,25 +113,26 @@ exports.generateThumbnail = functions.storage.object().onFinalize(async (object)
         return false;
     }
 
-    const metadata = {
-        contentType: contentType,
-    };
+    const metadata = { contentType: contentType };
+    const sizes = [200, 1600];
 
-    // We add a 'thumb_' prefix to thumbnails file name. That's where we'll upload the thumbnail.
-    const thumbFileName = `${THUMB_PREFIX}${fileName}`;
-    const thumbFilePath = join(dirname(filePath), thumbFileName);
-    // Create write stream for uploading thumbnail
-    const bucket = gcs.bucket(object.bucket)
-    const thumbnailUploadStream = bucket.file(thumbFilePath).createWriteStream({ metadata });
+    const uploadPromises = sizes.map(async size => {
+        // We add a 'thumb_' prefix to thumbnails file name.
+        const thumbFileName = `${THUMB_PREFIX}${size}_${fileName}`;
+        const thumbFilePath = join(dirname(filePath), thumbFileName);
+        console.log('Creating thumbnail: ', thumbFileName)
 
-    // Create Sharp pipeline for resizing the image and use pipe to read from bucket read stream
-    const pipeline = sharp();
-    await pipeline.resize(THUMB_MAX_WIDTH, THUMB_MAX_HEIGHT).pipe(thumbnailUploadStream);
+        // Create write stream for uploading thumbnail
+        const bucket = gcs.bucket(object.bucket)
+        const thumbnailUploadStream = bucket.file(thumbFilePath).createWriteStream({ metadata });
 
-    await bucket.file(filePath).createReadStream().pipe(pipeline);
+        // Create Sharp pipeline for resizing the image and use pipe to read from bucket read stream
+        const pipeline = sharp();
+        await pipeline.resize(size, size).pipe(thumbnailUploadStream);
+        await bucket.file(filePath).createReadStream().pipe(pipeline);
+        console.log('Created thumbnail: ', thumbFileName)
+    });
 
-    console.log('Created thumbnail: ', thumbFileName)
-
-    return new Promise((resolve, reject) =>
-        thumbnailUploadStream.on('finish', resolve).on('error', reject));
+    // 4. Run the upload operations
+    return Promise.all(uploadPromises)
 })
