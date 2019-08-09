@@ -76,7 +76,7 @@ class LocationPage extends React.Component {
         if (!this.state.selectedLocation) {
             // Find the location we are in and use it
             let now = new Date()
-            locations.forEach(loc => { 
+            locations.forEach(loc => {
                 if (loc.arrive.toDate() < now && loc.depart.toDate() > now) {
                     this.setState({ selectedLocation: loc })
                 }

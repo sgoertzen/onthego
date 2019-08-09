@@ -89,7 +89,7 @@ class PostEntry extends React.Component {
         let storageRef = firebase.storage().ref();
         var uploadTask = storageRef.child(folder + "/" + file.name).put(file);
         let self = this
-        let uploadingMedia = new Media(file.name, "", "", MediaHelper.getFiletype(file.name))
+        let uploadingMedia = new Media(file.name, "", MediaHelper.getFiletype(file.name))
 
         // Register three observers:
         // 1. 'state_changed' observer, called any time the state changes
@@ -121,7 +121,7 @@ class PostEntry extends React.Component {
                 }
                 if (url) {
                     upload.url = url
-                    upload.thumbnail = url.replace("postimages%2F", "postimages%2Fthumb_")
+                    //upload.thumbnail = url.replace("postimages%2F", "postimages%2Fthumb_")
                     upload.filetype = MediaHelper.getFiletype(filename)
                 }
                 if (percentUploaded) {
@@ -141,7 +141,7 @@ class PostEntry extends React.Component {
             items.push(
                 {
                     url: obj.url,
-                    thumbnail: obj.thumbnail,
+                    //thumbnail: obj.thumbnail,
                     filename: obj.filename,
                     filetype: obj.filetype.toString()
                 }
@@ -189,7 +189,6 @@ class PostEntry extends React.Component {
                 filename={obj.filename}
                 percentUploaded={obj.percentUploaded}
                 url={obj.url}
-                thumbnail={obj.thumbnail}
                 error={obj.error}
                 key={"upload_" + counter++}
                 filetype={obj.filetype}

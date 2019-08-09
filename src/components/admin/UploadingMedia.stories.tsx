@@ -13,8 +13,7 @@ storiesOf('admin/Uploading Media', module)
                 filename="something.png"
                 percentUploaded={75}
                 filetype={MediaType.Image}
-                url=""
-                thumbnail="" />
+                url="" />
         )
     })
     .add('Completed No URL', () => {
@@ -23,8 +22,7 @@ storiesOf('admin/Uploading Media', module)
                 filename="something.png"
                 percentUploaded={100}
                 filetype={MediaType.Image}
-                url=""
-                thumbnail="" />
+                url="" />
         )
     })
     .add('Completed with URL', () => {
@@ -33,8 +31,7 @@ storiesOf('admin/Uploading Media', module)
                 filename="something.png"
                 percentUploaded={100}
                 filetype={MediaType.Image}
-                url={travelImage}
-                thumbnail={thumbImage} />
+                url={travelImage} />
         )
     })
     .add('Completed Video', () => {
@@ -43,7 +40,6 @@ storiesOf('admin/Uploading Media', module)
                 filename="something.avi"
                 percentUploaded={100}
                 filetype={MediaType.Image}
-                url={travelImage}
-                thumbnail={thumbImage} />
+                url={travelImage} />
         )
     })
