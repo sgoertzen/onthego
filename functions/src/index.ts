@@ -6,6 +6,7 @@ import * as Storage from '@google-cloud/storage'
 import * as fs from 'fs-extra';
 import * as ffmpeg from 'fluent-ffmpeg'
 import { tmpdir } from 'os'
+
 const gcs = new Storage.Storage();
 const THUMB_PREFIX = "thumb_";
 
