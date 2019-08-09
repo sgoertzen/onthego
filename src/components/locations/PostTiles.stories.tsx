@@ -3,7 +3,6 @@ import { storiesOf } from '@storybook/react';
 import PostTiles from './PostTiles';
 import { Post } from '../../classes/Post';
 import travelImage from "../../../testdata/Travel.jpg";
-import thumbImage from "../../../testdata/thumb_Travel.jpg";
 import { TimeStamp } from '../../classes/TimeStamp';
 import { Media, MediaType } from '../../classes/Media';
 
@@ -13,7 +12,7 @@ storiesOf('locations/Post Tiles', module)
         let posts = [
             new Post(
                 "Sample title",
-                [new Media("travel.png", travelImage, thumbImage, MediaType.Image)],
+                [new Media("travel.png", travelImage, MediaType.Image)],
                 0,
                 "bob",
                 new TimeStamp(new Date(6 / 6 / 2019).getTime()),
@@ -33,10 +32,10 @@ storiesOf('locations/Post Tiles', module)
         let oneHourAgo = new TimeStamp(oneHourAgoDate.getTime())
 
         let tiles = [
-            new Post("Alpha", [new Media("travel.png", travelImage, thumbImage, MediaType.Image)], 3, "bob", oneMonthAgo, ""),
-            new Post("Beta", [new Media("travel.png", travelImage, thumbImage, MediaType.Image)], 3, "bob", oneMonthAgo, ""),
-            new Post("Charlie", [new Media("travel.png", travelImage, thumbImage, MediaType.Image)], 3, "bob", oneHourAgo, ""),
-            new Post("Delta", [new Media("travel.png", travelImage, thumbImage, MediaType.Image)], 3, "bob", oneHourAgo, "")
+            new Post("Alpha", [new Media("travel.png", travelImage, MediaType.Image)], 3, "bob", oneMonthAgo, ""),
+            new Post("Beta", [new Media("travel.png", travelImage, MediaType.Image)], 3, "bob", oneMonthAgo, ""),
+            new Post("Charlie", [new Media("travel.png", travelImage, MediaType.Image)], 3, "bob", oneHourAgo, ""),
+            new Post("Delta", [new Media("travel.png", travelImage, MediaType.Image)], 3, "bob", oneHourAgo, "")
         ]
         return <PostTiles posts={tiles} onPostClick={() => { }} />
 

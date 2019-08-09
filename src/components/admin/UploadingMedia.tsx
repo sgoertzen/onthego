@@ -5,9 +5,6 @@ import 'react-circular-progressbar/dist/styles.css';
 import { MediaHelper } from '../../util/MediaHelper';
 import { IMedia } from '../../classes/Media';
 
-
-
-
 class UploadingMedia extends React.Component {
 
     public props: IMedia

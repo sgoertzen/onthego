@@ -5,28 +5,39 @@ export enum MediaType {
     Unknown = "unknown"
 }
 
+export enum ImageSize {
+    Size_200 = "200",
+    Size_1600 = "1600"
+}
+
 export interface IMedia {
     filename: string
     url: string
-    thumbnail: string
     filetype: MediaType
     percentUploaded: number
     error?: string
 }
 
 export class Media implements IMedia {
-    constructor(filename: string, url: string, thumbnail: string, filetype: MediaType) {
+    constructor(filename: string, url: string, filetype: MediaType) {
         this.filename = filename
         this.url = url
-        this.thumbnail = thumbnail
         this.filetype = filetype
         this.percentUploaded = 0
         this.error = ""
     }
     filename = ""
     url = ""
-    thumbnail = ""
     filetype = MediaType.Unknown
     percentUploaded = 0
     error = ""
+
+    static imageThumbnail(media: IMedia, size: ImageSize): string {
+        const THUMB_PREFIX = "thumb_";
+        return media.url.replace(media.filename, `${THUMB_PREFIX}${size}_${media.filename}`)
+    }
+    static videoThumbnail(media: IMedia): string {
+        const THUMB_PREFIX = "thumb_";
+        return media.url.replace(media.filename, `${THUMB_PREFIX}${media.filename}`).replace(".mp4", ".png")
+    }
 }

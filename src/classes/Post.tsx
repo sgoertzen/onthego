@@ -12,7 +12,7 @@ export interface IPost {
 }
 
 export class Post implements IPost {
-    constructor(title: string, media: IMedia[], commentCount: number, author: string, posted: TimeStamp, details: string) {
+    constructor(title: string, media: Media[], commentCount: number, author: string, posted: TimeStamp, details: string) {
         this.title = title
         this.media = media
         this.commentCount = commentCount
@@ -22,7 +22,7 @@ export class Post implements IPost {
     }
     id = ""
     title = ""
-    media: IMedia[] = [new Media("", "", "", MediaType.Unknown)]
+    media: Media[] = [new Media("", "", MediaType.Unknown)]
     commentCount = 0
     author = ""
     posted = new TimeStamp()

@@ -41,4 +41,4 @@ storiesOf('locations/Location Buttons', module)
         locs.push(new TravelLocation("15", "Yecats", new GeoPoint(45, -93), new TimeStamp(0), new TimeStamp(0)))
         locs.push(new TravelLocation("16", "Nwahs", new GeoPoint(45, -93), new TimeStamp(0), new TimeStamp(0)))
         return <MenuBar locs={locs} onLocChange={(id: string) => { }} selectedLocation={locs[1]} />
-    } )
+    })

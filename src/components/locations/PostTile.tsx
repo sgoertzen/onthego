@@ -6,6 +6,7 @@ import { formatDistance } from 'date-fns';
 import defaultImage from '../../images/default.png';
 import { MediaHelper } from '../../util/MediaHelper';
 import { IPostClickCallback } from '../../classes/IPostClickCallback'
+import { ImageSize, Media } from '../../classes/Media';
 
 interface postTileProps {
     post: IPost
@@ -30,7 +31,7 @@ class PostTile extends React.Component {
         if (post.media) {
             for (let media of post.media) {
                 if (MediaHelper.isImage(media.filename)) {
-                    return media.thumbnail;
+                    return Media.imageThumbnail(media, ImageSize.Size_200);
                 }
             }
         }

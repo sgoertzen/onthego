@@ -3,7 +3,7 @@ import ImageGallery, { ReactImageGalleryItem } from 'react-image-gallery';
 //import ReactPlayer from 'react-player'
 import FilePlayer from 'react-player'
 import './PostMedia.css'
-import { IMedia, MediaType } from '../../classes/Media';
+import { IMedia, MediaType, ImageSize, Media } from '../../classes/Media';
 require('react-image-gallery/styles/css/image-gallery.css')
 
 
@@ -32,12 +32,12 @@ class PostMedia extends React.Component {
         for (let med of media) {
             if (med.filetype === MediaType.Image) {
                 items.push({
-                    original: med.url,
-                    thumbnail: med.thumbnail
+                    original: Media.imageThumbnail(med, ImageSize.Size_1600), // prefix with thumb_1600_
+                    thumbnail: Media.imageThumbnail(med, ImageSize.Size_200) // prefix with thumb_200_
                 })
             } else if (med.filetype === MediaType.Video) {
                 items.push({
-                    thumbnail: med.thumbnail,
+                    thumbnail: Media.videoThumbnail(med), // prefix with thumb_ and switch extension to .png
                     original: med.url,
                     description: 'Render custom slides within the gallery',
                     renderItem: this._renderVideo.bind(this)
