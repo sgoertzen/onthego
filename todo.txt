@@ -1,5 +1,4 @@
 Todo:
-(2-high) Create thumbnails for videos
 (2-high) Ability to comment
 (3-medium) Add menuy bar to post page with back to location button (mimic AdminMenu) (FIX CURRENT HACK)
 (3-medium) Total miles traveled (do using cloud functions)
@@ -41,3 +40,4 @@ Done:
 [done] (3-medium) Get analytics on site
 [done] (2-high) Style site
 [done] When switching to locations push a new location onto history (i.e. /location/cuba etc.)
+[done] (2-high) Create thumbnails for videos
