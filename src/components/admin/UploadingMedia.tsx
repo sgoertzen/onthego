@@ -33,9 +33,10 @@ class UploadingMedia extends React.Component {
         }
         else {
             const text = (this.props.percentUploaded < 100) ? "Uploading " : "Loading thumbnail for "
+            const percent = Math.round(this.props.percentUploaded)
             return (
                 <div className="UploadingMedia">
-                    <CircularProgressbar value={this.props.percentUploaded} text={`${this.props.percentUploaded}%`} />
+                    <CircularProgressbar value={percent} text={`${percent}%`} />
                     {text} {this.props.filename}
                 </div>
             )

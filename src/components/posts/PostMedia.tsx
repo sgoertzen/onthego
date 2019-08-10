@@ -21,7 +21,6 @@ class PostMedia extends React.Component {
     }
 
     _renderVideo(item: ReactImageGalleryItem) {
-        console.log("Rendering video", item.original)
         return (
             <FilePlayer url={item.original} controls={true} width="98%" height="98%" />
         );

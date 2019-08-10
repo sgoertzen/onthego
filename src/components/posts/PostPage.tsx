@@ -6,6 +6,8 @@ import PostMedia from './PostMedia';
 import * as firebase from "firebase/app";
 import "firebase/firestore";
 import { IHistoryProps } from '../../classes/IHistoryProps';
+import { IComment } from '../../classes/Comment';
+import PostComments from './PostComments';
 
 interface postDetailsProps {
     post?: IPost
@@ -18,6 +20,7 @@ interface postDetailsProps {
 }
 interface postDeatilsState {
     post?: IPost
+    comments: IComment[]
     loading: boolean
 }
 
@@ -33,10 +36,11 @@ class PostPage extends React.Component {
         this.postLoaded = this.postLoaded.bind(this)
 
         let needToLoad = (!this.props.post && this.props.match && this.props.match.params && this.props.match.params.postid) as boolean;
-        this.state = { post: this.props.post, loading: needToLoad }
+        this.state = { post: this.props.post, loading: needToLoad, comments: [] }
 
         if (!this.props.post && this.props.match && this.props.match.params && this.props.match.params.postid) {
             this.fetchPost(this.props.match.params.postid)
+            this.fetchComments(this.props.match.params.postid)
         } else {
             console.log("No post id provided")
         }
@@ -53,6 +57,23 @@ class PostPage extends React.Component {
         this.setState({
             post: post,
             loading: false
+        })
+    }
+
+    
+    fetchComments(postID: string): void {
+        var db = firebase.firestore();
+        var postsRef = db.collection("comments")
+        postsRef.where("postid", "==", postID).orderBy("posted").get().then((querySnapshot) => {
+            let comments: IComment[] = [];
+            querySnapshot.forEach(function(doc) {
+                let comment: IComment = doc.data() as IComment
+                comment.commentid = doc.id
+                comments.push(comment)
+            });
+            this.setState({
+                comments: comments
+            })
         })
     }
 
@@ -76,7 +97,7 @@ class PostPage extends React.Component {
                 <PostMenu history={this.props.history} />
                 <PostHeader title={post.title} author={post.author} date={post.posted.toDate()} details={post.details} />
                 <PostMedia items={post.media} />
-                {/* <PostComments /> */}
+                <PostComments comments={this.state.comments} />
             </div>
         );
     }
