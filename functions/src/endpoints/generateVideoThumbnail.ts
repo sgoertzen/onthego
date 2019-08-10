@@ -9,7 +9,7 @@ import { tmpdir } from 'os'
 const gcs = new Storage.Storage();
 const THUMB_PREFIX = "thumb_";
 
-exports.generateVideoThumbnail = functions.storage.object().onFinalize(async (object) => {
+exports = module.exports = functions.storage.object().onFinalize(async (object) => {
     if (!validateVideo(object)){
         return false
     }

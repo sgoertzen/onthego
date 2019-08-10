@@ -31,7 +31,7 @@ function validateImage(object:any):boolean {
     return true
 }
 
-exports.generateThumbnail = functions.storage.object().onFinalize(async (object) => {
+exports = module.exports = functions.storage.object().onFinalize(async (object) => {
     if (!validateImage(object)) {
         return false
     }
