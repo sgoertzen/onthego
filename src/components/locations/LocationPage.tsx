@@ -97,7 +97,7 @@ class LocationPage extends React.Component {
     loadPosts(locationId: string): void {
         var db = firebase.firestore();
         var postsRef = db.collection("posts")
-        postsRef.where("locationid", "==", locationId).get().then((querySnapshot) => {
+        postsRef.where("locationid", "==", locationId).orderBy("posted").get().then((querySnapshot) => {
             let posts: IPost[] = [];
             querySnapshot.forEach(function(doc) {
                 let post: IPost = doc.data() as IPost
