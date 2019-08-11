@@ -1,14 +1,14 @@
 /// <reference types="storybook__react" />
-import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { TravelLocation } from '../../classes/TravelLocation';
-import { GeoPoint } from '../../classes/GeoPoint';
-import { TimeStamp } from '../../classes/TimeStamp';
-import PostEntry from './PostEntry';
+import React from 'react'
+import { storiesOf } from '@storybook/react'
+import { TravelLocation } from '../../classes/TravelLocation'
+import { TimeStamp } from '../../classes/TimeStamp'
+import PostEntry from './PostEntry'
+import * as firebase from "firebase/app";;
 
 storiesOf('admin/Post Entry', module)
     .add('Basic Form', () => {
-        let tl = new TravelLocation("1", "Alpha", new GeoPoint(45, -93), new TimeStamp(0), new TimeStamp(10000))
+        let tl = new TravelLocation("1", "Alpha", new firebase.firestore.GeoPoint(45, -93), new TimeStamp(0), new TimeStamp(10000))
         return (
             <PostEntry
                 loc={tl}
@@ -17,7 +17,7 @@ storiesOf('admin/Post Entry', module)
         )
     })
     .add('Filled in Form', () => {
-        let tl = new TravelLocation("1", "Alpha", new GeoPoint(45, -93), new TimeStamp(0), new TimeStamp(10000))
+        let tl = new TravelLocation("1", "Alpha", new firebase.firestore.GeoPoint(45, -93), new TimeStamp(0), new TimeStamp(10000))
         return (
             <PostEntry
                 title="test title"

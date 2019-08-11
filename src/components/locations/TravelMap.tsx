@@ -1,11 +1,11 @@
 /// <reference types="googlemaps" />
-import React from 'react';
-import GoogleMapReact from 'google-map-react';
+import React from 'react'
+import GoogleMapReact from 'google-map-react'
 import MapMarker from './MapMarker'
-import { ITravelLocation } from '../../classes/TravelLocation';
-import { ILocChangeCallback } from '../../classes/ILocChangeCallback';
-import { GeoPoint, IGeoPoint } from '../../classes/GeoPoint';
+import { ITravelLocation } from '../../classes/TravelLocation'
+import { ILocChangeCallback } from '../../classes/ILocChangeCallback'
 import './TravelMap.css'
+import * as firebase from "firebase/app";;
 
 interface mapProps {
     locations: ITravelLocation[]
@@ -97,12 +97,12 @@ class TravelMap extends React.Component<mapProps> {
         return markers;
     }
     render() {
-        let center: IGeoPoint
+        let center: firebase.firestore.GeoPoint
         if (this.props.selectedLocation) {
             center = this.props.selectedLocation.coords
         } else {
             // Defaults to San Francisco
-            center = new GeoPoint(37.7749, -122.4194)
+            center = new firebase.firestore.GeoPoint(37.7749, -122.4194)
         }
         return (
             // Important! Always set the container height explicitly

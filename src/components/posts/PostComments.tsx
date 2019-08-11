@@ -1,18 +1,33 @@
 import React from 'react';
 import { IComment } from '../../classes/Comment';
 import PostComment from './PostComment';
+import { Button } from '@material-ui/core';
+import CommentDialog from './CommentDialog';
 
-interface postCommentProps {
+interface postCommentsProps {
     comments: IComment[]
+}
+interface postCommentsState {
+    comments: IComment[]
+    open: boolean
 }
 
 class PostComments extends React.Component {
 
-    public props: postCommentProps
+    public props: postCommentsProps
+    public state: postCommentsState
 
-    constructor(props: postCommentProps) {
+    constructor(props: postCommentsProps) {
         super(props);
         this.props = props;
+        this.state = {...props, open: false}
+    }
+
+    addComment() {
+        this.setState({ open: true })
+    }
+    handleClose() {
+        this.setState({ open: false })
     }
 
     render() {
@@ -28,6 +43,9 @@ class PostComments extends React.Component {
         });
         return ( 
             <div>
+                <Button variant="contained" onClick={this.addComment}>Add Comment</Button>
+                <CommentDialog open={this.state.open} onClose={this.handleClose} />
+                <hr />
                 {comments}
             </div>
         )

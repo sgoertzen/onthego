@@ -7,7 +7,6 @@ import DateFnsUtils from '@date-io/date-fns';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 import * as firebase from "firebase/app";
-import "firebase/firestore";
 import { IHistoryProps } from '../../classes/IHistoryProps';
 
 
@@ -79,14 +78,14 @@ class LocationEntry extends React.Component {
         this.setState({ arrival: event })
     }
     handleDepartureDateChange(event: any): void {
-        this.setState({ arrival: event })
+        this.setState({ departure: event })
     }
     handleSubmit(): void {
         console.log('form submitted')
         var db = firebase.firestore();
         db.collection("locations").add({
             name: this.state.name,
-            coords: { Latitude: this.state.latitude, Longitude: this.state.longitude },
+            coords: new firebase.firestore.GeoPoint(Number(this.state.latitude), Number(this.state.longitude)),
             arrive: this.state.arrival,
             depart: this.state.departure
         })

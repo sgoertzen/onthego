@@ -4,6 +4,9 @@ Todo:
 (3-medium) Total miles traveled (do using cloud functions)
 (3-medium) Pick photos from google photots (https://developers.google.com/picker/docs/) and (https://developers.google.com/photos/library/guides/access-media-items)
 (3-medium) Fix menu bar to work with a lot of location (mobile and desktop)
+After a post is saved, redirect to: https://www.goertzensonthego.com/notadmin
+Fix vertical pictures
+Fix vertical videos
 (4-low) Show location on post entry screen
 (4-low) Edit locations
 (4-low) Delete locations
