@@ -21,9 +21,12 @@ class PostComments extends React.Component {
         super(props);
         this.props = props;
         this.state = {...props, open: false}
+        this.addComment = this.addComment.bind(this)
+        this.handleClose = this.handleClose.bind(this)
     }
 
     addComment() {
+        console.log('opening')
         this.setState({ open: true })
     }
     handleClose() {
@@ -31,13 +34,14 @@ class PostComments extends React.Component {
     }
 
     render() {
+        let comments = []
         if (this.props.comments.length === 0) {
-            return <div className="no-posts">No comments</div>
+            comments.push(<div className="no-posts">No comments</div>)
         }
-        const comments = this.props.comments.map(comment => {
+        comments = this.props.comments.map(comment => {
             return (
                 // <Grid item key={post.title} xs={12} sm={6} md={4}>
-                    <PostComment {...comment} />
+                    <PostComment {...comment} key={comment.commentid} />
                 // </Grid>
             );
         });

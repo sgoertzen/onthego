@@ -1,19 +1,21 @@
 import React from 'react';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import { IComment } from '../../classes/Comment';
+import { Container, Divider, Button, DialogActions, DialogContent, DialogContentText, TextField } from '@material-ui/core';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 export interface ICloseCallback {
     (): void
 }
 interface commentDialogProps {
+    comment?: string
     onClose: ICloseCallback
     open: boolean
-    comment?: IComment
 }
 
 interface commentDialogState {
-    comment?: IComment
+    comment?: string
+    editing: boolean
     onClose: ICloseCallback
     open: boolean
 }
@@ -26,9 +28,28 @@ class CommentDialog extends React.Component {
     constructor(props: commentDialogProps) {
         super(props);
         this.props = props;
-        this.state = { ...props }
+        this.state = { ...props, editing:(this.props.comment !== undefined) }
+        this.handleChange = this.handleChange.bind(this)
+        this.handleClose = this.handleClose.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
+    handleChange(event:any) {
+        const id = event.target.id;
+        const value = event.target.value;
+        let stateChange: any
+        switch (id) {
+            case "comment-entry-comment": {
+                stateChange = { comment: value }
+                break;
+            }
+        }
+        this.setState(stateChange);
+    }
+
+    handleSubmit() {
+        alert('submit handled: ' + this.state.comment)
+    }
 
     handleClose() {
         this.props.onClose();
@@ -36,56 +57,39 @@ class CommentDialog extends React.Component {
 
     render() {
         return (
-            <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" open={this.state.open}>
+            <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" open={this.state.open} fullWidth>
                 <DialogTitle id="simple-dialog-title">Add Comment</DialogTitle>
-                {/* <List>
-                {emails.map(email => (
-                    <ListItem button onClick={() => handleListItemClick(email)} key={email}>
-                    <ListItemAvatar>
-                        <Avatar className={classes.avatar}>
-                        <PersonIcon />
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary={email} />
-                    </ListItem>
-                ))}
-
-                <ListItem button onClick={() => handleListItemClick('addAccount')}>
-                    <ListItemAvatar>
-                    <Avatar>
-                        <AddIcon />
-                    </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="add account" />
-                </ListItem>
-                </List> */}
+                <ValidatorForm
+                    ref="form"
+                    onSubmit={this.handleSubmit}
+                >
+                <DialogContent>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="comment-entry-comment"
+                        label="Comment"
+                        rows="3"
+                        onChange={this.handleChange}
+                        value={this.state.comment}
+                        fullWidth
+                        required
+                    />
+                    
+              </DialogContent>
+                <DialogActions>
+                    <Button onClick={this.handleClose} color="primary">
+                    Cancel
+                    </Button>
+                    <Button id="post-entry-submit"
+                            type="submit">
+                            Add Comment
+                        </Button>
+                </DialogActions>
+                </ValidatorForm>
             </Dialog>
         );
     }
 }
 
 export default CommentDialog
-// export default function SimpleDialogDemo() {
-//   const [open, setOpen] = React.useState(false);
-//   const [selectedValue, setSelectedValue] = React.useState(emails[1]);
-
-//   function handleClickOpen() {
-//     setOpen(true);
-//   }
-
-//   const handleClose = value => {
-//     setOpen(false);
-//     setSelectedValue(value);
-//   };
-
-//   return (
-//     <div>
-//       <Typography variant="subtitle1">Selected: {selectedValue}</Typography>
-//       <br />
-//       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-//         Open simple dialog
-//       </Button>
-//       <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
-//     </div>
-//   );
-// }

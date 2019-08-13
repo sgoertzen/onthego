@@ -6,6 +6,7 @@ export interface IComment {
     posted: TimeStamp
     postid: string
     commentid: string
+    edited: boolean
 }
 
 export class Comment implements IComment {
@@ -15,10 +16,12 @@ export class Comment implements IComment {
         this.posted = posted
         this.postid = ""
         this.commentid = ""
+        this.edited = false
     }
     author: string
     comment: string
     posted: TimeStamp
     postid: string
     commentid: string
+    edited: boolean
 }

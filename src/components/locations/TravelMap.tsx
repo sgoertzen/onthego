@@ -112,7 +112,7 @@ class TravelMap extends React.Component<mapProps> {
                     onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
                     bootstrapURLKeys={{ key: 'AIzaSyBDe1KUNj3px_7kkfl7cfkrEpihDwvunt4' }}
                     center={{ lat: center.latitude, lng: center.longitude }}
-                    defaultZoom={4}
+                    defaultZoom={6}
                 >
                     {this.buildMarkers()}
                     {this.drawPaths()}
