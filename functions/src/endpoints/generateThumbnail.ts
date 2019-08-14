@@ -7,30 +7,6 @@ import * as sharp from 'sharp'
 const gcs = new Storage.Storage();
 const THUMB_PREFIX = "thumb_";
 
-function validateImage(object:any):boolean {
-    
-    const filePath = object.name
-    const contentType = object.contentType
-    if (!filePath || !contentType) {
-        console.log('No filepath or content type.')
-        return false
-    }
-    if (!filePath.includes('postimages')) {
-        console.log('Skipping file as it is not an image: ', filePath)
-        return false;
-    }
-    const fileName = basename(filePath)
-    if (!contentType.startsWith('image/')) {
-        console.log('Not an image: ', contentType)
-        return false;
-    }
-    if (fileName.includes(THUMB_PREFIX)) {
-        console.log('Already a thumbnail', fileName)
-        return false;
-    }
-    return true
-}
-
 exports = module.exports = functions.storage.object().onFinalize(async (object) => {
     if (!validateImage(object)) {
         return false
@@ -68,3 +44,27 @@ exports = module.exports = functions.storage.object().onFinalize(async (object) 
 
     return Promise.all(promises)
 })
+
+function validateImage(object:any):boolean {
+    
+    const filePath = object.name
+    const contentType = object.contentType
+    if (!filePath || !contentType) {
+        console.log('No filepath or content type.')
+        return false
+    }
+    if (!filePath.includes('postimages')) {
+        console.log('Skipping file as it is not an image: ', filePath)
+        return false;
+    }
+    const fileName = basename(filePath)
+    if (!contentType.startsWith('image/')) {
+        console.log('Not an image: ', contentType)
+        return false;
+    }
+    if (fileName.includes(THUMB_PREFIX)) {
+        console.log('Already a thumbnail', fileName)
+        return false;
+    }
+    return true
+}

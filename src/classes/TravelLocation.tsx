@@ -1,12 +1,12 @@
-import { ITimestamp, TimeStamp } from "./TimeStamp"
+import { ITimeStamp, TimeStamp } from "./TimeStamp"
 import firebase from "firebase";
 
 export interface ITravelLocation {
     id: string
     name: string
     coords: firebase.firestore.GeoPoint
-    arrive: ITimestamp
-    depart: ITimestamp
+    arrive: ITimeStamp
+    depart: ITimeStamp
 }
 
 export class TravelLocation implements ITravelLocation {

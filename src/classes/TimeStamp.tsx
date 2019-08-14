@@ -1,9 +1,9 @@
-export interface ITimestamp {
+export interface ITimeStamp {
     toDate(): Date
     nanoseconds: number
 }
 
-export class TimeStamp implements ITimestamp {
+export class TimeStamp implements ITimeStamp {
     constructor(nanoseconds?: number) {
         this.nanoseconds = (nanoseconds == null) ? 0 : nanoseconds
     }
