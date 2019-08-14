@@ -17,7 +17,8 @@
     "deploy": "npm run build && firebase deploy --only hosting && firebase deploy --only functions",
     "deploy-functions": "firebase deploy --only functions",
     "deploy-hosting": "npm run build && firebase deploy --only hosting",
-    "deploy-database": "firebase deploy --only database"
+    "deploy-database": "firebase deploy --only database",
+    "deploy-rules": "firebase deploy --only firestore:rules"
   },
   "eslintConfig": {
     "extends": "react-app"

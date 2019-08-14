@@ -46,4 +46,31 @@ storiesOf('locations/Post Tile', module)
             onPostClick={() => { }}
         />
     })
+    .add('No Comments', () => {
+        return <PostTile post={
+            new Post("Sample title",
+                [new Media("travel.png", travelImage, MediaType.Image)],
+                0,
+                "Sally",
+                new TimeStamp(new Date("06/06/2019").getTime()),
+                ""
+            )}
+            onPostClick={() => { }}
+        />
+    })
+    .add('Multiple Comments', () => {
+        return <PostTile post={
+            new Post("Sample title",
+                [
+                    new Media("travel.png", travelImage, MediaType.Image),
+                    new Media("travel.png", travelImage, MediaType.Image),
+                    new Media("travel.png", travelImage, MediaType.Image)],
+                8,
+                "Sally",
+                new TimeStamp(new Date("12/12/2018").getTime()),
+                ""
+            )}
+            onPostClick={() => { }}
+        />
+    })
 
