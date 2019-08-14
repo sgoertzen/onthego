@@ -4,7 +4,7 @@ import ImageGallery, { ReactImageGalleryItem } from 'react-image-gallery';
 import FilePlayer from 'react-player'
 import './PostMedia.css'
 import { IMedia, MediaType, ImageSize, Media } from '../../classes/Media';
-require('react-image-gallery/styles/css/image-gallery.css')
+import 'react-image-gallery/styles/css/image-gallery.css'
 
 
 interface postMediaProps {

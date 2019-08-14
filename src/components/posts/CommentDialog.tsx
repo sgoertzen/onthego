@@ -1,8 +1,8 @@
 import React from 'react';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import { Container, Divider, Button, DialogActions, DialogContent, DialogContentText, TextField } from '@material-ui/core';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import { Button, DialogActions, DialogContent, TextField } from '@material-ui/core';
+import { ValidatorForm } from 'react-material-ui-form-validator';
 
 export interface ICloseCallback {
     (): void
