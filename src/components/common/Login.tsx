@@ -24,7 +24,7 @@ class Login extends React.Component {
         this.props = props;
         this.login = this.login.bind(this)
     }
-    
+
     login() {
         var provider = new firebase.auth.GoogleAuthProvider();
         if (this.props.adminLogin) {
@@ -34,7 +34,7 @@ class Login extends React.Component {
             console.log("Error during auth: " + error.code + ", " + error.message + ", " + error.email + ", " + error.credential)
         });
     }
-    
+
     logout() {
         firebase.auth().signOut()
     }
@@ -43,7 +43,7 @@ class Login extends React.Component {
         const username = this.props.username
         const isAdmin = this.props.adminLogin
         const isLink = this.props.control === LoginControl.Link
-        const text = isAdmin ? "Admin Login": "Login"
+        const text = isAdmin ? "Admin Login" : "Login"
         if (username) {
             return (
                 <Typography className="footer-user">Logged in as {username} &nbsp;-&nbsp; <Link onClick={this.logout}>Logout</Link></Typography>
@@ -51,10 +51,10 @@ class Login extends React.Component {
         } else {
             return (
                 <div>
-                {this.props.intro && <Typography>{this.props.intro}</Typography>}
-                {isLink ? 
-                    <Typography className="footer-user"><Link onClick={this.login}>{text}</Link></Typography>
-                    : <Button variant="outlined" onClick={this.login} id="login_button" >{text}</Button>}
+                    {this.props.intro && <Typography>{this.props.intro}</Typography>}
+                    {isLink ?
+                        <Typography className="footer-user"><Link onClick={this.login}>{text}</Link></Typography>
+                        : <Button variant="outlined" onClick={this.login} id="login_button" >{text}</Button>}
                 </div>
             )
         }

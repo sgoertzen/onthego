@@ -22,7 +22,7 @@ class AdminFooter extends React.Component {
             <Box className="footer" justifyContent="center" width="100%">
                 <Typography className="footer-copy">&copy;2019 Goertzen Family</Typography>
                 <Typography className="footer-spacer"> &nbsp;-&nbsp; </Typography>
-                <Login control={LoginControl.Link} adminLogin={true} username={this.props.username}/>
+                <Login control={LoginControl.Link} adminLogin={true} username={this.props.username} />
             </Box>
         );
     }

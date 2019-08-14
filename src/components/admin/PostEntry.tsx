@@ -166,11 +166,10 @@ class PostEntry extends React.Component {
         }).then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);
             alert('Success!')
-        })
-            .catch(function(error) {
-                console.error("Error adding document: ", error);
-                alert('failed uploading, check logs')
-            });
+        }).catch(function(error) {
+            console.error("Error adding document: ", error);
+            alert('failed uploading, check logs')
+        });
     }
 
     isUploading() {

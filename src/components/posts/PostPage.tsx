@@ -35,6 +35,7 @@ class PostPage extends React.Component {
         this.props = props;
         this.fetchPost = this.fetchPost.bind(this)
         this.postLoaded = this.postLoaded.bind(this)
+        this.commentsChanged = this.commentsChanged.bind(this)
 
         let needToLoad = (!this.props.post && this.props.match && this.props.match.params && this.props.match.params.postid) as boolean;
         this.state = { post: this.props.post, loading: needToLoad, comments: [] }
@@ -61,7 +62,6 @@ class PostPage extends React.Component {
         })
     }
 
-
     fetchComments(postID: string): void {
         var db = firebase.firestore();
         var postsRef = db.collection("comments")
@@ -76,6 +76,14 @@ class PostPage extends React.Component {
                 comments: comments
             })
         })
+    }
+
+    commentsChanged() {
+        if (this.state.post) {
+            this.fetchComments(this.state.post.id)
+        } else {
+            console.log("Warning: Comment change event occured but no post found.")
+        }
     }
 
     getPostDate(post: IPost): Date {
@@ -98,7 +106,7 @@ class PostPage extends React.Component {
                 <PostMenu history={this.props.history} />
                 <PostHeader title={post.title} author={post.author} date={post.posted.toDate()} details={post.details} />
                 <PostMedia items={post.media} />
-                <PostComments comments={this.state.comments} username={this.props.username} />
+                <PostComments comments={this.state.comments} username={this.props.username} postid={post.id} onChange={this.commentsChanged} />
             </div>
         );
     }
