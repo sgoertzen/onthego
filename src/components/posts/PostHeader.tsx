@@ -2,6 +2,7 @@ import React from 'react';
 import { format } from 'date-fns';
 import { Typography } from '@material-ui/core';
 import './PostHeader.css'
+import { ParagraphHelper } from '../../util/ParagraphHelper';
 
 interface postHeaderProps {
     title: string
@@ -28,9 +29,7 @@ class PostHeader extends React.Component {
                 <Typography>
                     By {this.props.author} on {format(this.props.date, "MMM d yyyy hh:mm a")}
                 </Typography>
-                <Typography className="post-header-details">
-                    {this.props.details}
-                </Typography>
+                {ParagraphHelper.split(this.props.details)}
             </div>
         );
     }

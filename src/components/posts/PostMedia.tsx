@@ -4,7 +4,7 @@ import ImageGallery, { ReactImageGalleryItem } from 'react-image-gallery';
 import FilePlayer from 'react-player'
 import './PostMedia.css'
 import { IMedia, MediaType, ImageSize, Media } from '../../classes/Media';
-require('react-image-gallery/styles/css/image-gallery.css')
+import 'react-image-gallery/styles/css/image-gallery.css'
 
 
 interface postMediaProps {
@@ -21,7 +21,6 @@ class PostMedia extends React.Component {
     }
 
     _renderVideo(item: ReactImageGalleryItem) {
-        console.log("Rendering video", item.original)
         return (
             <FilePlayer url={item.original} controls={true} width="98%" height="98%" />
         );

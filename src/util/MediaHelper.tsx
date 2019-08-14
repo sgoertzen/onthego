@@ -1,6 +1,5 @@
 import { MediaType } from "../classes/Media";
 
-
 export class MediaHelper {
     static getExtension(filename: string) {
         var parts = filename.split('.');

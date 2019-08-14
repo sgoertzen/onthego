@@ -58,16 +58,14 @@ class App extends React.Component {
                     <Switch>
                         <Route exact path="/" component={LocationPage} />
                         <Route exact path="/location/:locationName" component={LocationPage} />
-                        <Route exact path="/post/:postid" component={PostPage} />
+                        <Route exact path="/post/:postid" render={(props) => <PostPage {...props} username={this.state.username} />} />
                         <Route exact path="/notadmin" component={LocationList} />
                         <Route exact path="/notadmin/postentry/:locationid" component={PostEntry} />
                         <Route exact path="/notadmin/locationentry" component={LocationEntry} />
                         <Redirect to="/" />
                     </Switch>
                     <Switch>
-                        <Route path="/notadmin">
-                            <AdminFooter username={this.state.username} />
-                        </Route>
+                        <Route path="/notadmin" render={(props) => <AdminFooter {...props} username={this.state.username} />} />
                         <Route component={Footer} />
                     </Switch>
                 </div>

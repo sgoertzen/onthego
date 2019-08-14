@@ -3,7 +3,6 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import UploadingMedia from './UploadingMedia';
 import travelImage from "../../../testdata/Travel.jpg";
-import thumbImage from "../../../testdata/thumb_Travel.jpg";
 import { MediaType } from '../../classes/Media';
 
 storiesOf('admin/Uploading Media', module)
@@ -12,6 +11,15 @@ storiesOf('admin/Uploading Media', module)
             <UploadingMedia
                 filename="something.png"
                 percentUploaded={75}
+                filetype={MediaType.Image}
+                url="" />
+        )
+    })
+    .add('Percent with high precision', () => {
+        return (
+            <UploadingMedia
+                filename="something.png"
+                percentUploaded={75.948476737834535}
                 filetype={MediaType.Image}
                 url="" />
         )
