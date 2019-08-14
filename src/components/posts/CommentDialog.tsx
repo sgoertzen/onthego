@@ -17,7 +17,6 @@ interface commentDialogState {
     comment?: string
     editing: boolean
     onClose: ICloseCallback
-    open: boolean
 }
 
 class CommentDialog extends React.Component {
@@ -30,7 +29,6 @@ class CommentDialog extends React.Component {
         this.props = props;
         this.state = { ...props, editing: (this.props.comment !== undefined) }
         this.handleChange = this.handleChange.bind(this)
-        this.handleClose = this.handleClose.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
@@ -53,15 +51,12 @@ class CommentDialog extends React.Component {
         }
         let formattedComment = this.state.comment.replace(/\n/g, "<br />");
         alert('submit handled: ' + formattedComment)
-    }
-
-    handleClose() {
-        this.props.onClose();
+        this.props.onClose()
     }
 
     render() {
         return (
-            <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" open={this.state.open} fullWidth maxWidth="md">
+            <Dialog onClose={this.props.onClose} aria-labelledby="simple-dialog-title" open={this.props.open} fullWidth maxWidth="md">
                 <DialogTitle id="simple-dialog-title">Add Comment</DialogTitle>
                 <ValidatorForm
                     ref="form"
@@ -83,7 +78,7 @@ class CommentDialog extends React.Component {
 
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
+                        <Button onClick={this.props.onClose} color="primary">
                             Cancel
                     </Button>
                         <Button id="post-entry-submit"

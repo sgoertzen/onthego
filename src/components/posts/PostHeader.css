@@ -1,6 +1,18 @@
-.post-header {
-    padding: 1em;
+@media only screen and (max-width: 800px) {
+    .post-header {
+        padding: 1em;
+        width: 100%;
+    }
+  }
+    
+@media only screen and (min-width: 801px) {
+    .post-header {
+        padding: 1em;
+        margin: 0 auto;
+        width: 75%;
+    }
 }
+
 .post-header-details {
     padding-top: 1em;
 }
