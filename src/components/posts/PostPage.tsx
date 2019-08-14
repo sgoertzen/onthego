@@ -17,6 +17,7 @@ interface postDetailsProps {
         }
     }
     history?: IHistoryProps
+    username?: string
 }
 interface postDeatilsState {
     post?: IPost
@@ -97,7 +98,7 @@ class PostPage extends React.Component {
                 <PostMenu history={this.props.history} />
                 <PostHeader title={post.title} author={post.author} date={post.posted.toDate()} details={post.details} />
                 <PostMedia items={post.media} />
-                <PostComments comments={this.state.comments} />
+                <PostComments comments={this.state.comments} username={this.props.username} />
             </div>
         );
     }

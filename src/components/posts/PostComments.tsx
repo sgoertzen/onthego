@@ -7,6 +7,7 @@ import './PostComments.css'
 
 interface postCommentsProps {
     comments: IComment[]
+    username?: string
 }
 interface postCommentsState {
     comments: IComment[]
@@ -27,7 +28,6 @@ class PostComments extends React.Component {
     }
 
     addComment() {
-        console.log('opening')
         this.setState({ open: true })
     }
     handleClose() {
@@ -49,7 +49,7 @@ class PostComments extends React.Component {
         return (
             <div className="postcomments" key="postcomments">
                 <Button variant="contained" onClick={this.addComment} className="AddCommentButton">Add Comment</Button>
-                <CommentDialog open={this.state.open} onClose={this.handleClose} />
+                <CommentDialog open={this.state.open} onClose={this.handleClose} username={this.props.username} />
                 {comments}
             </div>
         )

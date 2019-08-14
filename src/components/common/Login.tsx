@@ -1,9 +1,18 @@
 import React from 'react';
 import * as firebase from "firebase/app";
-import { Button } from '@material-ui/core';
+import { Button, Typography, Link } from '@material-ui/core';
 import "firebase/auth";
 
+export enum LoginControl {
+    Link,
+    Button
+}
+
 interface loginProps {
+    control: LoginControl
+    username?: string
+    adminLogin?: boolean
+    intro?: string
 }
 
 class Login extends React.Component {
@@ -13,48 +22,42 @@ class Login extends React.Component {
     constructor(props: loginProps) {
         super(props);
         this.props = props;
+        this.login = this.login.bind(this)
     }
-
-    show() {
-        console.log("auth name: " + firebase.auth.name);
+    
+    login() {
         var provider = new firebase.auth.GoogleAuthProvider();
-        // If uncommenting this line, make sure you look into: https://developers.google.com/identity/protocols/googlescopes?authuser=0
-        // provider.addScope('https://www.googleapis.com/auth/drive.photos.readonly');
-        // firebase.auth().signInWithRedirect(provider);
-        // firebase.auth().getRedirectResult().then(function(result) {
-        firebase.auth().signInWithPopup(provider).then(function(result) {
-            // Don't really need to do anything with the result, it will be stored as a cookie
-            //if (result.credential) {
-            //console.log("Credential:")
-            //console.log(result.credential.toJSON())
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            //var token = result.credential.accessToken;
-            // ...
-            //}
-            // The signed-in user info.
-            // var user = result.user;
-            // console.log("User logged in : ")
-            // console.log(user)
-        }).catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // The email of the user's account used.
-            var email = error.email;
-            // The firebase.auth.AuthCredential type that was used.
-            var credential = error.credential;
-            // ...
-            console.log("Error during auth: " + errorCode + ", " + errorMessage + ", " + email + ", " + credential)
+        if (this.props.adminLogin) {
+            provider.addScope('https://www.googleapis.com/auth/drive.photos.readonly');
+        }
+        firebase.auth().signInWithPopup(provider).catch(function(error) {
+            console.log("Error during auth: " + error.code + ", " + error.message + ", " + error.email + ", " + error.credential)
         });
+    }
+    
+    logout() {
+        firebase.auth().signOut()
     }
 
     render() {
-        return <div>
-            <Button
-                onClick={this.show}
-                id="login_button"
-            >Admin Login</Button>
-        </div>
+        const username = this.props.username
+        const isAdmin = this.props.adminLogin
+        const isLink = this.props.control === LoginControl.Link
+        const text = isAdmin ? "Admin Login": "Login"
+        if (username) {
+            return (
+                <Typography className="footer-user">Logged in as {username} &nbsp;-&nbsp; <Link onClick={this.logout}>Logout</Link></Typography>
+            )
+        } else {
+            return (
+                <div>
+                {this.props.intro && <Typography>{this.props.intro}</Typography>}
+                {isLink ? 
+                    <Typography className="footer-user"><Link onClick={this.login}>{text}</Link></Typography>
+                    : <Button variant="outlined" onClick={this.login} id="login_button" >{text}</Button>}
+                </div>
+            )
+        }
     }
 }
 

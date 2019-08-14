@@ -1,8 +1,9 @@
 import React from 'react';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import { Button, DialogActions, DialogContent, TextField } from '@material-ui/core';
+import { Button, DialogActions, DialogContent, TextField, Typography } from '@material-ui/core';
 import { ValidatorForm } from 'react-material-ui-form-validator';
+import Login, { LoginControl } from '../common/Login';
 
 export interface ICloseCallback {
     (): void
@@ -11,6 +12,7 @@ interface commentDialogProps {
     comment?: string
     onClose: ICloseCallback
     open: boolean
+    username?: string
 }
 
 interface commentDialogState {
@@ -46,6 +48,7 @@ class CommentDialog extends React.Component {
     }
 
     handleSubmit() {
+        // TODO: SAVE THE Comment
         if (!this.state.comment) {
             return false;
         }
@@ -55,15 +58,20 @@ class CommentDialog extends React.Component {
     }
 
     render() {
+        const signedIn = (typeof this.props.username!='undefined' && this.props.username.trim())
         return (
             <Dialog onClose={this.props.onClose} aria-labelledby="simple-dialog-title" open={this.props.open} fullWidth maxWidth="md">
-                <DialogTitle id="simple-dialog-title">Add Comment</DialogTitle>
+                <DialogTitle id="simple-dialog-title">
+                    <Typography variant="h5" component="span">Add Comment</Typography>
+                    <Login key="login" control={LoginControl.Button} username={this.props.username} intro="Before posting a comment, you must login with a google account."/>
+                </DialogTitle>
                 <ValidatorForm
                     ref="form"
                     onSubmit={this.handleSubmit}
                 >
                     <DialogContent>
                         <TextField
+                            disabled={!signedIn}
                             autoFocus
                             id="comment-entry-comment"
                             label="Comment"
@@ -82,6 +90,7 @@ class CommentDialog extends React.Component {
                             Cancel
                     </Button>
                         <Button id="post-entry-submit"
+                            disabled={!signedIn}
                             type="submit">
                             Add Comment
                         </Button>
