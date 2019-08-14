@@ -20,7 +20,7 @@ class PostComments extends React.Component {
     constructor(props: postCommentsProps) {
         super(props);
         this.props = props;
-        this.state = {...props, open: false}
+        this.state = { ...props, open: false }
         this.addComment = this.addComment.bind(this)
         this.handleClose = this.handleClose.bind(this)
     }
@@ -40,12 +40,10 @@ class PostComments extends React.Component {
         }
         comments = this.props.comments.map(comment => {
             return (
-                // <Grid item key={post.title} xs={12} sm={6} md={4}>
-                    <PostComment {...comment} key={comment.commentid} />
-                // </Grid>
+                <PostComment {...comment} key={comment.commentid} />
             );
         });
-        return ( 
+        return (
             <div>
                 <Button variant="contained" onClick={this.addComment}>Add Comment</Button>
                 <CommentDialog open={this.state.open} onClose={this.handleClose} />
@@ -53,11 +51,6 @@ class PostComments extends React.Component {
                 {comments}
             </div>
         )
-        /* <Container className="cardGrid" maxWidth="lg">
-                <hr />
-                <Grid container spacing={4}>
-                </Grid>
-            </Container> */
     }
 }
 export default PostComments;

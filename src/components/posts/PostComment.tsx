@@ -1,7 +1,8 @@
 import React from 'react';
-import { Typography, Container } from '@material-ui/core';
+import { Typography, Container, Paper } from '@material-ui/core';
 import { IComment } from '../../classes/Comment';
-import { formatDistance } from 'date-fns';
+import { formatDistance, format, formatRelative } from 'date-fns';
+import './PostComment.css'
 
 class PostComment extends React.Component {
 
@@ -14,11 +15,14 @@ class PostComment extends React.Component {
 
     render() {
         return (
-            <Container>
-                <Typography>
-                    {this.props.author} said "{this.props.comment}" on {formatDistance(this.props.posted.toDate(), new Date())}
+            <Paper className="postcomment">
+                <Typography variant="h5" component="h3">
+                    {this.props.author} - {formatRelative(this.props.posted.toDate(), new Date())}
                 </Typography>
-            </Container>
+                <Typography component="p">
+                    {this.props.comment}
+                </Typography>
+            </Paper>
         );
     }
 }

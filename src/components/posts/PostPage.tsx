@@ -60,7 +60,7 @@ class PostPage extends React.Component {
         })
     }
 
-    
+
     fetchComments(postID: string): void {
         var db = firebase.firestore();
         var postsRef = db.collection("comments")

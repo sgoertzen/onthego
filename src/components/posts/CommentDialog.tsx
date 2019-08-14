@@ -21,20 +21,20 @@ interface commentDialogState {
 }
 
 class CommentDialog extends React.Component {
-    
+
     public props: commentDialogProps
     public state: commentDialogState
 
     constructor(props: commentDialogProps) {
         super(props);
         this.props = props;
-        this.state = { ...props, editing:(this.props.comment !== undefined) }
+        this.state = { ...props, editing: (this.props.comment !== undefined) }
         this.handleChange = this.handleChange.bind(this)
         this.handleClose = this.handleClose.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleChange(event:any) {
+    handleChange(event: any) {
         const id = event.target.id;
         const value = event.target.value;
         let stateChange: any
@@ -48,7 +48,11 @@ class CommentDialog extends React.Component {
     }
 
     handleSubmit() {
-        alert('submit handled: ' + this.state.comment)
+        if (!this.state.comment) {
+            return false;
+        }
+        let formattedComment = this.state.comment.replace(/\n/g, "<br />");
+        alert('submit handled: ' + formattedComment)
     }
 
     handleClose() {
@@ -57,35 +61,36 @@ class CommentDialog extends React.Component {
 
     render() {
         return (
-            <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" open={this.state.open} fullWidth>
+            <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" open={this.state.open} fullWidth maxWidth="md">
                 <DialogTitle id="simple-dialog-title">Add Comment</DialogTitle>
                 <ValidatorForm
                     ref="form"
                     onSubmit={this.handleSubmit}
                 >
-                <DialogContent>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="comment-entry-comment"
-                        label="Comment"
-                        rows="3"
-                        onChange={this.handleChange}
-                        value={this.state.comment}
-                        fullWidth
-                        required
-                    />
-                    
-              </DialogContent>
-                <DialogActions>
-                    <Button onClick={this.handleClose} color="primary">
-                    Cancel
+                    <DialogContent>
+                        <TextField
+                            autoFocus
+                            id="comment-entry-comment"
+                            label="Comment"
+                            rows="4"
+                            variant="outlined"
+                            onChange={this.handleChange}
+                            value={this.state.comment}
+                            multiline
+                            fullWidth
+                            required
+                        />
+
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleClose} color="primary">
+                            Cancel
                     </Button>
-                    <Button id="post-entry-submit"
+                        <Button id="post-entry-submit"
                             type="submit">
                             Add Comment
                         </Button>
-                </DialogActions>
+                    </DialogActions>
                 </ValidatorForm>
             </Dialog>
         );

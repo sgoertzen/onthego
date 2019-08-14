@@ -10,7 +10,7 @@ export interface IComment {
 }
 
 export class Comment implements IComment {
-    constructor(author:string, comment:string, posted:TimeStamp) {
+    constructor(author: string, comment: string, posted: TimeStamp) {
         this.author = author
         this.comment = comment
         this.posted = posted

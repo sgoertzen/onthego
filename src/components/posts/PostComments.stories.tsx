@@ -12,5 +12,5 @@ storiesOf('posts/Post Comments', module)
             new Comment("Sally", "I like cheese", new TimeStamp()),
             new Comment("Sally", "I like cheese", new TimeStamp()),
         ]
-        return (<PostComments comments={comments}/>)
+        return (<PostComments comments={comments} />)
     })
