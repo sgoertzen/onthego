@@ -26,6 +26,7 @@
     "fluent-ffmpeg": "^2.1.2",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.4",
+    "haversine-distance": "github:dcousens/haversine-distance#18caa412b25239e517e8bc219d4947ebc0e3020d",
     "sharp": "^0.22.1"
   },
   "devDependencies": {

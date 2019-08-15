@@ -2,7 +2,9 @@
 
 import { sync } from 'glob'
 import { resolve } from 'path'
+import * as admin from 'firebase-admin'
 
+admin.initializeApp();
 const ENDPOINT_FOLDER = './endpoints';
 const DO_NOT_DEPLOY = /^(admin|a|debug|d)$/;
 const IGNORE = /^(ignore|i)$/;
