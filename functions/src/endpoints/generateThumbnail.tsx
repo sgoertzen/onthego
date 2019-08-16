@@ -44,7 +44,8 @@ exports = module.exports = functions.storage.object().onFinalize(async (object) 
         const thumbnailUploadStream = bucket.file(thumbFilePath).createWriteStream({ metadata })
 
         // Create Sharp pipeline for resizing the image and use pipe to read from bucket read stream
-        const pipeline = sharp()
+        // rotate() is needed here, it will read the EXIF orientation info and make the thumbnails match
+        const pipeline = sharp().rotate()
         pipeline.resize(resize.size, resize.size, {fit: resize.fit}).pipe(thumbnailUploadStream)
         bucket.file(filePath).createReadStream().pipe(pipeline).on('end', () => {
             console.log('Created thumbnail: ', thumbFileName)

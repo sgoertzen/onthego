@@ -8,6 +8,7 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import UploadingMedia from './UploadingMedia';
 import { MediaHelper } from '../../util/MediaHelper';
 import { IMedia, Media } from '../../classes/Media';
+import { IHistoryProps } from '../../classes/IHistoryProps';
 
 // Todo: may want to move this out of this class later
 export interface IPostCreated {
@@ -19,6 +20,7 @@ interface postEntryProps {
     details?: string,
     loc: ITravelLocation
     onPostCreated: IPostCreated
+    history?: IHistoryProps
     match: {
         params: {
             locationid: string
@@ -48,10 +50,11 @@ class PostEntry extends React.Component {
             locationid: this.props.match.params.locationid,
             uploads: [],
         }
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.isUploading = this.isUploading.bind(this);
-        this.updateUploadState = this.updateUploadState.bind(this);
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.isUploading = this.isUploading.bind(this)
+        this.updateUploadState = this.updateUploadState.bind(this)
+        this.backToList = this.backToList.bind(this)
     }
 
     handleChange(event: any) {
@@ -151,9 +154,8 @@ class PostEntry extends React.Component {
     }
 
     handleSubmit() {
-        console.log("submitting post entry")
-
-        let user = firebase.auth().currentUser
+        const user = firebase.auth().currentUser
+        const that = this
 
         var db = firebase.firestore();
         db.collection("posts").add({
@@ -165,11 +167,17 @@ class PostEntry extends React.Component {
             media: this.prepMediaForSaving(this.state.uploads)
         }).then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);
-            alert('Success!')
+            that.backToList()
         }).catch(function(error) {
             console.error("Error adding document: ", error);
             alert('failed uploading, check logs')
         });
+    }
+
+    backToList() {
+        if (this.props.history) {
+            this.props.history.push("/notadmin/")
+        }
     }
 
     isUploading() {
