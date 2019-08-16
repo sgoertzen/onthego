@@ -4,6 +4,7 @@
     "lint": "tslint --project tsconfig.json",
     "format": "tsfmt -r",
     "build": "tsc",
+    "test": "jest src",
     "serve": "npm run build && firebase serve --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
@@ -26,13 +27,24 @@
     "fluent-ffmpeg": "^2.1.2",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.4",
-    "haversine-distance": "github:dcousens/haversine-distance#18caa412b25239e517e8bc219d4947ebc0e3020d",
     "sharp": "^0.22.1"
   },
   "devDependencies": {
+    "ts-jest": "^24.0.2",
     "tslint": "^5.12.0",
     "typescript": "^3.2.2",
     "typescript-formatter": "^7.2.2"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "/.*\\.test.(ts|tsx|js)$"
   },
   "private": true
 }

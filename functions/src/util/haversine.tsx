@@ -1,4 +1,6 @@
-interface LatitudeLongitude {
+// Adapted from: https://github.com/dcousens/haversine-distance
+
+export interface LatitudeLongitude {
     latitude: number;
     longitude: number;
 }
@@ -9,7 +11,7 @@ export class haversine {
     static PI = Math.PI
     static squared (x:number) { return x * x }
     static toRad (x:number) { return x * haversine.PI / 180.0 }
-    static metersInAMile = 0.0006213712
+    static metersInAMile = 1609.344
     
     static distance (a:LatitudeLongitude, b:LatitudeLongitude) {
         
@@ -33,6 +35,6 @@ export class haversine {
     }
 
     static distanceMiles(a:LatitudeLongitude, b:LatitudeLongitude) {
-        return this.distance(a,b) * haversine.metersInAMile
+        return this.distance(a,b) / haversine.metersInAMile
     }
 }
