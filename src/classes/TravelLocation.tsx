@@ -7,6 +7,7 @@ export interface ITravelLocation {
     coords: firebase.firestore.GeoPoint
     arrive: ITimeStamp
     depart: ITimeStamp
+    distance: number
 }
 
 export class TravelLocation implements ITravelLocation {
@@ -16,10 +17,12 @@ export class TravelLocation implements ITravelLocation {
         this.coords = (coords == null) ? new firebase.firestore.GeoPoint(0, 0) : coords
         this.arrive = (arrive == null) ? new TimeStamp() : arrive
         this.depart = (depart == null) ? new TimeStamp() : depart
+        this.distance = 0
     }
     id: string
     name: string
     coords: firebase.firestore.GeoPoint
     arrive: TimeStamp
     depart: TimeStamp
+    distance: number
 }

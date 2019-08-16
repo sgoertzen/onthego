@@ -1,6 +1,5 @@
 Todo:
 (3-medium) Add menuy bar to post page with back to location button (mimic AdminMenu) (FIX CURRENT HACK)
-(3-medium) Total miles traveled (do using cloud functions)
 (3-medium) Pick photos from google photots (https://developers.google.com/picker/docs/) and (https://developers.google.com/photos/library/guides/access-media-items)
 (3-medium) Fix menu bar to work with a lot of location (mobile and desktop)
 (3-medium) Fix vertical pictures
@@ -44,3 +43,4 @@ Done:
 [done] When switching to locations push a new location onto history (i.e. /location/cuba etc.)
 [done] (2-high) Create thumbnails for videos
 [done] (2-high) Ability to comment
+[done] (3-medium) Total miles traveled (do using cloud functions)
