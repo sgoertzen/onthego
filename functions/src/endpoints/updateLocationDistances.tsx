@@ -37,14 +37,14 @@ exports = module.exports = functions.firestore.document('locations/{locationid}'
         const after = change.after.data() as ITravelLocation
         if (before.coords.isEqual(after.coords) &&
             before.arrive === after.arrive &&
-            before.depart === after.depart){
+            before.depart === after.depart) {
             // Matching lat long, exit early
             console.debug("Exiting as lat and long match")
             return null;
         }
     }
     console.debug("Updating distance for ", context.params.locationid)
-    
+
     // Fetch all the locations, ordering by arrival date
     return db.collection("locations").orderBy("arrive").get().then(async (querySnapshot) => {
         const locations: ITravelLocation[] = [];
@@ -56,7 +56,7 @@ exports = module.exports = functions.firestore.document('locations/{locationid}'
 
         // Loop over all locations and calculate the distance, 
         // only update the database if the distance value is different
-        let previous:ITravelLocation|null = null;
+        let previous: ITravelLocation | null = null;
         const promises = []
         for (const current of locations) {
             if (previous !== null) { // No distance on the first location
@@ -72,7 +72,7 @@ exports = module.exports = functions.firestore.document('locations/{locationid}'
     });
 });
 
-async function setDistance(location: ITravelLocation, distance:number):Promise<void | FirebaseFirestore.WriteResult> {
+async function setDistance(location: ITravelLocation, distance: number): Promise<void | FirebaseFirestore.WriteResult> {
     return db.doc(`locations/${location.id}`).update({
         distance: distance
     }).catch((reason) => {

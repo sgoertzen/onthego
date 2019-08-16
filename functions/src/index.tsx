@@ -17,54 +17,54 @@ const is = {
     deploying: !process.env.hasOwnProperty('FUNCTION_NAME'),
 };
 
-const skipped:string[] = [];
+const skipped: string[] = [];
 sync(`./**/*.js`, {
-  cwd: resolve(__dirname, ENDPOINT_FOLDER),
+    cwd: resolve(__dirname, ENDPOINT_FOLDER),
 })
-.map(file => ({
-  path: file.slice(2),
-  components: file.slice(2, -3).split(/[\/.]/g),
-}))
-.sort((a, b) => b.components.length - a.components.length)
-.forEach(file => {
+    .map(file => ({
+        path: file.slice(2),
+        components: file.slice(2, -3).split(/[\/.]/g),
+    }))
+    .sort((a, b) => b.components.length - a.components.length)
+    .forEach(file => {
 
-  // ignore by name
-  if (file.components.find(c => IGNORE.test(c))) return;
+        // ignore by name
+        if (file.components.find(c => IGNORE.test(c))) return;
 
-   // firebase naming standard
-  const FB_NAME = file.components.join('-');
-  //const FB_NAME = file.components[0]
+        // firebase naming standard
+        const FB_NAME = file.components.join('-');
+        //const FB_NAME = file.components[0]
 
-  // function is currently being triggered
-  is.triggered = process.env.FUNCTION_NAME === FB_NAME;
+        // function is currently being triggered
+        is.triggered = process.env.FUNCTION_NAME === FB_NAME;
 
-  // only deploy files locally or if allowed to deploy
-  is.deployable = is.emulating || !file.components.find(c => DO_NOT_DEPLOY.test(c));
+        // only deploy files locally or if allowed to deploy
+        is.deployable = is.emulating || !file.components.find(c => DO_NOT_DEPLOY.test(c));
 
-  // export module if triggered or deploying
-  if (is.triggered || is.deploying && is.deployable) {
+        // export module if triggered or deploying
+        if (is.triggered || is.deploying && is.deployable) {
 
-    // map the module to a deep path: { [component]: { [component]: module } }
-    file.components.reduce((_, c, i, list) => {
+            // map the module to a deep path: { [component]: { [component]: module } }
+            file.components.reduce((_, c, i, list) => {
 
-      // get the map for each path component
-      if (i < list.length - 1) {
-        if (!_[c]) _[c] = {};
-        return _[c];
-      }
+                // get the map for each path component
+                if (i < list.length - 1) {
+                    if (!_[c]) _[c] = {};
+                    return _[c];
+                }
 
-      // skip files where a naming conflict exists with a directory
-      if (_[c]) return skipped.push(`./${file.path.slice(0, -3)}`);
+                // skip files where a naming conflict exists with a directory
+                if (_[c]) return skipped.push(`./${file.path.slice(0, -3)}`);
 
-      // export the module
-      _[c] = require(`./${ENDPOINT_FOLDER}/${file.path}`);
-    }, exports);
-  }
-});
+                // export the module
+                _[c] = require(`./${ENDPOINT_FOLDER}/${file.path}`);
+            }, exports);
+        }
+    });
 
 // don't allow conflicts to deploy
 if (BREAK_ON_ERROR && skipped.length) {
-  throw new Error(`naming conflict: "${skipped.join('", "')}"`);
+    throw new Error(`naming conflict: "${skipped.join('", "')}"`);
 }
 
 
