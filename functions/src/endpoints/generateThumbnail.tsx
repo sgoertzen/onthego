@@ -27,11 +27,11 @@ exports = module.exports = functions.storage.object().onFinalize(async (object) 
     const contentType = object.contentType
     const fileName = basename(filePath)
     const resizes = [
-        {size:200, fit: sharp.fit.cover},
-        {size:1600, fit:sharp.fit.inside}
+        { size: 200, fit: sharp.fit.cover },
+        { size: 1600, fit: sharp.fit.inside }
     ]
     const metadata = { contentType: contentType };
-    const promises:Promise<void>[] = []
+    const promises: Promise<void>[] = []
 
     for (const resize of resizes) {
         // We add a 'thumb_' prefix to thumbnails file name.
@@ -46,7 +46,7 @@ exports = module.exports = functions.storage.object().onFinalize(async (object) 
         // Create Sharp pipeline for resizing the image and use pipe to read from bucket read stream
         // rotate() is needed here, it will read the EXIF orientation info and make the thumbnails match
         const pipeline = sharp().rotate()
-        pipeline.resize(resize.size, resize.size, {fit: resize.fit}).pipe(thumbnailUploadStream)
+        pipeline.resize(resize.size, resize.size, { fit: resize.fit }).pipe(thumbnailUploadStream)
         bucket.file(filePath).createReadStream().pipe(pipeline).on('end', () => {
             console.log('Created thumbnail: ', thumbFileName)
         })
@@ -58,8 +58,8 @@ exports = module.exports = functions.storage.object().onFinalize(async (object) 
     return Promise.all(promises)
 })
 
-function validateImage(object:any):boolean {
-    
+function validateImage(object: any): boolean {
+
     const filePath = object.name
     const contentType = object.contentType
     if (!filePath || !contentType) {

@@ -19,7 +19,7 @@ const gcs = new Storage.Storage();
 const THUMB_PREFIX = "thumb_";
 
 exports = module.exports = functions.storage.object().onFinalize(async (object) => {
-    if (!validateVideo(object)){
+    if (!validateVideo(object)) {
         return false
     }
 
@@ -49,7 +49,7 @@ exports = module.exports = functions.storage.object().onFinalize(async (object) 
 
     // 3. Create the screenshot
     await ffmpeg(tmpFilePath)
-        .on('filenames', (filenames:string[]) => {
+        .on('filenames', (filenames: string[]) => {
             console.log('Will generate ' + filenames.join(', '))
             thumbnailGeneratedName = filenames[0]
         })
@@ -80,7 +80,7 @@ exports = module.exports = functions.storage.object().onFinalize(async (object) 
     return true
 })
 
-function validateVideo(object:any) {
+function validateVideo(object: any) {
     const contentType = object.contentType
     const filePath = object.name
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Login, { LoginControl } from './Login';
 
-storiesOf('Login', module)
+storiesOf('common/Login', module)
     .add('link', () => <Login control={LoginControl.Link} />)
     .add('button', () => <Login control={LoginControl.Button} />)
     .add('admin link', () => <Login control={LoginControl.Link} adminLogin={true} />)

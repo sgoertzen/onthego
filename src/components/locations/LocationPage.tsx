@@ -148,11 +148,11 @@ class LocationPage extends React.Component {
         return visited;
     }
 
-    computeDistanceTraveled(locations:ITravelLocation[]):number {
+    computeDistanceTraveled(locations: ITravelLocation[]): number {
         let total = 0;
         let now = new Date()
         locations.forEach(loc => {
-            if (loc.arrive.toDate() < now && loc.distance){
+            if (loc.arrive.toDate() < now && loc.distance) {
                 total += loc.distance
             }
         });
@@ -161,7 +161,7 @@ class LocationPage extends React.Component {
 
     render() {
         let daysOnTheRoad = Math.max(differenceInDays(new Date(), new Date(2019, 6, 27)), 0)
- 
+
         return (
             <div className="App">
                 <div className="App-header"><LocationSelector locs={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} /></div>

@@ -25,7 +25,7 @@ export class TravelLocation implements ITravelLocation {
     arrive: TimeStamp
     depart: TimeStamp
     distance: number
-    
+
     static encode(name: string): string {
         return name.replace(' ', '-').toLowerCase()
     }
