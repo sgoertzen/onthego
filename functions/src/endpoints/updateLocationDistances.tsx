@@ -35,7 +35,9 @@ exports = module.exports = functions.firestore.document('locations/{locationid}'
         change.after.exists) {
         const before = change.before.data() as ITravelLocation
         const after = change.after.data() as ITravelLocation
-        if (before.coords.isEqual(after.coords)){
+        if (before.coords.isEqual(after.coords) &&
+            before.arrive === after.arrive &&
+            before.depart === after.depart){
             // Matching lat long, exit early
             console.debug("Exiting as lat and long match")
             return null;
@@ -58,11 +60,12 @@ exports = module.exports = functions.firestore.document('locations/{locationid}'
         let previous:ITravelLocation|null = null;
         const promises = []
         for (const current of locations) {
-            if (previous === null) {continue} // No distance on the first location
-            const dist = haversine.distanceMiles(previous.coords, current.coords)
-            if (dist !== current.distance) {
-                console.debug(`Setting distance of ${dist} on ${current.id}.  Previous distance was ${previous.distance}`)
-                promises.push(setDistance(current, dist))
+            if (previous !== null) { // No distance on the first location
+                const dist = haversine.distanceMiles(previous.coords, current.coords)
+                if (dist !== current.distance) {
+                    console.debug(`Setting distance of ${dist} on ${current.id}.  Previous distance was ${previous.distance}`)
+                    promises.push(setDistance(current, dist))
+                }
             }
             previous = current
         }
