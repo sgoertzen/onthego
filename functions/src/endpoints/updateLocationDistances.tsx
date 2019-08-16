@@ -56,8 +56,8 @@ exports = module.exports = functions.firestore.document('locations/{locationid}'
         // Loop over all locations and calculate the distance, 
         // only update the database if the distance value is different
         let previous:ITravelLocation|null = null;
-        let promises = []
-        for (let current of locations) {
+        const promises = []
+        for (const current of locations) {
             if (previous == null) {continue} // No distance on the first location
             const dist = haversine.distanceMiles(previous.coords, current.coords)
             if (dist !== current.distance) {
