@@ -26,6 +26,7 @@ interface ILocationPageState {
     selectedLocationNameEncoded?: string
     selectedLocation?: ITravelLocation
     countriesVisited: number
+    distanceTraveled: number
 }
 
 class LocationPage extends React.Component {
@@ -46,7 +47,7 @@ class LocationPage extends React.Component {
         if (this.props.match && this.props.match.params) {
             locName = this.props.match.params.locationName;
         }
-        this.state = { locs: emptyLocations, posts: emptyPosts, selectedLocationNameEncoded: locName, countriesVisited: 0 }
+        this.state = { locs: emptyLocations, posts: emptyPosts, selectedLocationNameEncoded: locName, countriesVisited: 0, distanceTraveled: 0 }
         this.loadLocations()
     }
 
@@ -90,7 +91,8 @@ class LocationPage extends React.Component {
             this.loadPosts(this.state.selectedLocation.id)
         }
         this.setState({
-            countriesVisited: this.computeCountriesVisited(locations)
+            countriesVisited: this.computeCountriesVisited(locations),
+            distanceTraveled: this.computeDistanceTraveled(locations)
         })
     }
 
@@ -150,16 +152,26 @@ class LocationPage extends React.Component {
         return visited;
     }
 
+    computeDistanceTraveled(locations:ITravelLocation[]):number {
+        let total = 0;
+        let now = new Date()
+        locations.forEach(loc => {
+            if (loc.arrive.toDate() < now && loc.distance){
+                total += loc.distance
+            }
+        });
+        return total;
+    }
+
     render() {
         let daysOnTheRoad = Math.max(differenceInDays(new Date(), new Date(2019, 6, 27)), 0)
-        let milesTraveled = daysOnTheRoad > 10 ? (4804 + 2566.63) : 2566.63
-
+ 
         return (
             <div className="App">
                 <div className="App-header"><LocationSelector locs={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} /></div>
                 <div className="App-details"><LocationDetails location={this.state.selectedLocation} /></div>
                 <div className="App-map"><TravelMap locations={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} /></div>
-                <div className="App-stats"><TripStats daysOnTheRoad={daysOnTheRoad} countriesVisited={this.state.countriesVisited} milesTraveled={milesTraveled} /></div>
+                <div className="App-stats"><TripStats daysOnTheRoad={daysOnTheRoad} countriesVisited={this.state.countriesVisited} milesTraveled={this.state.distanceTraveled} /></div>
                 <div className="App-posts"><PostTiles posts={this.state.posts} onPostClick={this.postClick} /></div>
             </div>
         );
