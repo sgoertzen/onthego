@@ -7,13 +7,11 @@
     "sourceMap": true,
     "strict": true,
     "target": "es2017",
-    "jsx": "preserve"
+    "jsx": "react"
   },
   "compileOnSave": true,
   "include": [
     "src"
   ],
-  "exclude": [
-    "src/util/haversine.test.tsx"
-  ]
+  "exclude" : ["src/**/*.test.tsx"]
 }

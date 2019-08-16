@@ -58,7 +58,7 @@ exports = module.exports = functions.firestore.document('locations/{locationid}'
         let previous:ITravelLocation|null = null;
         const promises = []
         for (const current of locations) {
-            if (previous == null) {continue} // No distance on the first location
+            if (previous === null) {continue} // No distance on the first location
             const dist = haversine.distanceMiles(previous.coords, current.coords)
             if (dist !== current.distance) {
                 console.debug(`Setting distance of ${dist} on ${current.id}.  Previous distance was ${previous.distance}`)
