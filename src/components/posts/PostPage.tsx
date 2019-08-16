@@ -8,6 +8,7 @@ import "firebase/firestore";
 import { IHistoryProps } from '../../classes/IHistoryProps';
 import { IComment } from '../../classes/Comment';
 import PostComments from './PostComments';
+import { ITravelLocation } from '../../classes/TravelLocation';
 
 interface postDetailsProps {
     post?: IPost
@@ -23,6 +24,7 @@ interface postDeatilsState {
     post?: IPost
     comments: IComment[]
     loading: boolean
+    locationname?: string
 }
 
 class PostPage extends React.Component {
@@ -36,6 +38,8 @@ class PostPage extends React.Component {
         this.fetchPost = this.fetchPost.bind(this)
         this.postLoaded = this.postLoaded.bind(this)
         this.commentsChanged = this.commentsChanged.bind(this)
+        this.fetchLocation = this.fetchLocation.bind(this)
+        this.locationLoaded = this.locationLoaded.bind(this)
 
         let needToLoad = (!this.props.post && this.props.match && this.props.match.params && this.props.match.params.postid) as boolean;
         this.state = { post: this.props.post, loading: needToLoad, comments: [] }
@@ -59,6 +63,16 @@ class PostPage extends React.Component {
         this.setState({
             post: post,
             loading: false
+        })
+        this.fetchLocation(post.locationid)
+    }
+    fetchLocation(locationID: string): void {
+        firebase.firestore().collection("locations").doc(locationID).get().then(this.locationLoaded)
+    }
+    locationLoaded(docSnapshot: firebase.firestore.DocumentSnapshot) {
+        let location = docSnapshot.data() as ITravelLocation
+        this.setState({
+            locationname: location.name
         })
     }
 
@@ -103,7 +117,7 @@ class PostPage extends React.Component {
         let post = this.state.post
         return (
             <div>
-                <PostMenu history={this.props.history} />
+                <PostMenu history={this.props.history} locationname={this.state.locationname}/>
                 <PostHeader title={post.title} author={post.author} date={post.posted.toDate()} details={post.details} />
                 <PostMedia items={post.media} />
                 <PostComments comments={this.state.comments} username={this.props.username} postid={post.id} onChange={this.commentsChanged} />

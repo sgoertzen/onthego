@@ -43,7 +43,7 @@ exports = module.exports = functions.firestore.document('locations/{locationid}'
             return null;
         }
     }
-    console.log("Working with", context.params.locationid)
+    console.debug("Updating distance for ", context.params.locationid)
     
     // Fetch all the locations, ordering by arrival date
     return db.collection("locations").orderBy("arrive").get().then(async (querySnapshot) => {
@@ -54,7 +54,6 @@ exports = module.exports = functions.firestore.document('locations/{locationid}'
             locations.push(loc)
         })
 
-        console.log(`Looping over ${locations.length} locations`)
         // Loop over all locations and calculate the distance, 
         // only update the database if the distance value is different
         let previous:ITravelLocation|null = null;

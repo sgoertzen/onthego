@@ -9,6 +9,7 @@ export interface IPost {
     author: string
     details: string
     posted: TimeStamp
+    locationid: string
 }
 
 export class Post implements IPost {
@@ -19,6 +20,7 @@ export class Post implements IPost {
         this.author = author
         this.posted = posted
         this.details = details
+        this.locationid = ""
     }
     id = ""
     title = ""
@@ -27,4 +29,5 @@ export class Post implements IPost {
     author = ""
     posted = new TimeStamp()
     details = ""
+    locationid = ""
 }

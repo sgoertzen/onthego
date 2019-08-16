@@ -44,8 +44,8 @@ class LocationPage extends React.Component {
         this.loadLocations = this.loadLocations.bind(this);
         this.locationsLoaded = this.locationsLoaded.bind(this);
         let locName: string | undefined
-        if (this.props.match && this.props.match.params) {
-            locName = this.props.match.params.locationName;
+        if (this.props.match && this.props.match.params && this.props.match.params.locationName) {
+            locName = this.props.match.params.locationName.toLowerCase();
         }
         this.state = { locs: emptyLocations, posts: emptyPosts, selectedLocationNameEncoded: locName, countriesVisited: 0, distanceTraveled: 0 }
         this.loadLocations()
@@ -68,7 +68,7 @@ class LocationPage extends React.Component {
         if (this.state.selectedLocationNameEncoded) {
             // Loop over locations and find the one matching this name
             locations.forEach(loc => {
-                if (this.state.selectedLocationNameEncoded && this.encode(loc.name) === this.state.selectedLocationNameEncoded) {
+                if (this.state.selectedLocationNameEncoded && TravelLocation.encode(loc.name) === this.state.selectedLocationNameEncoded) {
                     this.setState({ selectedLocation: loc })
                 }
             });
@@ -117,7 +117,7 @@ class LocationPage extends React.Component {
         locations.forEach(loc => {
             if (loc.id === locationId) {
                 if (this.props.history) {
-                    this.props.history.push('/location/' + this.encode(loc.name))
+                    this.props.history.push('/location/' + TravelLocation.encode(loc.name))
                     this.setState({ selectedLocation: loc })
                     this.loadPosts(loc.id)
                 } else {
@@ -127,10 +127,6 @@ class LocationPage extends React.Component {
                 }
             }
         });
-    }
-
-    encode(name: string): string {
-        return name.replace(' ', '-').toLowerCase()
     }
 
     postClick(postID: string): void {

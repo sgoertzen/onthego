@@ -1,3 +1,12 @@
+// ****************************************************************************
+//  Update Comment Count
+//
+//  Description: Calculates the number of comments for a post and sets that
+//   value on post
+//     
+//  Trigger: Any change to a comment in the database
+//     
+// ****************************************************************************
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 

@@ -1,3 +1,12 @@
+// ****************************************************************************
+//  Generate Video Thumbnail
+//
+//  Description: Creates a thumbnail for an uploaded video.  Uses the first 
+//    frame of the video for the screenshot.  
+//     
+//  Trigger: Any file uploaded to postvideos/
+//     
+// ****************************************************************************
 import * as functions from 'firebase-functions'
 
 import { basename, join, dirname, extname } from 'path'
