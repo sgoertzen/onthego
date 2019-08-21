@@ -32,6 +32,7 @@ interface ILocationEntryState {
     departure: Date
 }
 
+// TODO: Support editing a post when locationid is passed in
 class LocationEntry extends React.Component {
 
     public state: ILocationEntryState;

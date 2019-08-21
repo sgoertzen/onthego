@@ -52,14 +52,12 @@ class LocationList extends React.Component {
         this.setState({ locs: locations })
     }
 
-    addPost(loc: ITravelLocation) {
-        console.log("Creating post for ", loc.name)
-        this.props.history.push("/notadmin/postentry/" + loc.id)
+    viewLocation(loc: ITravelLocation) {
+        this.props.history.push(`/notadmin/location/${loc.id}`)
     }
 
     edit(loc: ITravelLocation): void {
-        console.log("Would edit: " + loc.name);
-        this.props.history.push("/notadmin/locationentry/" + loc.id)
+        this.props.history.push(`/notadmin/locationentry/${loc.id}`)
     }
 
     delete(loc: ITravelLocation): void {
@@ -92,7 +90,7 @@ class LocationList extends React.Component {
                             <TableCell align="right">Depart</TableCell>
                             <TableCell align="right">Latitude</TableCell>
                             <TableCell align="right">Longitude</TableCell>
-                            <TableCell align="center">Posts</TableCell>
+                            <TableCell align="center">Details</TableCell>
                             <TableCell align="center">Actions</TableCell>
                         </TableRow>
                     </TableHead>
@@ -107,8 +105,8 @@ class LocationList extends React.Component {
                                 <TableCell align="right">{loc.coords.latitude}</TableCell>
                                 <TableCell align="right">{loc.coords.longitude}</TableCell>
                                 <TableCell align="center">
-                                    <Button variant="outlined" onClick={() => { this.addPost(loc) }}>
-                                        Add Post
+                                    <Button variant="outlined" onClick={() => { this.viewLocation(loc) }}>
+                                        Posts
                                     </Button>
                                 </TableCell>
                                 <TableCell align="center">
@@ -117,11 +115,11 @@ class LocationList extends React.Component {
                                             <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" /><path d="M0 0h24v24H0z" fill="none" />
                                         </SvgIcon>
                                     </IconButton>
-                                    <IconButton aria-label="Delete" onClick={() => { this.delete(loc) }}>
+                                    {/* <IconButton aria-label="Delete" onClick={() => { this.delete(loc) }}>
                                         <SvgIcon>
                                             <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" /><path d="M0 0h24v24H0z" fill="none" />
                                         </SvgIcon>
-                                    </IconButton>
+                                    </IconButton> */}
                                 </TableCell>
                             </TableRow>
                         ))}

@@ -24,16 +24,17 @@ interface postEntryProps {
     match: {
         params: {
             locationid: string
+            postid?: string
         }
     }
 }
-
 
 interface IPostEntryState {
     title: string
     details: string
     uploads: IMedia[]
     locationid: string
+    postid?: string
 }
 
 class PostEntry extends React.Component {
@@ -48,6 +49,7 @@ class PostEntry extends React.Component {
             title: this.props.title || "",
             details: this.props.details || "",
             locationid: this.props.match.params.locationid,
+            postid: this.props.match.params.postid,
             uploads: [],
         }
         this.handleChange = this.handleChange.bind(this)

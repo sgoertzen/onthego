@@ -35,24 +35,24 @@ class PostPage extends React.Component {
     constructor(props: postDetailsProps) {
         super(props);
         this.props = props;
-        this.fetchPost = this.fetchPost.bind(this)
+        this.loadPost = this.loadPost.bind(this)
         this.postLoaded = this.postLoaded.bind(this)
         this.commentsChanged = this.commentsChanged.bind(this)
-        this.fetchLocation = this.fetchLocation.bind(this)
+        this.loadLocation = this.loadLocation.bind(this)
         this.locationLoaded = this.locationLoaded.bind(this)
 
         let needToLoad = (!this.props.post && this.props.match && this.props.match.params && this.props.match.params.postid) as boolean;
         this.state = { post: this.props.post, loading: needToLoad, comments: [] }
 
         if (!this.props.post && this.props.match && this.props.match.params && this.props.match.params.postid) {
-            this.fetchPost(this.props.match.params.postid)
+            this.loadPost(this.props.match.params.postid)
             this.fetchComments(this.props.match.params.postid)
         } else {
             console.log("No post id provided")
         }
     }
 
-    fetchPost(postID: string): void {
+    loadPost(postID: string): void {
         firebase.firestore().collection("posts").doc(postID).get().then(this.postLoaded)
     }
 
@@ -64,9 +64,9 @@ class PostPage extends React.Component {
             post: post,
             loading: false
         })
-        this.fetchLocation(post.locationid)
+        this.loadLocation(post.locationid)
     }
-    fetchLocation(locationID: string): void {
+    loadLocation(locationID: string): void {
         firebase.firestore().collection("locations").doc(locationID).get().then(this.locationLoaded)
     }
     locationLoaded(docSnapshot: firebase.firestore.DocumentSnapshot) {
