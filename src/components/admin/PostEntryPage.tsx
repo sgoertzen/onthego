@@ -48,7 +48,7 @@ class PostEntryPage extends React.Component {
 
     backToList() {
         if (this.props.history) {
-            this.props.history.push(`/notadmin/location/${this.props.match.params}`)
+            this.props.history.push(`/notadmin/location/${this.props.match.params.locationid}`)
         }
     }
 
