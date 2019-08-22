@@ -1,15 +1,15 @@
 import React from 'react';
 import './LocationPage.css';
 import TravelMap from './TravelMap';
-import * as firebase from "firebase/app";
 import { ITravelLocation, TravelLocation } from '../../classes/TravelLocation';
 import LocationSelector from './LocationSelector';
-import { IPost, Post } from '../../classes/Post';
+import { Post } from '../../classes/Post';
 import PostTiles from './PostTiles';
 import TripStats from './TripStats';
 import { differenceInDays } from 'date-fns';
 import { IHistoryProps } from '../../classes/IHistoryProps';
 import LocationDetails from './LocationDetails';
+import { FirestoreHelper } from '../../util/FirestoreHelper';
 
 interface ILocationPageProps {
     match?: {
@@ -41,27 +41,16 @@ class LocationPage extends React.Component {
         let emptyPosts: Post[] = [];
         this.locationChanged = this.locationChanged.bind(this);
         this.postClick = this.postClick.bind(this);
-        this.loadLocations = this.loadLocations.bind(this);
         this.locationsLoaded = this.locationsLoaded.bind(this);
         let locName: string | undefined
         if (this.props.match && this.props.match.params && this.props.match.params.locationName) {
             locName = this.props.match.params.locationName.toLowerCase();
         }
         this.state = { locs: emptyLocations, posts: emptyPosts, selectedLocationNameEncoded: locName, countriesVisited: 0, distanceTraveled: 0 }
-        this.loadLocations()
+        FirestoreHelper.loadLocations(this.locationsLoaded)
     }
 
-    loadLocations(): void {
-        firebase.firestore().collection("locations").orderBy("arrive").get().then(this.locationsLoaded);
-    }
-
-    locationsLoaded(querySnapshot: firebase.firestore.QuerySnapshot): void {
-        const locations: ITravelLocation[] = [];
-        querySnapshot.forEach((doc) => {
-            let loc = doc.data() as ITravelLocation
-            loc.id = doc.id
-            locations.push(loc)
-        })
+    locationsLoaded(locations: ITravelLocation[]): void {
         this.setState({ locs: locations })
 
         // Try to find the location based on the name passed in
@@ -88,7 +77,10 @@ class LocationPage extends React.Component {
             this.setState({ selectedLocation: locations[0] })
         }
         if (this.state.selectedLocation) {
-            this.loadPosts(this.state.selectedLocation.id)
+            let that = this
+            FirestoreHelper.loadPosts(this.state.selectedLocation.id, (posts) => {
+                that.setState({ posts: posts })
+            })
         }
         this.setState({
             countriesVisited: this.computeCountriesVisited(locations),
@@ -96,21 +88,6 @@ class LocationPage extends React.Component {
         })
     }
 
-    loadPosts(locationId: string): void {
-        var db = firebase.firestore();
-        var postsRef = db.collection("posts")
-        postsRef.where("locationid", "==", locationId).orderBy("posted").get().then((querySnapshot) => {
-            let posts: IPost[] = [];
-            querySnapshot.forEach(function(doc) {
-                let post: IPost = doc.data() as IPost
-                post.id = doc.id
-                posts.push(post)
-            });
-            this.setState({
-                posts: posts
-            })
-        })
-    }
 
     locationChanged(locationId: string): void {
         let locations = this.state.locs
@@ -118,13 +95,14 @@ class LocationPage extends React.Component {
             if (loc.id === locationId) {
                 if (this.props.history) {
                     this.props.history.push('/location/' + TravelLocation.encode(loc.name))
-                    this.setState({ selectedLocation: loc })
-                    this.loadPosts(loc.id)
                 } else {
                     console.log('No history object found, falling back')
-                    this.setState({ selectedLocation: loc })
-                    this.loadPosts(loc.id)
                 }
+                this.setState({ selectedLocation: loc })
+                let that = this
+                FirestoreHelper.loadPosts(loc.id, (posts) => {
+                    that.setState({ posts: posts })
+                })
             }
         });
     }

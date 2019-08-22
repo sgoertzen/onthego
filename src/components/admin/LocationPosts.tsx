@@ -1,11 +1,10 @@
 import React from 'react';
 import { format } from 'date-fns';
-import * as firebase from "firebase/app";
 import { IHistoryProps } from '../../classes/IHistoryProps';
 import { Paper, Table, TableRow, TableBody, TableHead, TableCell, IconButton, SvgIcon, Button } from '@material-ui/core'
 import { IPost } from '../../classes/Post';
 import { ITravelLocation } from '../../classes/TravelLocation';
-
+import { FirestoreHelper } from '../../util/FirestoreHelper';
 
 interface ILocationPostsProps {
     history: IHistoryProps
@@ -30,49 +29,28 @@ class LocationPosts extends React.Component {
     constructor(props: ILocationPostsProps) {
         super(props);
         this.props = props;
-        
-        let locid = this.props.match.params.locationid 
+
+        let locid = this.props.match.params.locationid
         this.state = {
             posts: [],
             locationid: locid
         }
 
-        this.loadLocation = this.loadLocation.bind(this)
-        this.locationLoaded = this.locationLoaded.bind(this)
-        this.loadPosts = this.loadPosts.bind(this)
-        this.postsLoaded = this.postsLoaded.bind(this)
         this.create = this.create.bind(this)
         this.edit = this.edit.bind(this)
         this.delete = this.delete.bind(this)
         this.viewPost = this.viewPost.bind(this)
-        this.loadLocation(locid)
-        this.loadPosts(locid)
-    }
 
-    loadLocation(locationID: string): void {
-        firebase.firestore().collection("locations").doc(locationID).get().then(this.locationLoaded)
-    }
-    locationLoaded(docSnapshot: firebase.firestore.DocumentSnapshot) {
-        let location = docSnapshot.data() as ITravelLocation
-        this.setState({
-            location: location
+        let that = this
+        FirestoreHelper.loadLocation(locid, (loc) => {
+            that.setState({ location: loc })
+        })
+        FirestoreHelper.loadPosts(locid, (posts) => {
+            this.setState({ posts: posts })
         })
     }
-    
-    loadPosts(locationid: string): void {
-        firebase.firestore().collection("posts").where("locationid", "==", locationid).orderBy("posted").get().then(this.postsLoaded);
-    }
 
-    postsLoaded(querySnapshot: firebase.firestore.QuerySnapshot): void {
-        const posts: IPost[] = [];
-        querySnapshot.forEach((doc) => {
-            let loc = doc.data() as IPost
-            loc.id = doc.id
-            posts.push(loc)
-        })
-        this.setState({ posts: posts })
-    }
-    
+
     viewPost(post: IPost) {
         this.props.history.push(`/post/${post.id}`)
     }

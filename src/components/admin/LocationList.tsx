@@ -5,6 +5,7 @@ import { ITravelLocation } from '../../classes/TravelLocation';
 import { format } from 'date-fns';
 import * as firebase from "firebase/app";
 import { IHistoryProps } from '../../classes/IHistoryProps';
+import { FirestoreHelper } from '../../util/FirestoreHelper';
 
 
 interface ILocationListProps {
@@ -31,25 +32,12 @@ class LocationList extends React.Component {
         this.state = {
             locs: locs
         }
-        this.loadLocations = this.loadLocations.bind(this);
-        this.locationsLoaded = this.locationsLoaded.bind(this);
         if (locs.length === 0) {
-            this.loadLocations()
+            let that = this
+            FirestoreHelper.loadLocations((locs) => {
+                that.setState({ locs: locs })
+            })
         }
-    }
-
-    loadLocations(): void {
-        firebase.firestore().collection("locations").orderBy("arrive").get().then(this.locationsLoaded);
-    }
-
-    locationsLoaded(querySnapshot: firebase.firestore.QuerySnapshot): void {
-        const locations: ITravelLocation[] = [];
-        querySnapshot.forEach((doc) => {
-            let loc = doc.data() as ITravelLocation
-            loc.id = doc.id
-            locations.push(loc)
-        })
-        this.setState({ locs: locations })
     }
 
     viewLocation(loc: ITravelLocation) {
@@ -106,7 +94,7 @@ class LocationList extends React.Component {
                                 <TableCell align="right">{loc.coords.longitude}</TableCell>
                                 <TableCell align="center">
                                     <Button variant="outlined" onClick={() => { this.viewLocation(loc) }}>
-                                        Posts
+                                        Details
                                     </Button>
                                 </TableCell>
                                 <TableCell align="center">

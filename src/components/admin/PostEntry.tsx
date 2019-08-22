@@ -3,38 +3,29 @@ import './LocationEntry.css';
 import * as firebase from "firebase/app";
 import "firebase/storage"
 import { ITravelLocation } from '../../classes/TravelLocation';
-import { TextField, Button, Divider, Container } from '@material-ui/core';
+import { TextField, Button, Divider, Container, Typography } from '@material-ui/core';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import UploadingMedia from './UploadingMedia';
 import { MediaHelper } from '../../util/MediaHelper';
 import { IMedia, Media } from '../../classes/Media';
-import { IHistoryProps } from '../../classes/IHistoryProps';
+import { IPost } from '../../classes/Post';
 
-// Todo: may want to move this out of this class later
 export interface IPostCreated {
     (): void;
 }
 
 interface postEntryProps {
-    title?: string,
-    details?: string,
     loc: ITravelLocation
+    post?: IPost
     onPostCreated: IPostCreated
-    history?: IHistoryProps
-    match: {
-        params: {
-            locationid: string
-            postid?: string
-        }
-    }
 }
 
 interface IPostEntryState {
     title: string
     details: string
     uploads: IMedia[]
+    editing: boolean
     locationid: string
-    postid?: string
 }
 
 class PostEntry extends React.Component {
@@ -46,17 +37,16 @@ class PostEntry extends React.Component {
         super(props);
         this.props = props;
         this.state = {
-            title: this.props.title || "",
-            details: this.props.details || "",
-            locationid: this.props.match.params.locationid,
-            postid: this.props.match.params.postid,
+            title: this.props.post ? this.props.post.title : "",
+            details: this.props.post ? this.props.post.details : "",
+            locationid: this.props.loc.id,
             uploads: [],
+            editing: (this.props.post !== undefined)
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.isUploading = this.isUploading.bind(this)
         this.updateUploadState = this.updateUploadState.bind(this)
-        this.backToList = this.backToList.bind(this)
     }
 
     handleChange(event: any) {
@@ -117,7 +107,6 @@ class PostEntry extends React.Component {
     }
 
     updateUploadState(filename: string, percentUploaded?: number, url?: string, error?: Error) {
-
         let uploadings = this.state.uploads
         for (let upload of uploadings) {
             if (upload.filename === filename) {
@@ -126,7 +115,6 @@ class PostEntry extends React.Component {
                 }
                 if (url) {
                     upload.url = url
-                    //upload.thumbnail = url.replace("postimages%2F", "postimages%2Fthumb_")
                     upload.filetype = MediaHelper.getFiletype(filename)
                 }
                 if (percentUploaded) {
@@ -169,18 +157,13 @@ class PostEntry extends React.Component {
             media: this.prepMediaForSaving(this.state.uploads)
         }).then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);
-            that.backToList()
+            that.props.onPostCreated()
         }).catch(function(error) {
             console.error("Error adding document: ", error);
             alert('failed uploading, check logs')
         });
     }
 
-    backToList() {
-        if (this.props.history) {
-            this.props.history.push("/notadmin/")
-        }
-    }
 
     isUploading() {
         for (let file of this.state.uploads) {
@@ -210,7 +193,7 @@ class PostEntry extends React.Component {
                 onSubmit={this.handleSubmit}
             >
                 <Container maxWidth="md">
-
+                    <Typography>Adding post for {this.props.loc.name}</Typography>
                     <TextValidator
                         required
                         id="post-entry-title"
