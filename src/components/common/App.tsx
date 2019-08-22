@@ -7,13 +7,14 @@ import { Post } from '../../classes/Post';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom'
 import LocationPage from '../locations/LocationPage';
 import LocationList from '../admin/LocationList';
-import PostEntry from '../admin/PostEntry'
+import PostEntryPage from '../admin/PostEntryPage'
 import LocationEntry from '../admin/LocationEntry'
 import Header from './Header'
 import Footer from './Footer';
 import AdminMenuBar from '../admin/AdminMenuBar';
 import AdminFooter from '../admin/AdminFooter';
 import PostPage from '../posts/PostPage';
+import LocationPosts from '../admin/LocationPosts';
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -60,8 +61,11 @@ class App extends React.Component {
                         <Route exact path="/location/:locationName" component={LocationPage} />
                         <Route exact path="/post/:postid" render={(props) => <PostPage {...props} username={this.state.username} />} />
                         <Route exact path="/notadmin" component={LocationList} />
-                        <Route exact path="/notadmin/postentry/:locationid" component={PostEntry} />
                         <Route exact path="/notadmin/locationentry" component={LocationEntry} />
+                        <Route exact path="/notadmin/locationentry/:locationid" component={LocationEntry} />
+                        <Route exact path="/notadmin/location/:locationid" component={LocationPosts} />
+                        <Route exact path="/notadmin/location/:locationid/postentry" component={PostEntryPage} />
+                        <Route exact path="/notadmin/location/:locationid/postentry/:postid" component={PostEntryPage} />
                         <Redirect to="/" />
                     </Switch>
                     <Switch>

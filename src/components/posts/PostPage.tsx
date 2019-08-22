@@ -3,12 +3,11 @@ import { IPost } from '../../classes/Post';
 import PostMenu from './PostMenu';
 import PostHeader from './PostHeader';
 import PostMedia from './PostMedia';
-import * as firebase from "firebase/app";
 import "firebase/firestore";
 import { IHistoryProps } from '../../classes/IHistoryProps';
 import { IComment } from '../../classes/Comment';
 import PostComments from './PostComments';
-import { ITravelLocation } from '../../classes/TravelLocation';
+import { FirestoreHelper } from '../../util/FirestoreHelper';
 
 interface postDetailsProps {
     post?: IPost
@@ -35,66 +34,33 @@ class PostPage extends React.Component {
     constructor(props: postDetailsProps) {
         super(props);
         this.props = props;
-        this.fetchPost = this.fetchPost.bind(this)
-        this.postLoaded = this.postLoaded.bind(this)
         this.commentsChanged = this.commentsChanged.bind(this)
-        this.fetchLocation = this.fetchLocation.bind(this)
-        this.locationLoaded = this.locationLoaded.bind(this)
 
         let needToLoad = (!this.props.post && this.props.match && this.props.match.params && this.props.match.params.postid) as boolean;
         this.state = { post: this.props.post, loading: needToLoad, comments: [] }
 
         if (!this.props.post && this.props.match && this.props.match.params && this.props.match.params.postid) {
-            this.fetchPost(this.props.match.params.postid)
-            this.fetchComments(this.props.match.params.postid)
+            let that = this
+            FirestoreHelper.loadPost(this.props.match.params.postid, (post) => {
+                that.setState({
+                    post: post,
+                    loading: false
+                })
+            })
+            FirestoreHelper.loadComments(this.props.match.params.postid, (comments) => {
+                that.setState({ comments: comments })
+            })
         } else {
             console.log("No post id provided")
         }
     }
 
-    fetchPost(postID: string): void {
-        firebase.firestore().collection("posts").doc(postID).get().then(this.postLoaded)
-    }
-
-    postLoaded(docSnapshot: firebase.firestore.DocumentSnapshot): void {
-        let post = docSnapshot.data() as IPost
-        post.id = docSnapshot.id
-
-        this.setState({
-            post: post,
-            loading: false
-        })
-        this.fetchLocation(post.locationid)
-    }
-    fetchLocation(locationID: string): void {
-        firebase.firestore().collection("locations").doc(locationID).get().then(this.locationLoaded)
-    }
-    locationLoaded(docSnapshot: firebase.firestore.DocumentSnapshot) {
-        let location = docSnapshot.data() as ITravelLocation
-        this.setState({
-            locationname: location.name
-        })
-    }
-
-    fetchComments(postID: string): void {
-        var db = firebase.firestore();
-        var postsRef = db.collection("comments")
-        postsRef.where("postid", "==", postID).orderBy("posted").get().then((querySnapshot) => {
-            let comments: IComment[] = [];
-            querySnapshot.forEach(function(doc) {
-                let comment: IComment = doc.data() as IComment
-                comment.commentid = doc.id
-                comments.push(comment)
-            });
-            this.setState({
-                comments: comments
-            })
-        })
-    }
-
     commentsChanged() {
         if (this.state.post) {
-            this.fetchComments(this.state.post.id)
+            let that = this
+            FirestoreHelper.loadComments(this.state.post.id, (comments) => {
+                that.setState({ comments: comments })
+            })
         } else {
             console.log("Warning: Comment change event occured but no post found.")
         }

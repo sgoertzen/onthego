@@ -27,7 +27,7 @@ class Header extends React.Component {
     render() {
         return (
             <Typography variant="h4" onClick={this.goHome} className="header">
-                Goertzens on the go
+                Goertzens on the Go
             </Typography>
         );
     }
