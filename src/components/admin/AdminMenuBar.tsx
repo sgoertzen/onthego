@@ -22,7 +22,6 @@ class AdminMenuBar extends React.Component {
             <AppBar position="static">
                 <Tabs value={0}>
                     <Tab label="Locations" key="locations" onClick={() => { this.props.history.push('/notadmin') }}></Tab>
-                    <Tab label="Add Location" key="add-loc" onClick={() => { this.props.history.push('/notadmin/locationentry') }}></Tab>
                     <Tab label="Back to main page" key="leave" onClick={() => { this.props.history.push('/') }}></Tab>
                 </Tabs>
             </AppBar>

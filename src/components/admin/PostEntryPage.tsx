@@ -35,13 +35,12 @@ class PostEntryPage extends React.Component {
 
         let locationid = this.props.match.params.locationid
         let postid = this.props.match.params.postid
-        let that = this
         FirestoreHelper.loadLocation(locationid, (loc) => {
-            that.setState({ location: loc })
+            this.setState({ location: loc })
         })
         if (postid) {
             FirestoreHelper.loadPost(postid, (post) => {
-                that.setState({ post: post })
+                this.setState({ post: post })
             })
         }
     }
