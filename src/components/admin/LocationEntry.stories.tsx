@@ -12,9 +12,9 @@ firebase.initializeApp(firebaseConfig);
 
 storiesOf('admin/Location Entry', module)
     .add('Basic Form', () => {
-        return <LocationEntry onLocationCreated={() => {}} />
+        return <LocationEntry onLocationCreated={() => { }} />
     })
     .add('Filled Form', () => {
         const loc = new TravelLocation("", "Antarctica", new firebase.firestore.GeoPoint(15.5, 31.156), new TimeStamp(), new TimeStamp())
-        return <LocationEntry loc={loc} onLocationCreated={() => {}}/>
+        return <LocationEntry loc={loc} onLocationCreated={() => { }} />
     })

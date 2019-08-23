@@ -180,7 +180,7 @@ class LocationEntry extends React.Component {
                         fullWidth
                     >
                         {this.props.loc !== undefined ? "Update Location" : "Add Location"}
-                </Button>
+                    </Button>
                 </Container>
             </ValidatorForm>
         );

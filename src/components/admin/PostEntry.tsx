@@ -152,7 +152,7 @@ class PostEntry extends React.Component {
                     details: this.state.details
                 })
                 .then(this.props.onPostCreated)
-                .catch((reason) => {console.error(`Unable to update the post: ${reason}`)})
+                .catch((reason) => { console.error(`Unable to update the post: ${reason}`) })
         } else {
             db.collection("posts")
                 .add({
@@ -164,7 +164,7 @@ class PostEntry extends React.Component {
                     media: this.prepMediaForSaving(this.state.uploads)
                 })
                 .then(this.props.onPostCreated)
-                .catch((reason) => {console.error(`Unable to update the post: ${reason}`)})
+                .catch((reason) => { console.error(`Unable to update the post: ${reason}`) })
         }
     }
 
@@ -197,7 +197,7 @@ class PostEntry extends React.Component {
                 onSubmit={this.handleSubmit}
             >
                 <Container maxWidth="md">
-                    <Typography>Adding post for {this.props.loc.name}</Typography>
+                    <Typography variant="h5">Adding post for {this.props.loc.name}</Typography>
                     <TextValidator
                         required
                         id="post-entry-title"

@@ -40,15 +40,14 @@ class PostPage extends React.Component {
         this.state = { post: this.props.post, loading: needToLoad, comments: [] }
 
         if (!this.props.post && this.props.match && this.props.match.params && this.props.match.params.postid) {
-            let that = this
             FirestoreHelper.loadPost(this.props.match.params.postid, (post) => {
-                that.setState({
+                this.setState({
                     post: post,
                     loading: false
                 })
             })
             FirestoreHelper.loadComments(this.props.match.params.postid, (comments) => {
-                that.setState({ comments: comments })
+                this.setState({ comments: comments })
             })
         } else {
             console.log("No post id provided")
@@ -57,9 +56,8 @@ class PostPage extends React.Component {
 
     commentsChanged() {
         if (this.state.post) {
-            let that = this
             FirestoreHelper.loadComments(this.state.post.id, (comments) => {
-                that.setState({ comments: comments })
+                this.setState({ comments: comments })
             })
         } else {
             console.log("Warning: Comment change event occured but no post found.")

@@ -22,7 +22,7 @@ class LocationEntryPage extends React.Component {
     public props: locationEntryPageProps
     public state: locationEntryPageState
 
-    constructor(props:locationEntryPageProps) {
+    constructor(props: locationEntryPageProps) {
         super(props)
         this.props = props
 
@@ -33,9 +33,8 @@ class LocationEntryPage extends React.Component {
 
         let locationid = this.props.match.params.locationid
         if (locationid) {
-            let that = this
             FirestoreHelper.loadLocation(locationid, (loc) => {
-                that.setState({ location: loc })
+                this.setState({ location: loc })
             })
         }
     }

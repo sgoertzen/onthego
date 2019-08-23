@@ -1,10 +1,10 @@
 import React from 'react';
 import { format } from 'date-fns';
 import { IHistoryProps } from '../../classes/IHistoryProps';
-import { Paper, Table, TableRow, TableBody, TableHead, TableCell, IconButton, SvgIcon, Button } from '@material-ui/core'
+import { Paper, Table, TableRow, TableBody, TableHead, TableCell, IconButton, SvgIcon, Button, Typography } from '@material-ui/core'
 import { IPost } from '../../classes/Post';
 import { ITravelLocation } from '../../classes/TravelLocation';
-import { FirestoreHelper } from '../../util/FirestoreHelper';
+import { FirestoreHelper } from '../../util/FirestoreHelper'
 
 interface ILocationPostsProps {
     history: IHistoryProps
@@ -41,9 +41,8 @@ class LocationPosts extends React.Component {
         this.delete = this.delete.bind(this)
         this.viewPost = this.viewPost.bind(this)
 
-        let that = this
         FirestoreHelper.loadLocation(locid, (loc) => {
-            that.setState({ location: loc })
+            this.setState({ location: loc })
         })
         FirestoreHelper.loadPosts(locid, (posts) => {
             this.setState({ posts: posts })
@@ -72,7 +71,7 @@ class LocationPosts extends React.Component {
         }
         return (
             <Paper className="root">
-                <h1>List of posts for {this.state.location.name}</h1>
+                <Typography variant="h5">List of posts for {this.state.location.name}</Typography>
                 <Button variant="outlined" onClick={() => { this.create(this.state.locationid) }}>
                     Create Post
                 </Button>

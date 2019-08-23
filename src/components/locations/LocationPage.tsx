@@ -77,9 +77,8 @@ class LocationPage extends React.Component {
             this.setState({ selectedLocation: locations[0] })
         }
         if (this.state.selectedLocation) {
-            let that = this
             FirestoreHelper.loadPosts(this.state.selectedLocation.id, (posts) => {
-                that.setState({ posts: posts })
+                this.setState({ posts: posts })
             })
         }
         this.setState({
@@ -99,9 +98,8 @@ class LocationPage extends React.Component {
                     console.log('No history object found, falling back')
                 }
                 this.setState({ selectedLocation: loc })
-                let that = this
                 FirestoreHelper.loadPosts(loc.id, (posts) => {
-                    that.setState({ posts: posts })
+                    this.setState({ posts: posts })
                 })
             }
         });
