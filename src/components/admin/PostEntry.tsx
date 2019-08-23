@@ -24,7 +24,6 @@ interface IPostEntryState {
     title: string
     details: string
     uploads: IMedia[]
-    editing: boolean
     locationid: string
 }
 
@@ -40,8 +39,7 @@ class PostEntry extends React.Component {
             title: this.props.post ? this.props.post.title : "",
             details: this.props.post ? this.props.post.details : "",
             locationid: this.props.loc.id,
-            uploads: [],
-            editing: (this.props.post !== undefined)
+            uploads: []
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -144,36 +142,29 @@ class PostEntry extends React.Component {
 
     handleSubmit() {
         const user = firebase.auth().currentUser
-        const that = this
         var db = firebase.firestore();
 
         if (this.props.post) {
             let post = this.props.post
-            console.log("Would updated editted post")
-            db.doc(`posts/${post.id}`).update({
-                title: this.state.title,
-                details: this.state.details
-            }).then(function() {
-                console.log("Post updated: ", post.id);
-                that.props.onPostCreated()
-            }).catch((reason) => {
-                console.error(`Unable to update the post: ${reason}`)
-            })
+            db.doc(`posts/${post.id}`)
+                .update({
+                    title: this.state.title,
+                    details: this.state.details
+                })
+                .then(this.props.onPostCreated)
+                .catch((reason) => {console.error(`Unable to update the post: ${reason}`)})
         } else {
-            db.collection("posts").add({
-                title: this.state.title,
-                details: this.state.details,
-                locationid: this.state.locationid,
-                author: user ? user.displayName : "(unknown)",
-                posted: new Date(),
-                media: this.prepMediaForSaving(this.state.uploads)
-            }).then(function(docRef) {
-                console.log("Document written with ID: ", docRef.id);
-                that.props.onPostCreated()
-            }).catch(function(error) {
-                console.error("Error adding document: ", error);
-                alert('failed uploading, check logs')
-            })
+            db.collection("posts")
+                .add({
+                    title: this.state.title,
+                    details: this.state.details,
+                    locationid: this.state.locationid,
+                    author: user ? user.displayName : "(unknown)",
+                    posted: new Date(),
+                    media: this.prepMediaForSaving(this.state.uploads)
+                })
+                .then(this.props.onPostCreated)
+                .catch((reason) => {console.error(`Unable to update the post: ${reason}`)})
         }
     }
 
@@ -252,7 +243,7 @@ class PostEntry extends React.Component {
                         type="submit"
                         disabled={this.isUploading()}
                         fullWidth>
-                        {this.state.editing ? "Update Post" : "Create Post"}
+                        {this.props.post !== undefined ? "Update Post" : "Create Post"}
                     </Button>
                 </Container>
             </ValidatorForm>

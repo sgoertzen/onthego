@@ -5,9 +5,8 @@ import { Button, Container, Grid } from '@material-ui/core';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-
 import * as firebase from "firebase/app";
-import { IHistoryProps } from '../../classes/IHistoryProps';
+import { ITravelLocation } from '../../classes/TravelLocation';
 
 
 // Todo: may want to move this out of this class later
@@ -16,43 +15,38 @@ export interface ILocationCreated {
 }
 
 export interface locationEntryProps {
-    name?: string
-    latitude?: number
-    longitude?: number
-    arrival?: Date
-    departure?: Date
-    history?: IHistoryProps
+    loc?: ITravelLocation
+    onLocationCreated: ILocationCreated
 }
 
 interface ILocationEntryState {
     name: string
     latitude: number
     longitude: number
-    arrival: Date
-    departure: Date
+    arrive: Date
+    depart: Date
 }
 
-// TODO: Support editing a post when locationid is passed in
 class LocationEntry extends React.Component {
 
     public state: ILocationEntryState;
     public props: locationEntryProps
 
     constructor(props: locationEntryProps) {
-        super(props);
-        this.props = props;
+        super(props)
+        this.props = props
+        let loc = this.props.loc
         this.state = {
-            name: this.props.name ? this.props.name : "",
-            latitude: this.props.latitude ? this.props.latitude : 0,
-            longitude: this.props.longitude ? this.props.longitude : 0,
-            arrival: this.props.arrival ? this.props.arrival : new Date(),
-            departure: this.props.departure ? this.props.departure : new Date()
+            name: loc ? loc.name : "",
+            latitude: loc && loc.coords ? loc.coords.latitude : 0,
+            longitude: loc && loc.coords ? loc.coords.longitude : 0,
+            arrive: loc && loc.arrive ? loc.arrive.toDate() : new Date(),
+            depart: loc && loc.depart ? loc.depart.toDate() : new Date()
         }
-        this.handleChange = this.handleChange.bind(this);
-        this.handleArrivalDateChange = this.handleArrivalDateChange.bind(this);
-        this.handleDepartureDateChange = this.handleDepartureDateChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.returnToList = this.returnToList.bind(this);
+        this.handleChange = this.handleChange.bind(this)
+        this.handleArrivalDateChange = this.handleArrivalDateChange.bind(this)
+        this.handleDepartureDateChange = this.handleDepartureDateChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleChange(event: any): void {
@@ -82,23 +76,29 @@ class LocationEntry extends React.Component {
         this.setState({ departure: event })
     }
     handleSubmit(): void {
-        console.log('form submitted')
         var db = firebase.firestore();
-        db.collection("locations").add({
-            name: this.state.name,
-            coords: new firebase.firestore.GeoPoint(Number(this.state.latitude), Number(this.state.longitude)),
-            arrive: this.state.arrival,
-            depart: this.state.departure
-        })
-            .then(this.returnToList)
-            .catch((error) => console.error("Error adding document: ", error));
-    }
+        if (this.props.loc) {
+            let loc = this.props.loc
+            db.doc(`locations/${loc.id}`)
+                .update({
+                    name: this.state.name,
+                    coords: new firebase.firestore.GeoPoint(Number(this.state.latitude), Number(this.state.longitude)),
+                    arrive: this.state.arrive,
+                    depart: this.state.depart,
+                })
+                .then(this.props.onLocationCreated)
+                .catch((error) => console.error("Error adding document: ", error))
 
-    returnToList() {
-        if (this.props.history) {
-            this.props.history.push('/notadmin/locationslist')
         } else {
-            console.log('Would return to location list.')
+            db.collection("locations")
+                .add({
+                    name: this.state.name,
+                    coords: new firebase.firestore.GeoPoint(Number(this.state.latitude), Number(this.state.longitude)),
+                    arrive: this.state.arrive,
+                    depart: this.state.depart
+                })
+                .then(this.props.onLocationCreated)
+                .catch((error) => console.error("Error adding document: ", error));
         }
     }
 
@@ -149,7 +149,7 @@ class LocationEntry extends React.Component {
                                 margin="normal"
                                 id="location-entry-arrive"
                                 label="Arrive"
-                                value={this.state.arrival}
+                                value={this.state.arrive}
                                 onChange={this.handleArrivalDateChange}
                                 KeyboardButtonProps={{
                                     'aria-label': 'change date',
@@ -162,7 +162,7 @@ class LocationEntry extends React.Component {
                                 margin="normal"
                                 id="location-entry-depart"
                                 label="Depart"
-                                value={this.state.departure}
+                                value={this.state.depart}
                                 onChange={this.handleDepartureDateChange}
                                 KeyboardButtonProps={{
                                     'aria-label': 'change date',
@@ -179,7 +179,7 @@ class LocationEntry extends React.Component {
                         type="submit"
                         fullWidth
                     >
-                        Add Location
+                        {this.props.loc !== undefined ? "Update Location" : "Add Location"}
                 </Button>
                 </Container>
             </ValidatorForm>
