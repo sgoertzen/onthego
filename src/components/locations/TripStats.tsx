@@ -1,5 +1,4 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
 import './TripStats.css'
 
 interface statsProps {
@@ -30,27 +29,18 @@ class TripStats extends React.Component {
     render() {
         return (
             <div className="statsPanel">
-                <Typography variant="h5" component="h5" className="titleRow">
-                    Trip Stats:
-                </Typography>
-                <Typography variant="body2" component="span" className="statsLabel">
-                    On the road:
-                </Typography>
-                <Typography component="span" className="statsContent">
-                    {this.props.daysOnTheRoad} days
-                </Typography>
-                <Typography variant="body2" component="span" className="statsLabel">
-                    Visited:
-                </Typography>
-                <Typography component="span" className="statsContent">
-                    {this.props.countriesVisited} countries
-                </Typography>
-                <Typography variant="body2" component="span" className="statsLabel">
-                    Traveled:
-                </Typography>
-                <Typography component="span" className="statsContent">
-                    {this.formatMiles(this.props.milesTraveled)}
-                </Typography>
+                <div className="statsGroup">
+                    <span className="statsLabel">On the road:</span>
+                    <span className="statsContent">{this.props.daysOnTheRoad} days</span>
+                </div>
+                <div>
+                    <span className="statsLabel">Visited:</span>
+                    <span className="statsContent">{this.props.countriesVisited} countries</span>
+                </div>
+                <div>
+                    <span className="statsLabel">Traveled:</span>
+                    <span className="statsContent">{this.formatMiles(this.props.milesTraveled)}</span>
+                </div>
             </div>
         );
     }
