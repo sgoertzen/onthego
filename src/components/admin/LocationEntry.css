@@ -1,4 +1,9 @@
 .PostEntryInput {
     display: none;
   }
+.country-selector {
+  padding-top: 1em;
+  width: 20em;
+  margin: 1px;
+}
   

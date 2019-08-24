@@ -45,6 +45,9 @@ class PostPage extends React.Component {
                     post: post,
                     loading: false
                 })
+                FirestoreHelper.loadLocation(post.locationid, (loc) => {
+                    this.setState({ locationname: loc.name })
+                })
             })
             FirestoreHelper.loadComments(this.props.match.params.postid, (comments) => {
                 this.setState({ comments: comments })

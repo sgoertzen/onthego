@@ -80,6 +80,7 @@ class LocationList extends React.Component {
                     <TableHead>
                         <TableRow>
                             <TableCell>Name</TableCell>
+                            <TableCell align="right">Code</TableCell>
                             <TableCell align="right">Arrive</TableCell>
                             <TableCell align="right">Depart</TableCell>
                             <TableCell align="right">Latitude</TableCell>
@@ -94,6 +95,7 @@ class LocationList extends React.Component {
                                 <TableCell component="th" scope="row">
                                     {loc.name}
                                 </TableCell>
+                                <TableCell align="right">{loc.countrycode}</TableCell>
                                 <TableCell align="right">{format(loc.arrive.toDate(), "MMM do, yyyy")}</TableCell>
                                 <TableCell align="right">{format(loc.depart.toDate(), "MMM do, yyyy")}</TableCell>
                                 <TableCell align="right">{loc.coords.latitude}</TableCell>

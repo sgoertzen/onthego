@@ -1,7 +1,7 @@
 import { ITravelLocation } from "../classes/TravelLocation";
-import * as firebase from "firebase/app";
 import { IPost } from "../classes/Post";
 import { IComment } from "../classes/Comment";
+import * as firebase from 'firebase/app'
 
 export interface LocationsLoaded {
     (location: ITravelLocation[]): void

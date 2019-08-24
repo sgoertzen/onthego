@@ -1,9 +1,7 @@
 import React from 'react';
 import { ITravelLocation } from '../../classes/TravelLocation';
 import { ILocChangeCallback } from '../../classes/ILocChangeCallback';
-import Tabs from '@material-ui/core/Tabs';
-import { Tab, AppBar, Select, MenuItem } from '@material-ui/core';
-import './LocationSelector.css'
+import { Select, MenuItem } from '@material-ui/core';
 
 interface buttonProps {
     locs: ITravelLocation[]
@@ -37,24 +35,21 @@ class LocationSelector extends React.Component {
 
     render() {
         let counter = 0
-        let selectedIndex = 0;
         let selectedValue = ""
-        // TODO: Fix this when I am back online and can look up the type!
-        let buttons: any[] = []
         let options: any[] = []
         for (let loc of this.props.locs) {
-            buttons.push(<Tab label={loc.name} key={counter} />)
-            options.push(<MenuItem value={loc.name} key={counter}>{loc.name}</MenuItem>)
             if (loc === this.props.selectedLocation) {
-                selectedIndex = counter
+                options.push(<MenuItem value={loc.name} key={counter}>Jump to:</MenuItem>)
+                selectedValue = loc.name
+            } else {
+                options.push(<MenuItem value={loc.name} key={counter}>{loc.name}</MenuItem>)
+            }
+            if (loc === this.props.selectedLocation) {
                 selectedValue = loc.name
             }
             counter++
         }
         if (this.props.locs.length === 0) {
-            buttons.push(
-                <Tab label="Loading locations" disabled={true} key="nolocs"></Tab>
-            )
             options.push(
                 <MenuItem key="nolocs" disabled={true}>Loading Locations</MenuItem>
             )
@@ -65,13 +60,6 @@ class LocationSelector extends React.Component {
                     <Select value={selectedValue} onChange={this.optionChange} fullWidth>
                         {options}
                     </Select>
-                </div>
-                <div className="LocationSelectorTabs">
-                    <AppBar position="static">
-                        <Tabs value={selectedIndex} onChange={this.tabChange}>
-                            {buttons}
-                        </Tabs>
-                    </AppBar>
                 </div>
             </div>
         );

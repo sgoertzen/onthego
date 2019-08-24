@@ -2,7 +2,6 @@ import React from 'react';
 import './LocationPage.css';
 import TravelMap from './TravelMap';
 import { ITravelLocation, TravelLocation } from '../../classes/TravelLocation';
-import LocationSelector from './LocationSelector';
 import { Post } from '../../classes/Post';
 import PostTiles from './PostTiles';
 import TripStats from './TripStats';
@@ -90,6 +89,7 @@ class LocationPage extends React.Component {
 
     locationChanged(locationId: string): void {
         let locations = this.state.locs
+        this.setState({ posts: [] })
         locations.forEach(loc => {
             if (loc.id === locationId) {
                 if (this.props.history) {
@@ -140,10 +140,9 @@ class LocationPage extends React.Component {
 
         return (
             <div className="App">
-                <div className="App-header"><LocationSelector locs={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} /></div>
-                <div className="App-details"><LocationDetails location={this.state.selectedLocation} /></div>
+                <div className="App-header"><TripStats daysOnTheRoad={daysOnTheRoad} countriesVisited={this.state.countriesVisited} milesTraveled={this.state.distanceTraveled} /></div>
+                <div className="App-details"><LocationDetails locations={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} /></div>
                 <div className="App-map"><TravelMap locations={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} /></div>
-                <div className="App-stats"><TripStats daysOnTheRoad={daysOnTheRoad} countriesVisited={this.state.countriesVisited} milesTraveled={this.state.distanceTraveled} /></div>
                 <div className="App-posts"><PostTiles posts={this.state.posts} onPostClick={this.postClick} /></div>
             </div>
         );

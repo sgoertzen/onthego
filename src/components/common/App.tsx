@@ -1,22 +1,21 @@
-import React from 'react';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import { TravelLocation } from '../../classes/TravelLocation';
+import React from 'react'
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+import { TravelLocation } from '../../classes/TravelLocation'
 import { firebaseConfig } from '../../config/firebase.config'
-import { Post } from '../../classes/Post';
+import { Post } from '../../classes/Post'
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom'
-import LocationPage from '../locations/LocationPage';
-import LocationList from '../admin/LocationList';
+import LocationPage from '../locations/LocationPage'
+import LocationList from '../admin/LocationList'
 import PostEntryPage from '../admin/PostEntryPage'
 import LocationEntryPage from '../admin/LocationEntryPage'
 import Header from './Header'
-import Footer from './Footer';
-import AdminMenuBar from '../admin/AdminMenuBar';
-import AdminFooter from '../admin/AdminFooter';
-import PostPage from '../posts/PostPage';
-import LocationPosts from '../admin/LocationPosts';
+import Footer from './Footer'
+import AdminMenuBar from '../admin/AdminMenuBar'
+import AdminFooter from '../admin/AdminFooter'
+import PostPage from '../posts/PostPage'
+import LocationPosts from '../admin/LocationPosts'
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
 interface IAppState {

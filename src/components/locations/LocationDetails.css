@@ -6,3 +6,9 @@
     grid-gap: 10px;
     vertical-align: middle;
 }
+.detailNav {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+}

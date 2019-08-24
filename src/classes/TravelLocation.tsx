@@ -1,5 +1,5 @@
 import { ITimeStamp, TimeStamp } from "./TimeStamp"
-import firebase from "firebase";
+import * as firebase from 'firebase/app'
 
 export interface ITravelLocation {
     id: string
@@ -8,6 +8,7 @@ export interface ITravelLocation {
     arrive: ITimeStamp
     depart: ITimeStamp
     distance: number
+    countrycode: string
 }
 
 export class TravelLocation implements ITravelLocation {
@@ -18,6 +19,7 @@ export class TravelLocation implements ITravelLocation {
         this.arrive = (arrive == null) ? new TimeStamp() : arrive
         this.depart = (depart == null) ? new TimeStamp() : depart
         this.distance = 0
+        this.countrycode = ""
     }
     id: string
     name: string
@@ -25,6 +27,7 @@ export class TravelLocation implements ITravelLocation {
     arrive: TimeStamp
     depart: TimeStamp
     distance: number
+    countrycode: string
 
     static encode(name: string): string {
         return name.replace(' ', '-').toLowerCase()
