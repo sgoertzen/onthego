@@ -1,18 +1,21 @@
-import React from 'react';
-import { Typography } from '@material-ui/core';
-import { ITravelLocation } from '../../classes/TravelLocation';
-import { TimeStamp } from '../../classes/TimeStamp';
-import { format } from 'date-fns';
+import React from 'react'
+import { Typography } from '@material-ui/core'
+import { ITravelLocation } from '../../classes/TravelLocation'
+import { TimeStamp } from '../../classes/TimeStamp'
+import { format } from 'date-fns'
+import LocationSelector from './LocationSelector'
+import { ILocChangeCallback } from '../../classes/ILocChangeCallback'
+import LocationLink, { LinkDirection } from './LocationLink'
+import FlagIconFactory from 'react-flag-icon-css'
 import "./LocationDetails.css"
-import LocationSelector from './LocationSelector';
-import { ILocChangeCallback } from '../../classes/ILocChangeCallback';
-import LocationLink, { LinkDirection } from './LocationLink';
 
 interface detailProps {
     locations?: ITravelLocation[]
     onLocChange: ILocChangeCallback
     selectedLocation?: ITravelLocation
 }
+
+export const FlagIcon = FlagIconFactory(React,  { useCssModules: false })
 
 class LocationDetails extends React.Component {
 
@@ -55,6 +58,7 @@ class LocationDetails extends React.Component {
                     {inLocation ? "Currently In:" : " "}
                 </Typography>
                 <Typography variant="h3" className="details-location">
+                    <FlagIcon code={loc.code} size="lg" />&nbsp;
                     {loc.name}
                 </Typography>
                 <Typography component="span" className="details-arrive">

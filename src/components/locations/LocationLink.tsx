@@ -2,6 +2,8 @@ import React from 'react'
 import { ILocChangeCallback } from '../../classes/ILocChangeCallback';
 import { ITravelLocation } from '../../classes/TravelLocation';
 import { Link } from '@material-ui/core';
+import { FlagIcon } from './LocationDetails'
+import './LocationLink.css'
 
 interface locationLinkProps {
     onLocChange: ILocChangeCallback
@@ -29,17 +31,12 @@ class LocationLink extends React.Component {
         }
 
         const loc = this.props.loc
-        let text = loc.name
-        switch (this.props.direction) {
-            case LinkDirection.Back:
-                text = "<< " + text
-                break
-            case LinkDirection.Forward:
-                text = text + " >>"
-                break
-        }
         return (
-            <Link onClick={() => { this.props.onLocChange(loc.id) }}>{text}</Link>
+            <Link onClick={() => { this.props.onLocChange(loc.id) }} className="link">
+                {this.props.direction === LinkDirection.Back ? "<< " : <FlagIcon code={loc.code} size="lg"/>}
+                {loc.name} 
+                {this.props.direction === LinkDirection.Forward ? " >>" : <FlagIcon code={loc.code} size="lg"/>}
+            </Link>
         )
     }
 }

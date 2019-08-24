@@ -89,6 +89,7 @@ class LocationPage extends React.Component {
 
     locationChanged(locationId: string): void {
         let locations = this.state.locs
+        this.setState({ posts: [] })
         locations.forEach(loc => {
             if (loc.id === locationId) {
                 if (this.props.history) {

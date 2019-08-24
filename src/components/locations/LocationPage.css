@@ -32,7 +32,7 @@
   .App {
     text-align: center;
     display: grid;
-    grid-template-columns: 45% 55%;
+    grid-template-columns: 44% 55%;
     grid-gap: 0;
   }
 
