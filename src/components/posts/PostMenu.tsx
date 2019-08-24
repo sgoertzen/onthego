@@ -29,7 +29,7 @@ class PostMenu extends React.Component {
     render() {
         const buttonText = this.props.locationname ? `< Back to ${this.props.locationname}` : ""
         return (
-            <AppBar position="static">
+            <AppBar position="static" style={{ background: '#3E442B' }}>
                 <Tabs value={0}>
                     <Tab label={buttonText} key="leave" onClick={this.goBack} disabled={!this.props.locationname}></Tab>
                 </Tabs>

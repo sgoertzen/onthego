@@ -39,7 +39,7 @@ class TravelMap extends React.Component<mapProps> {
         let traveledPath = new this.maps.Polyline({
             path: pathCoords.traveled,
             geodesic: true,
-            strokeColor: '#6f584b',
+            strokeColor: '#3E442B',
             strokeOpacity: 1.0,
             strokeWeight: 4
         });
@@ -48,7 +48,7 @@ class TravelMap extends React.Component<mapProps> {
         let upcomingPath = new this.maps.Polyline({
             path: pathCoords.upcoming,
             geodesic: true,
-            strokeColor: '#ffaf05',
+            strokeColor: '#AAADC4',
             strokeOpacity: 0.4,
             strokeWeight: 3
         });

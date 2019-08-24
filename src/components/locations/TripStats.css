@@ -5,7 +5,7 @@
   justify-content: center;
   vertical-align: middle;
   align-content: center;
-  background-color: #1c6e8c;
+  background-color: #3E442B;
   padding: .2em;
 }
 .statsContent {
@@ -46,7 +46,7 @@
   padding-bottom: .5em;
 }
 
-/* .color1 {
+.color1 {
     color: #6f584b
   }
   .color2 {
@@ -60,4 +60,4 @@
   }
   .color5 {
     color: #000000
-  }  */
+  } 
