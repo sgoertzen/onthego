@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TravelMap from './TravelMap';
 import { ITravelLocation, TravelLocation } from '../../classes/TravelLocation';
-import firebase from 'firebase';
+import * as firebase from 'firebase/app'
 import { TimeStamp } from '../../classes/TimeStamp';
 
 it('renders without crashing', () => {

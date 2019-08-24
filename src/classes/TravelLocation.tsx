@@ -1,5 +1,5 @@
 import { ITimeStamp, TimeStamp } from "./TimeStamp"
-import firebase from "firebase";
+import * as firebase from 'firebase/app'
 
 export interface ITravelLocation {
     id: string

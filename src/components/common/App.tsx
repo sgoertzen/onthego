@@ -1,5 +1,5 @@
 import React from 'react'
-import firebase from 'firebase/app'
+import * as firebase from 'firebase/app'
 import 'firebase/auth'
 import { TravelLocation } from '../../classes/TravelLocation'
 import { firebaseConfig } from '../../config/firebase.config'
