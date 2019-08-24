@@ -31,11 +31,15 @@ class LocationLink extends React.Component {
         }
 
         const loc = this.props.loc
+        const code = loc.countrycode ? loc.countrycode.toLowerCase() : ""
+        const flag = (
+            <FlagIcon size="lg" code={code} />
+        )
         return (
             <Link onClick={() => { this.props.onLocChange(loc.id) }} className="link">
-                {this.props.direction === LinkDirection.Back ? "<< " : <FlagIcon code={loc.code} size="lg"/>}
-                {loc.name} 
-                {this.props.direction === LinkDirection.Forward ? " >>" : <FlagIcon code={loc.code} size="lg"/>}
+                {this.props.direction === LinkDirection.Back ? "<< " : flag}
+                {loc.name}
+                {this.props.direction === LinkDirection.Forward ? " >>" : flag}
             </Link>
         )
     }

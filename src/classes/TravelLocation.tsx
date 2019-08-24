@@ -8,7 +8,7 @@ export interface ITravelLocation {
     arrive: ITimeStamp
     depart: ITimeStamp
     distance: number
-    code: string
+    countrycode: string
 }
 
 export class TravelLocation implements ITravelLocation {
@@ -19,7 +19,7 @@ export class TravelLocation implements ITravelLocation {
         this.arrive = (arrive == null) ? new TimeStamp() : arrive
         this.depart = (depart == null) ? new TimeStamp() : depart
         this.distance = 0
-        this.code = ""
+        this.countrycode = ""
     }
     id: string
     name: string
@@ -27,7 +27,7 @@ export class TravelLocation implements ITravelLocation {
     arrive: TimeStamp
     depart: TimeStamp
     distance: number
-    code: string
+    countrycode: string
 
     static encode(name: string): string {
         return name.replace(' ', '-').toLowerCase()

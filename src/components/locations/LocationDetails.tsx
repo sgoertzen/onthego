@@ -15,7 +15,7 @@ interface detailProps {
     selectedLocation?: ITravelLocation
 }
 
-export const FlagIcon = FlagIconFactory(React,  { useCssModules: false })
+export const FlagIcon = FlagIconFactory(React, { useCssModules: false })
 
 class LocationDetails extends React.Component {
 
@@ -58,7 +58,7 @@ class LocationDetails extends React.Component {
                     {inLocation ? "Currently In:" : " "}
                 </Typography>
                 <Typography variant="h3" className="details-location">
-                    <FlagIcon code={loc.code} size="lg" />&nbsp;
+                    {loc.countrycode && loc.countrycode.length > 0 ? <FlagIcon code={loc.countrycode.toLowerCase()} size="lg" /> : ""}
                     {loc.name}
                 </Typography>
                 <Typography component="span" className="details-arrive">
