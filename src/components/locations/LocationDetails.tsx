@@ -35,11 +35,11 @@ class LocationDetails extends React.Component {
         if (!this.props.selectedLocation || !this.props.locations) {
             return (<div />)
         }
-        let loc = this.props.selectedLocation
+        const loc = this.props.selectedLocation
 
         let previous: ITravelLocation | undefined, next: ITravelLocation | undefined
         let foundOurself = false
-        for (let l of this.props.locations) {
+        for (const l of this.props.locations) {
             if (l.id === loc.id) {
                 foundOurself = true
                 continue;
@@ -50,8 +50,8 @@ class LocationDetails extends React.Component {
             }
             previous = l;
         }
-        let now = new Date()
-        let inLocation = loc.arrive.toDate() < now && loc.depart.toDate() > now
+        const now = new Date()
+        const inLocation = loc.arrive.toDate() < now && loc.depart.toDate() > now
         return (
             <div className="detailsPanel">
                 <Typography variant="body1" className="details-intro">

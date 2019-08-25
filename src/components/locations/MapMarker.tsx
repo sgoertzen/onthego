@@ -11,11 +11,11 @@ interface markerProps {
     onLocChange: ILocChangeCallback
 }
 
-const MapMarker: React.FC<markerProps> = (markerProps) => {
+const MapMarker: React.FC<markerProps> = (mark) => {
     return (
         <Paper className="MapMarker">
             <Typography variant="h6" component="h5">
-                {markerProps.text}
+                {mark.text}
             </Typography>
         </Paper>
     );

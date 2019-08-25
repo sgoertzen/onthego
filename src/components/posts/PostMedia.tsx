@@ -27,8 +27,8 @@ class PostMedia extends React.Component {
     }
 
     buildItems(media: IMedia[]): ReactImageGalleryItem[] {
-        let items: ReactImageGalleryItem[] = []
-        for (let med of media) {
+        const items: ReactImageGalleryItem[] = []
+        for (const med of media) {
             if (med.filetype === MediaType.Image) {
                 items.push({
                     original: Media.imageThumbnail(med, ImageSize.Size_1600), // prefix with thumb_1600_

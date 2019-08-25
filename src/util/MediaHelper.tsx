@@ -2,11 +2,11 @@ import { MediaType } from "../classes/Media";
 
 export class MediaHelper {
     static getExtension(filename: string) {
-        var parts = filename.split('.');
+        const parts = filename.split('.');
         return parts[parts.length - 1];
     }
     static isImage(filename: string) {
-        var ext = this.getExtension(filename);
+        const ext = this.getExtension(filename);
         switch (ext.toLowerCase()) {
             case 'jpg':
             case 'jpeg':
@@ -19,7 +19,7 @@ export class MediaHelper {
     }
 
     static isVideo(filename: string) {
-        var ext = this.getExtension(filename);
+        const ext = this.getExtension(filename);
         switch (ext.toLowerCase()) {
             case 'm4v':
             case 'avi':

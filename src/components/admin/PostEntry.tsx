@@ -61,9 +61,9 @@ class PostEntry extends React.Component {
             }
             case "post-entry-media": {
                 if (event.target.files) {
-                    let uploadings: IMedia[] = []
+                    const uploadings: IMedia[] = []
                     console.log("Processing " + event.target.files.length + " files")
-                    for (let file of event.target.files) {
+                    for (const file of event.target.files) {
                         console.log("processing file ", file.name)
                         uploadings.push(this.uploadFile(file))
                     }
@@ -77,12 +77,12 @@ class PostEntry extends React.Component {
 
     uploadFile(file: any): IMedia {
 
-        let folder = MediaHelper.isImage(file.name) ? "postimages" : "postvideos"
+        const folder = MediaHelper.isImage(file.name) ? "postimages" : "postvideos"
 
-        let storageRef = firebase.storage().ref();
-        var uploadTask = storageRef.child(folder + "/" + file.name).put(file);
-        let self = this
-        let uploadingMedia = new Media(file.name, "", MediaHelper.getFiletype(file.name))
+        const storageRef = firebase.storage().ref();
+        const uploadTask = storageRef.child(folder + "/" + file.name).put(file);
+        const self = this
+        const uploadingMedia = new Media(file.name, "", MediaHelper.getFiletype(file.name))
 
         // Register three observers:
         // 1. 'state_changed' observer, called any time the state changes
@@ -90,7 +90,7 @@ class PostEntry extends React.Component {
         // 3. Completion observer, called on successful completion
 
         uploadTask.on('state_changed', function(snapshot) {
-            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             self.updateUploadState(uploadingMedia.filename, progress)
         }, function(error) {
             console.log("Unable to upload the file ", error)
@@ -99,14 +99,14 @@ class PostEntry extends React.Component {
             uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
                 console.log('File available at', downloadURL);
                 self.updateUploadState(uploadingMedia.filename, undefined, downloadURL)
-            });
+            }).catch((reason) => { console.log("Unable to load upload file", reason) })
         });
         return uploadingMedia
     }
 
     updateUploadState(filename: string, percentUploaded?: number, url?: string, error?: Error) {
-        let uploadings = this.state.uploads
-        for (let upload of uploadings) {
+        const uploadings = this.state.uploads
+        for (const upload of uploadings) {
             if (upload.filename === filename) {
                 if (error) {
                     upload.error = error.message
@@ -126,8 +126,8 @@ class PostEntry extends React.Component {
 
     prepMediaForSaving(media: IMedia[]): any[] {
         // Convert the enum to a string
-        let items: any[] = []
-        for (let obj of media) {
+        const items: any[] = []
+        for (const obj of media) {
             items.push(
                 {
                     url: obj.url,
@@ -142,10 +142,10 @@ class PostEntry extends React.Component {
 
     handleSubmit() {
         const user = firebase.auth().currentUser
-        var db = firebase.firestore();
+        const db = firebase.firestore();
 
         if (this.props.post) {
-            let post = this.props.post
+            const post = this.props.post
             db.doc(`posts/${post.id}`)
                 .update({
                     title: this.state.title,
@@ -170,7 +170,7 @@ class PostEntry extends React.Component {
 
 
     isUploading() {
-        for (let file of this.state.uploads) {
+        for (const file of this.state.uploads) {
             if (file.percentUploaded < 100) {
                 return true
             }
@@ -180,7 +180,7 @@ class PostEntry extends React.Component {
 
     render() {
         let counter = 0
-        let uploadDisplays = this.state.uploads.map(obj => {
+        const uploadDisplays = this.state.uploads.map(obj => {
             return (<UploadingMedia
                 filename={obj.filename}
                 percentUploaded={obj.percentUploaded}

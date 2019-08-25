@@ -26,7 +26,7 @@ class Login extends React.Component {
     }
 
     login() {
-        var provider = new firebase.auth.GoogleAuthProvider();
+        const provider = new firebase.auth.GoogleAuthProvider();
         if (this.props.adminLogin) {
             provider.addScope('https://www.googleapis.com/auth/drive.photos.readonly');
         }
@@ -36,7 +36,7 @@ class Login extends React.Component {
     }
 
     logout() {
-        firebase.auth().signOut()
+        firebase.auth().signOut().catch((reason) => { console.log("Unable to sign out", reason) })
     }
 
     render() {

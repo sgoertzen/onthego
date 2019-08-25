@@ -9,7 +9,7 @@ import { Media, MediaType } from '../../classes/Media';
 
 storiesOf('locations/Post Tiles', module)
     .add('Single Post', () => {
-        let posts = [
+        const posts = [
             new Post(
                 "Sample title",
                 [new Media("travel.png", travelImage, MediaType.Image)],
@@ -23,15 +23,15 @@ storiesOf('locations/Post Tiles', module)
     .add("Multiple Posts", () => {
         // We use dates based off the current day/time, as the labels will remain consistent then 
         // since they show as "One Month Ago".  This avoids UI changes when the code doesn't change.
-        let oneMonthAgoDate = new Date()
+        const oneMonthAgoDate = new Date()
         oneMonthAgoDate.setMonth(oneMonthAgoDate.getMonth() - 1)
-        let oneHourAgoDate = new Date()
+        const oneHourAgoDate = new Date()
         oneHourAgoDate.setHours(oneHourAgoDate.getHours() - 1)
 
-        let oneMonthAgo = new TimeStamp(oneMonthAgoDate.getTime())
-        let oneHourAgo = new TimeStamp(oneHourAgoDate.getTime())
+        const oneMonthAgo = new TimeStamp(oneMonthAgoDate.getTime())
+        const oneHourAgo = new TimeStamp(oneHourAgoDate.getTime())
 
-        let tiles = [
+        const tiles = [
             new Post("Alpha", [new Media("travel.png", travelImage, MediaType.Image)], 3, "bob", oneMonthAgo, ""),
             new Post("Beta", [new Media("travel.png", travelImage, MediaType.Image)], 3, "bob", oneMonthAgo, ""),
             new Post("Charlie", [new Media("travel.png", travelImage, MediaType.Image)], 3, "bob", oneHourAgo, ""),

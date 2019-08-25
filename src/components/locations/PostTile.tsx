@@ -29,7 +29,7 @@ class PostTile extends React.Component {
 
     getPostImageURL(post: IPost): string {
         if (post.media) {
-            for (let media of post.media) {
+            for (const media of post.media) {
                 if (MediaHelper.isImage(media.filename)) {
                     return Media.imageThumbnail(media, ImageSize.Size_200);
                 }
@@ -45,10 +45,10 @@ class PostTile extends React.Component {
     }
 
     render() {
-        let post = this.props.post
-        let mediaCount = post.media ? post.media.length : 0
-        let commentCount = post.commentcount ? post.commentcount : 0
-        let imageURL = this.getPostImageURL(post)
+        const post = this.props.post
+        const mediaCount = post.media ? post.media.length : 0
+        const commentCount = post.commentcount ? post.commentcount : 0
+        const imageURL = this.getPostImageURL(post)
         return (
             <Card className="card">
                 <CardActionArea onClick={this.onClick}>

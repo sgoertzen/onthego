@@ -37,7 +37,7 @@ class LocationEntry extends React.Component {
     constructor(props: locationEntryProps) {
         super(props)
         this.props = props
-        let loc = this.props.loc
+        const loc = this.props.loc
         this.state = {
             name: loc ? loc.name : "",
             latitude: loc && loc.coords ? loc.coords.latitude : 0,
@@ -83,9 +83,9 @@ class LocationEntry extends React.Component {
         this.setState({ depart: event })
     }
     handleSubmit(): void {
-        var db = firebase.firestore();
+        const db = firebase.firestore();
         if (this.props.loc) {
-            let loc = this.props.loc
+            const loc = this.props.loc
             db.doc(`locations/${loc.id}`)
                 .update({
                     name: this.state.name,

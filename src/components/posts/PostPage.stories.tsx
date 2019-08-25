@@ -11,7 +11,7 @@ import { Media, MediaType } from '../../classes/Media';
 storiesOf('posts/Post Page', module)
     .add('no post', () => <PostPage />)
     .add('single post', () => {
-        let post = new Post(
+        const post = new Post(
             "Test Post",
             [new Media("default.png", travelImage, MediaType.Image)],
             0,
