@@ -25,7 +25,7 @@ class LocationSelector extends React.Component {
     }
 
     optionChange(event: React.ChangeEvent<{ name?: string | undefined; value: unknown; }>) {
-        for (let loc of this.props.locs) {
+        for (const loc of this.props.locs) {
             if (loc.name === event.target.value) {
                 this.props.onLocChange(loc.id)
                 return;
@@ -36,8 +36,8 @@ class LocationSelector extends React.Component {
     render() {
         let counter = 0
         let selectedValue = ""
-        let options: any[] = []
-        for (let loc of this.props.locs) {
+        const options: any[] = []
+        for (const loc of this.props.locs) {
             if (loc === this.props.selectedLocation) {
                 options.push(<MenuItem value={loc.name} key={counter}>Jump to:</MenuItem>)
                 selectedValue = loc.name

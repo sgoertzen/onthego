@@ -7,7 +7,7 @@ import { MediaType, Media } from '../../classes/Media'
 storiesOf('posts/Post Media', module)
     .add('Empty', () => <PostMedia items={[]} />)
     .add('Single Image', () => {
-        let items = [
+        const items = [
             new Media("travel.jpg", travelImage, MediaType.Image)
         ]
         return (
@@ -15,7 +15,7 @@ storiesOf('posts/Post Media', module)
         )
     })
     .add('Multiple Images', () => {
-        let items = [
+        const items = [
             new Media("travel.jpg", travelImage, MediaType.Image),
             new Media("travel.jpg", travelImage, MediaType.Image),
             new Media("travel.jpg", travelImage, MediaType.Image)
@@ -25,7 +25,7 @@ storiesOf('posts/Post Media', module)
         )
     })
     .add('Single Video', () => {
-        let items = [
+        const items = [
             new Media("SampleVideo_720x480_1mb.mp4", "/SampleVideo_720x480_1mb.mp4", MediaType.Video)
         ]
         return (
@@ -33,7 +33,7 @@ storiesOf('posts/Post Media', module)
         )
     })
     .add('Image and Video', () => {
-        let items = [
+        const items = [
             new Media("travel.jpg", travelImage, MediaType.Image),
             new Media("SampleVideo_720x480_1mb.mp4", "/SampleVideo_720x480_1mb.mp4", MediaType.Video)
         ]

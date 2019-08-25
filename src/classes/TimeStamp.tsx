@@ -5,7 +5,7 @@ export interface ITimeStamp {
 
 export class TimeStamp implements ITimeStamp {
     constructor(nanoseconds?: number) {
-        this.nanoseconds = (nanoseconds == null) ? 0 : nanoseconds
+        this.nanoseconds = (nanoseconds === undefined) ? 0 : nanoseconds
     }
     nanoseconds: number;
     toDate = () => {

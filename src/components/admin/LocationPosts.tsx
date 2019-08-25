@@ -30,7 +30,7 @@ class LocationPosts extends React.Component {
         super(props);
         this.props = props;
 
-        let locid = this.props.match.params.locationid
+        const locid = this.props.match.params.locationid
         this.state = {
             posts: [],
             locationid: locid

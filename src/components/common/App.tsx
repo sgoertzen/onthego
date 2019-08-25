@@ -30,8 +30,8 @@ class App extends React.Component {
 
     constructor(props: any) {
         super(props);
-        var arr: TravelLocation[] = [];
-        var arr2: Post[] = [];
+        const arr: TravelLocation[] = [];
+        const arr2: Post[] = [];
 
         this.listenForUser = this.listenForUser.bind(this);
         this.state = { locs: arr, posts: arr2 }

@@ -36,7 +36,7 @@ class PostPage extends React.Component {
         this.props = props;
         this.commentsChanged = this.commentsChanged.bind(this)
 
-        let needToLoad = (!this.props.post && this.props.match && this.props.match.params && this.props.match.params.postid) as boolean;
+        const needToLoad = (!this.props.post && this.props.match && this.props.match.params && this.props.match.params.postid) as boolean;
         this.state = { post: this.props.post, loading: needToLoad, comments: [] }
 
         if (!this.props.post && this.props.match && this.props.match.params && this.props.match.params.postid) {
@@ -81,7 +81,7 @@ class PostPage extends React.Component {
         if (!this.state.post) {
             return <div>No post found</div>
         }
-        let post = this.state.post
+        const post = this.state.post
         return (
             <div>
                 <PostMenu history={this.props.history} locationname={this.state.locationname} />

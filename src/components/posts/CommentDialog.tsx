@@ -55,9 +55,9 @@ class CommentDialog extends React.Component {
         this.setState({ saving: true })
 
         const that = this
-        let user = firebase.auth().currentUser
+        const user = firebase.auth().currentUser
 
-        var db = firebase.firestore();
+        const db = firebase.firestore();
         db.collection("comments").add({
             postid: this.props.postid,
             comment: this.state.comment,
@@ -83,7 +83,7 @@ class CommentDialog extends React.Component {
     }
 
     render() {
-        const signedIn = (typeof this.props.username != 'undefined' && this.props.username && this.props.username.trim())
+        const signedIn = (this.props.username !== undefined && this.props.username && this.props.username.trim())
         return (
             <Dialog onClose={this.props.onClose} aria-labelledby="simple-dialog-title" open={this.props.open} fullWidth maxWidth="md">
                 <DialogTitle id="simple-dialog-title">

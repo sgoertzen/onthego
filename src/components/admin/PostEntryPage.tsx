@@ -33,8 +33,8 @@ class PostEntryPage extends React.Component {
         }
         this.backToList = this.backToList.bind(this)
 
-        let locationid = this.props.match.params.locationid
-        let postid = this.props.match.params.postid
+        const locationid = this.props.match.params.locationid
+        const postid = this.props.match.params.postid
         FirestoreHelper.loadLocation(locationid, (loc) => {
             this.setState({ location: loc })
         })

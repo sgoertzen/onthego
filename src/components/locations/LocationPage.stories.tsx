@@ -6,7 +6,7 @@ import LocationPage from './LocationPage';
 storiesOf('locations/Location Page', module)
     .add('no selection', () => <LocationPage />)
     .add('cuba selected', () => {
-        let match = {
+        const match = {
             params: {
                 locationName: "Cuba"
             }

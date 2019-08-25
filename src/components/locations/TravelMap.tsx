@@ -32,11 +32,11 @@ class TravelMap extends React.Component<mapProps> {
         this.drawPaths();
     }
     drawPaths() {
-        if (this.map == null) {
+        if (this.map === undefined) {
             return;
         }
-        let pathCoords = this.buildFlightPlanCoordinates(this.props.locations)
-        let traveledPath = new this.maps.Polyline({
+        const pathCoords = this.buildFlightPlanCoordinates(this.props.locations)
+        const traveledPath = new this.maps.Polyline({
             path: pathCoords.traveled,
             geodesic: true,
             strokeColor: '#3E442B',
@@ -45,7 +45,7 @@ class TravelMap extends React.Component<mapProps> {
         });
         traveledPath.setMap(this.map);
 
-        let upcomingPath = new this.maps.Polyline({
+        const upcomingPath = new this.maps.Polyline({
             path: pathCoords.upcoming,
             geodesic: true,
             strokeColor: '#AAADC4',
@@ -57,17 +57,17 @@ class TravelMap extends React.Component<mapProps> {
 
     buildFlightPlanCoordinates(locs: ITravelLocation[]) {
         const now: Date = new Date()
-        var traveledPath = [];
+        const traveledPath = [];
         const upcomingPath = [];
 
         for (const loc of locs) {
-            if (loc.arrive == null || loc.arrive.toDate() < now) {
+            if (loc.arrive === undefined || loc.arrive.toDate() < now) {
                 traveledPath.push({
                     lat: loc.coords.latitude,
                     lng: loc.coords.longitude
                 });
             }
-            if (loc.depart == null || loc.depart.toDate() > now) {
+            if (loc.depart === undefined || loc.depart.toDate() > now) {
                 upcomingPath.push({
                     lat: loc.coords.latitude,
                     lng: loc.coords.longitude
@@ -104,6 +104,8 @@ class TravelMap extends React.Component<mapProps> {
             // Defaults to San Francisco
             center = new firebase.firestore.GeoPoint(37.7749, -122.4194)
         }
+
+        this.drawPaths()
         return (
             // Important! Always set the container height explicitly
             <div className="TravelMap">
@@ -115,7 +117,6 @@ class TravelMap extends React.Component<mapProps> {
                     defaultZoom={6}
                 >
                     {this.buildMarkers()}
-                    {this.drawPaths()}
                 </GoogleMapReact>
             </div>
         );

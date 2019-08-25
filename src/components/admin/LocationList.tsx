@@ -33,8 +33,8 @@ class LocationList extends React.Component {
             locs: locs
         }
         if (locs.length === 0) {
-            FirestoreHelper.loadLocations((locs) => {
-                this.setState({ locs: locs })
+            FirestoreHelper.loadLocations((locations) => {
+                this.setState({ locs: locations })
             })
         }
     }
@@ -52,7 +52,7 @@ class LocationList extends React.Component {
     }
 
     delete(loc: ITravelLocation): void {
-        let name = loc.name
+        const name = loc.name
         // TODO: Figure out how to show a confirmation dialog
         if (false) {
             // if this one doens't work, use the one commented out below

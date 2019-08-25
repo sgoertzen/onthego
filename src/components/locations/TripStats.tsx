@@ -17,7 +17,7 @@ class TripStats extends React.Component {
     }
 
     formatMiles(value: number): string {
-        let km = value * 1.60934;
+        const km = value * 1.60934;
         return this.formatNumber(value) + " miles (" + this.formatNumber(km) + " km)"
     }
     formatNumber(value: number): string {

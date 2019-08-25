@@ -31,7 +31,7 @@ class LocationEntryPage extends React.Component {
         }
         this.backToList = this.backToList.bind(this)
 
-        let locationid = this.props.match.params.locationid
+        const locationid = this.props.match.params.locationid
         if (locationid) {
             FirestoreHelper.loadLocation(locationid, (loc) => {
                 this.setState({ location: loc })

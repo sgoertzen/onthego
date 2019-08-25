@@ -1,6 +1,5 @@
 import React from 'react';
 import { Typography, Box } from '@material-ui/core';
-import "firebase/auth";
 import './AdminFooter.css'
 import Login, { LoginControl } from '../common/Login';
 

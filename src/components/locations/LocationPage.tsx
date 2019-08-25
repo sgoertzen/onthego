@@ -36,8 +36,8 @@ class LocationPage extends React.Component {
     constructor(props: ILocationPageProps) {
         super(props);
         this.props = props;
-        let emptyLocations: TravelLocation[] = [];
-        let emptyPosts: Post[] = [];
+        const emptyLocations: TravelLocation[] = [];
+        const emptyPosts: Post[] = [];
         this.locationChanged = this.locationChanged.bind(this);
         this.postClick = this.postClick.bind(this);
         this.locationsLoaded = this.locationsLoaded.bind(this);
@@ -64,7 +64,7 @@ class LocationPage extends React.Component {
         // Find the location where arrival/departure is around current date
         if (!this.state.selectedLocation) {
             // Find the location we are in and use it
-            let now = new Date()
+            const now = new Date()
             locations.forEach(loc => {
                 if (loc.arrive.toDate() < now && loc.depart.toDate() > now) {
                     this.setState({ selectedLocation: loc })
@@ -88,7 +88,7 @@ class LocationPage extends React.Component {
 
 
     locationChanged(locationId: string): void {
-        let locations = this.state.locs
+        const locations = this.state.locs
         this.setState({ posts: [] })
         locations.forEach(loc => {
             if (loc.id === locationId) {
@@ -114,9 +114,9 @@ class LocationPage extends React.Component {
     }
 
     computeCountriesVisited(locs: ITravelLocation[]): number {
-        let today = new Date()
+        const today = new Date()
         let visited = 0;
-        for (let loc of locs) {
+        for (const loc of locs) {
             if (today > loc.arrive.toDate()) {
                 visited++;
             }
@@ -126,7 +126,7 @@ class LocationPage extends React.Component {
 
     computeDistanceTraveled(locations: ITravelLocation[]): number {
         let total = 0;
-        let now = new Date()
+        const now = new Date()
         locations.forEach(loc => {
             if (loc.arrive.toDate() < now && loc.distance) {
                 total += loc.distance
@@ -136,7 +136,7 @@ class LocationPage extends React.Component {
     }
 
     render() {
-        let daysOnTheRoad = Math.max(differenceInDays(new Date(), new Date(2019, 6, 27)), 0)
+        const daysOnTheRoad = Math.max(differenceInDays(new Date(), new Date(2019, 6, 27)), 0)
 
         return (
             <div className="App">
