@@ -8,5 +8,6 @@
   .MediaViewer {
     margin: 0 auto;
     width: 75%;
+    max-width: 800px;
   }
 }

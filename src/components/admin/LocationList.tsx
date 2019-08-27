@@ -80,11 +80,9 @@ class LocationList extends React.Component {
                     <TableHead>
                         <TableRow>
                             <TableCell>Name</TableCell>
-                            <TableCell align="right">Code</TableCell>
-                            <TableCell align="right">Arrive</TableCell>
-                            <TableCell align="right">Depart</TableCell>
-                            <TableCell align="right">Latitude</TableCell>
-                            <TableCell align="right">Longitude</TableCell>
+                            <TableCell id="codeCol" align="right">Code</TableCell>
+                            <TableCell id="arriveCol" align="right" className="expandedColumn">Arrive</TableCell>
+                            <TableCell id="departCol" align="right">Depart</TableCell>
                             <TableCell align="center">Actions</TableCell>
                             <TableCell align="center">Details</TableCell>
                         </TableRow>
@@ -95,11 +93,9 @@ class LocationList extends React.Component {
                                 <TableCell component="th" scope="row">
                                     {loc.name}
                                 </TableCell>
-                                <TableCell align="right">{loc.countrycode}</TableCell>
-                                <TableCell align="right">{format(loc.arrive.toDate(), "MMM do, yyyy")}</TableCell>
-                                <TableCell align="right">{format(loc.depart.toDate(), "MMM do, yyyy")}</TableCell>
-                                <TableCell align="right">{loc.coords.latitude}</TableCell>
-                                <TableCell align="right">{loc.coords.longitude}</TableCell>
+                                <TableCell id="codeCol" align="right">{loc.countrycode}</TableCell>
+                                <TableCell id="arriveCol" align="right" className="expandedColumn">{format(loc.arrive.toDate(), "MMM do, yyyy")}</TableCell>
+                                <TableCell id="departCol" align="right">{format(loc.depart.toDate(), "MMM do, yyyy")}</TableCell>
                                 <TableCell align="center">
                                     <IconButton aria-label="Edit" onClick={() => { this.edit(loc) }}>
                                         <SvgIcon>
