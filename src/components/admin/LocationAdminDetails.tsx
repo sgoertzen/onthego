@@ -1,10 +1,11 @@
-import React from 'react';
-import { format } from 'date-fns';
-import { IHistoryProps } from '../../classes/IHistoryProps';
+import React from 'react'
+import { format } from 'date-fns'
+import { IHistoryProps } from '../../classes/IHistoryProps'
 import { Paper, Table, TableRow, TableBody, TableHead, TableCell, IconButton, SvgIcon, Button, Typography } from '@material-ui/core'
-import { IPost } from '../../classes/Post';
-import { ITravelLocation } from '../../classes/TravelLocation';
+import { IPost } from '../../classes/Post'
+import { ITravelLocation } from '../../classes/TravelLocation'
 import { FirestoreHelper } from '../../util/FirestoreHelper'
+import './LocationAdminDetails.css'
 
 interface ILocationPostsProps {
     history: IHistoryProps
@@ -21,7 +22,7 @@ interface ILocationPostsState {
     posts: IPost[]
 }
 
-class LocationPosts extends React.Component {
+class LocationAdminDetails extends React.Component {
 
     public props: ILocationPostsProps
     public state: ILocationPostsState
@@ -71,7 +72,10 @@ class LocationPosts extends React.Component {
         }
         return (
             <Paper className="root">
-                <Typography variant="h5">List of posts for {this.state.location.name}</Typography>
+                <Typography variant="h5">{this.state.location.name}</Typography>
+                <Typography>Country Code: {this.state.location.countrycode}</Typography>
+                <Typography>Arrive: {format(this.state.location.arrive.toDate(), "MMM do, yyyy")}</Typography>
+                <Typography>Depart: {format(this.state.location.depart.toDate(), "MMM do, yyyy")}</Typography>
                 <Button variant="outlined" onClick={() => { this.create(this.state.locationid) }}>
                     Create Post
                 </Button>
@@ -79,22 +83,22 @@ class LocationPosts extends React.Component {
                     <TableHead>
                         <TableRow>
                             <TableCell>Title</TableCell>
-                            <TableCell align="center">Author</TableCell>
+                            <TableCell align="center" id="authorCol">Author</TableCell>
                             <TableCell align="right">Posted</TableCell>
-                            <TableCell align="right">Media</TableCell>
-                            <TableCell align="right">Comments</TableCell>
+                            <TableCell align="right" id="mediaCol">Media</TableCell>
+                            <TableCell align="right" id="commentsCol">Comments</TableCell>
                             <TableCell align="center">Actions</TableCell>
-                            <TableCell align="center">View</TableCell>
+                            <TableCell align="center" id="viewCol">View</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {this.state.posts.map(post => (
                             <TableRow key={post.id}>
                                 <TableCell scope="row">{post.title}</TableCell>
-                                <TableCell align="center">{post.author}</TableCell>
+                                <TableCell align="center" id="authorCol">{post.author}</TableCell>
                                 <TableCell align="right">{format(post.posted.toDate(), "MMM do, yyyy")}</TableCell>
-                                <TableCell align="right">{post.media.length}</TableCell>
-                                <TableCell align="right">{post.commentcount}</TableCell>
+                                <TableCell align="right" id="mediaCol">{post.media.length}</TableCell>
+                                <TableCell align="right" id="commentsCol">{post.commentcount}</TableCell>
                                 <TableCell align="center">
                                     <IconButton aria-label="Edit" onClick={() => { this.edit(post) }}>
                                         <SvgIcon>
@@ -107,7 +111,7 @@ class LocationPosts extends React.Component {
                                         </SvgIcon>
                                     </IconButton> */}
                                 </TableCell>
-                                <TableCell align="center">
+                                <TableCell align="center" id="viewCol">
                                     <Button variant="outlined" onClick={() => { this.viewPost(post) }}>
                                         View Post
                                     </Button>
@@ -121,4 +125,4 @@ class LocationPosts extends React.Component {
     }
 }
 
-export default LocationPosts
+export default LocationAdminDetails

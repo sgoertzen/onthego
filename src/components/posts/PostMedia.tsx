@@ -1,6 +1,5 @@
 import React from 'react';
 import ImageGallery, { ReactImageGalleryItem } from 'react-image-gallery';
-//import ReactPlayer from 'react-player'
 import FilePlayer from 'react-player'
 import './PostMedia.css'
 import { IMedia, MediaType, ImageSize, Media } from '../../classes/Media';

@@ -1,5 +1,5 @@
 @media only screen and (max-width: 800px) {
-    #arriveCol, #departCol, #codeCol {
+    #authorCol, #mediaCol, #commentsCol, #viewCol {
         display: none;
     }
     .location-table {
@@ -11,11 +11,4 @@
     .location-table {
         min-width: 650px;
     }
-}
-  
-
-.root {
-    width: '100%';
-    margin-top: 1em;
-    overflow-x: auto;
 }

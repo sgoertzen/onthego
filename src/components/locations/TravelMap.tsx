@@ -16,14 +16,12 @@ interface mapProps {
 class TravelMap extends React.Component<mapProps> {
 
     public props: mapProps
-    private map: google.maps.Map | null;
+    private map: google.maps.Map | undefined;
     private maps: any;
 
     constructor(props: mapProps) {
         super(props);
         this.props = props;
-        this.map = null;
-        this.maps = null;
     }
 
     handleApiLoaded(map: google.maps.Map, maps: any) {
@@ -32,7 +30,7 @@ class TravelMap extends React.Component<mapProps> {
         this.drawPaths();
     }
     drawPaths() {
-        if (this.map === undefined) {
+        if (this.map === undefined || this.maps === undefined) {
             return;
         }
         const pathCoords = this.buildFlightPlanCoordinates(this.props.locations)
@@ -104,8 +102,8 @@ class TravelMap extends React.Component<mapProps> {
             // Defaults to San Francisco
             center = new firebase.firestore.GeoPoint(37.7749, -122.4194)
         }
-
         this.drawPaths()
+
         return (
             // Important! Always set the container height explicitly
             <div className="TravelMap">
