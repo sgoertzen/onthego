@@ -9,21 +9,7 @@
 // ****************************************************************************
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
-
-
-export interface IComment {
-    author: string
-    comment: string
-    posted: ITimeStamp
-    postid: string
-    commentid: string
-    edited: boolean
-}
-
-export interface ITimeStamp {
-    toDate(): Date
-    nanoseconds: number
-}
+import { IComment } from '../../../src/classes/Comment'
 
 const db = admin.firestore();
 

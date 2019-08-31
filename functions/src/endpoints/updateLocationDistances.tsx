@@ -10,22 +10,9 @@
 // ****************************************************************************
 
 import * as functions from 'firebase-functions'
-import { firestore } from "firebase";
 import * as admin from 'firebase-admin'
 import { haversine } from '../util/haversine'
-
-export interface ITravelLocation {
-    id: string
-    name: string
-    coords: firestore.GeoPoint
-    arrive: ITimeStamp
-    depart: ITimeStamp
-    distance: number
-}
-export interface ITimeStamp {
-    toDate(): Date
-    nanoseconds: number
-}
+import { ITravelLocation } from '../../../src/classes/TravelLocation'
 
 const db = admin.firestore();
 
