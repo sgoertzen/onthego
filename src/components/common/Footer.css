@@ -12,7 +12,7 @@
     .footer-spacer{
         display: none;
     }
-    .footer-user {
+    .footer-rss {
         grid-column: 1;
         grid-row: 2;
     }
@@ -31,7 +31,7 @@
         grid-column: 2;
         grid-row: 1;
     }
-    .footer-user {
+    .footer-rss {
         grid-column: 3;
         grid-row: 1;
     }
