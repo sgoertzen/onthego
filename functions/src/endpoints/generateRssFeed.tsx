@@ -36,10 +36,10 @@ exports = module.exports = functions.firestore.document('posts/{postid}').onWrit
                 title: post.title,
                 id: post.id,
                 link: `https://www.goertzensonthego.com/post/${post.id}`,
-                content: post.details,
+                content: buildContent(post),
                 author: [{ name: post.author }],
-                date: post.posted.toDate(),
-                image: post.media.length > 0 ? Media.imageThumbnail(post.media[0], ImageSize.Size_1600) : undefined
+                date: post.posted.toDate()
+                // image: post.media.length > 0 ? Media.imageThumbnail(post.media[0], ImageSize.Size_1600) : undefined
             });
         })
 
@@ -60,5 +60,12 @@ exports = module.exports = functions.firestore.document('posts/{postid}').onWrit
     }).catch((reason) => {
         console.log("Error on database promise:  " + reason)
     })
+})
 
-});
+function buildContent(post: IPost): string {
+    let content = post.details
+    for (let media of post.media) {
+        content += `<img src="${Media.imageThumbnail(media, ImageSize.Size_1600)}"/>`
+    }
+    return content
+}
