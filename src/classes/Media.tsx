@@ -32,10 +32,21 @@ export class Media implements IMedia {
     percentUploaded = 0
     error = ""
 
+    static imageThumbnailFilename(media: IMedia, size: ImageSize): string {
+        const THUMB_PREFIX = "thumb_";
+        return `${THUMB_PREFIX}${size}_${media.filename}`
+    }
+
     static imageThumbnail(media: IMedia, size: ImageSize): string {
         const THUMB_PREFIX = "thumb_";
         return media.url.replace(media.filename, `${THUMB_PREFIX}${size}_${media.filename}`)
     }
+
+    static videoThumbnailFilename(media: IMedia): string {
+        const THUMB_PREFIX = "thumb_";
+        return `${THUMB_PREFIX}${media.filename}`.replace(".mp4", ".png")
+    }
+
     static videoThumbnail(media: IMedia): string {
         const THUMB_PREFIX = "thumb_";
         return media.url.replace(media.filename, `${THUMB_PREFIX}${media.filename}`).replace(".mp4", ".png")

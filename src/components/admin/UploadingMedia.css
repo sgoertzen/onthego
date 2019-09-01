@@ -1,3 +1,19 @@
+.UploadingContainer {
+    display: inline;
+    position: relative;
+}
+
 .UploadingMedia {
+    position: relative;
     width: 100px;
+}
+
+.UploadedMedia {
+    margin: 0;
+}
+
+.UploadingRemoveIcon {
+  position: absolute;
+  top: -20px;
+  right: 46px;
 }

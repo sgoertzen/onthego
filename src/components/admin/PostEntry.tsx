@@ -1,14 +1,15 @@
-import React from 'react';
-import './LocationEntry.css';
-import * as firebase from "firebase/app";
+import React from 'react'
+import './LocationEntry.css'
+import * as firebase from "firebase/app"
 import "firebase/storage"
-import { ITravelLocation } from '../../classes/TravelLocation';
-import { TextField, Button, Divider, Container, Typography } from '@material-ui/core';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import UploadingMedia from './UploadingMedia';
-import { MediaHelper } from '../../util/MediaHelper';
-import { IMedia, Media } from '../../classes/Media';
-import { IPost } from '../../classes/Post';
+import { ITravelLocation } from '../../classes/TravelLocation'
+import { TextField, Button, Divider, Container, Typography } from '@material-ui/core'
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
+import UploadingMedia from './UploadingMedia'
+import { MediaHelper } from '../../util/MediaHelper'
+import { IMedia, Media, MediaType, ImageSize } from '../../classes/Media'
+import { IPost } from '../../classes/Post'
+import './PostEntry.css'
 
 export interface IPostCreated {
     (): void;
@@ -25,6 +26,7 @@ interface IPostEntryState {
     details: string
     uploads: IMedia[]
     locationid: string
+    removeduploads: IMedia[]
 }
 
 class PostEntry extends React.Component {
@@ -39,12 +41,15 @@ class PostEntry extends React.Component {
             title: this.props.post ? this.props.post.title : "",
             details: this.props.post ? this.props.post.details : "",
             locationid: this.props.loc.id,
-            uploads: []
+            uploads: this.props.post ? this.props.post.media : [], // Set uploaded to 100%
+            removeduploads: []
         }
+        // Todo; Allow uploads to be browsed for multiple times
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.isUploading = this.isUploading.bind(this)
         this.updateUploadState = this.updateUploadState.bind(this)
+        this.removeMedia = this.removeMedia.bind(this)
     }
 
     handleChange(event: any) {
@@ -68,7 +73,7 @@ class PostEntry extends React.Component {
                         uploadings.push(this.uploadFile(file))
                     }
                     this.setState({
-                        uploads: uploadings
+                        uploads: this.state.uploads.concat(uploadings)
                     })
                 }
             }
@@ -76,9 +81,7 @@ class PostEntry extends React.Component {
     }
 
     uploadFile(file: any): IMedia {
-
         const folder = MediaHelper.isImage(file.name) ? "postimages" : "postvideos"
-
         const storageRef = firebase.storage().ref();
         const uploadTask = storageRef.child(folder + "/" + file.name).put(file);
         const self = this
@@ -89,18 +92,18 @@ class PostEntry extends React.Component {
         // 2. Error observer, called on failure
         // 3. Completion observer, called on successful completion
 
-        uploadTask.on('state_changed', function(snapshot) {
+        uploadTask.on('state_changed', snapshot => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             self.updateUploadState(uploadingMedia.filename, progress)
-        }, function(error) {
+        }, error => {
             console.log("Unable to upload the file ", error)
             self.updateUploadState(uploadingMedia.filename, undefined, undefined, error)
-        }, function() {
+        }, () => {
             uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
                 console.log('File available at', downloadURL);
                 self.updateUploadState(uploadingMedia.filename, undefined, downloadURL)
             }).catch((reason) => { console.log("Unable to load upload file", reason) })
-        });
+        })
         return uploadingMedia
     }
 
@@ -131,7 +134,6 @@ class PostEntry extends React.Component {
             items.push(
                 {
                     url: obj.url,
-                    //thumbnail: obj.thumbnail,
                     filename: obj.filename,
                     filetype: obj.filetype.toString()
                 }
@@ -142,16 +144,20 @@ class PostEntry extends React.Component {
 
     handleSubmit() {
         const user = firebase.auth().currentUser
-        const db = firebase.firestore();
+        const db = firebase.firestore()
 
         if (this.props.post) {
             const post = this.props.post
             db.doc(`posts/${post.id}`)
                 .update({
                     title: this.state.title,
-                    details: this.state.details
+                    details: this.state.details,
+                    media: this.prepMediaForSaving(this.state.uploads)
                 })
-                .then(this.props.onPostCreated)
+                .then(async () => {
+                    await this.deleteRemovedMedia(this.state.removeduploads)
+                    this.props.onPostCreated()
+                })
                 .catch((reason) => { console.error(`Unable to update the post: ${reason}`) })
         } else {
             db.collection("posts")
@@ -163,11 +169,50 @@ class PostEntry extends React.Component {
                     posted: new Date(),
                     media: this.prepMediaForSaving(this.state.uploads)
                 })
-                .then(this.props.onPostCreated)
-                .catch((reason) => { console.error(`Unable to update the post: ${reason}`) })
+                .then(async () => {
+                    await this.deleteRemovedMedia(this.state.removeduploads)
+                    this.props.onPostCreated()
+                })
+                .catch((reason) => { console.error(`Unable to add the post: ${reason}`) })
         }
     }
 
+
+    deleteRemovedMedia(removed: IMedia[]): Promise<any> {
+        const promises: Promise<any>[] = []
+        const storageRef = firebase.storage().ref()
+
+        console.log(removed)
+        removed.forEach(toremove => {
+            console.log("removing image: " + toremove.filename)
+            if (toremove.filetype === MediaType.Image) {
+                // Remove both thumbnails and main image
+                const folder = "postimages"
+                promises.push(storageRef.child(folder + "/" + Media.imageThumbnailFilename(toremove, ImageSize.Size_200)).delete())
+                promises.push(storageRef.child(folder + "/" + Media.imageThumbnailFilename(toremove, ImageSize.Size_1600)).delete())
+                promises.push(storageRef.child(folder + "/" + toremove.filename).delete())
+            } else if (toremove.filetype === MediaType.Video) {
+                // Remove thumbnail and main video
+                const folder = "postvideos"
+                promises.push(storageRef.child(folder + "/" + Media.videoThumbnailFilename(toremove)).delete())
+                promises.push(storageRef.child(folder + "/" + toremove.filename).delete())
+            }
+        })
+        return Promise.all(promises)
+    }
+
+    removeMedia(media: IMedia) {
+        // Remove from our uploads and add to removedUploads list
+        const newMedia = this.state.uploads.filter((value, index, arr) => {
+            return value.filename !== media.filename
+        })
+        const newRemoved = this.state.removeduploads
+        newRemoved.push(media)
+        this.setState({
+            removeduploads: newRemoved,
+            uploads: newMedia
+        })
+    }
 
     isUploading() {
         for (const file of this.state.uploads) {
@@ -188,6 +233,7 @@ class PostEntry extends React.Component {
                 error={obj.error}
                 key={"upload_" + counter++}
                 filetype={obj.filetype}
+                removeCallback={this.removeMedia}
             />)
         })
 
@@ -230,11 +276,13 @@ class PostEntry extends React.Component {
                             accept="image/*|video/*"
                             onChange={this.handleChange}
                         />
-                        <label htmlFor="post-entry-media">
-                            <Button variant="outlined" component="span">
-                                Add Images and Videos
-                        </Button>
-                        </label>
+                        <div className="secondaryButtons">
+                            <label htmlFor="post-entry-media">
+                                <Button variant="outlined" component="span">
+                                    Add Images and Videos
+                                </Button>
+                            </label>
+                        </div>
                     </div>
                     <Divider />
                     <Button

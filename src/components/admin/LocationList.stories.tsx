@@ -1,10 +1,10 @@
 /// <reference types="storybook__react" />
-import React from 'react';
-import { storiesOf } from '@storybook/react';
-import LocationList from './LocationList';
-import { TravelLocation } from '../../classes/TravelLocation';
-import { TimeStamp } from '../../classes/TimeStamp';
-import * as firebase from "firebase/app";;
+import React from 'react'
+import { storiesOf } from '@storybook/react'
+import LocationList from './LocationList'
+import { TravelLocation } from '../../classes/TravelLocation'
+import { TimeStamp } from '../../classes/TimeStamp'
+import * as firebase from "firebase/app"
 
 storiesOf('admin/Location List', module)
     .add('No entries', () => {
