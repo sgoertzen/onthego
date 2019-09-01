@@ -7,7 +7,7 @@ import { TextField, Button, Divider, Container, Typography } from '@material-ui/
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
 import UploadingMedia from './UploadingMedia'
 import { MediaHelper } from '../../util/MediaHelper'
-import { IMedia, Media } from '../../classes/Media'
+import { IMedia, Media, MediaType, ImageSize } from '../../classes/Media'
 import { IPost } from '../../classes/Post'
 import './PostEntry.css'
 
@@ -81,9 +81,7 @@ class PostEntry extends React.Component {
     }
 
     uploadFile(file: any): IMedia {
-
         const folder = MediaHelper.isImage(file.name) ? "postimages" : "postvideos"
-
         const storageRef = firebase.storage().ref();
         const uploadTask = storageRef.child(folder + "/" + file.name).put(file);
         const self = this
@@ -94,18 +92,18 @@ class PostEntry extends React.Component {
         // 2. Error observer, called on failure
         // 3. Completion observer, called on successful completion
 
-        uploadTask.on('state_changed', function(snapshot) {
+        uploadTask.on('state_changed', snapshot => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             self.updateUploadState(uploadingMedia.filename, progress)
-        }, function(error) {
+        }, error => {
             console.log("Unable to upload the file ", error)
             self.updateUploadState(uploadingMedia.filename, undefined, undefined, error)
-        }, function() {
+        }, () => {
             uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
                 console.log('File available at', downloadURL);
                 self.updateUploadState(uploadingMedia.filename, undefined, downloadURL)
             }).catch((reason) => { console.log("Unable to load upload file", reason) })
-        });
+        })
         return uploadingMedia
     }
 
@@ -146,16 +144,20 @@ class PostEntry extends React.Component {
 
     handleSubmit() {
         const user = firebase.auth().currentUser
-        const db = firebase.firestore();
+        const db = firebase.firestore()
 
         if (this.props.post) {
             const post = this.props.post
             db.doc(`posts/${post.id}`)
                 .update({
                     title: this.state.title,
-                    details: this.state.details
+                    details: this.state.details,
+                    media: this.prepMediaForSaving(this.state.uploads)
                 })
-                .then(this.props.onPostCreated)  // TODO: Use this.state.removeduploads
+                .then(async () => {
+                    await this.deleteRemovedMedia(this.state.removeduploads)
+                    this.props.onPostCreated()
+                })
                 .catch((reason) => { console.error(`Unable to update the post: ${reason}`) })
         } else {
             db.collection("posts")
@@ -167,9 +169,49 @@ class PostEntry extends React.Component {
                     posted: new Date(),
                     media: this.prepMediaForSaving(this.state.uploads)
                 })
-                .then(this.props.onPostCreated)
-                .catch((reason) => { console.error(`Unable to update the post: ${reason}`) })
+                .then(async () => {
+                    await this.deleteRemovedMedia(this.state.removeduploads)
+                    this.props.onPostCreated()
+                })
+                .catch((reason) => { console.error(`Unable to add the post: ${reason}`) })
         }
+    }
+
+
+    deleteRemovedMedia(removed: IMedia[]): Promise<any> {
+        const promises: Promise<any>[] = []
+        const storageRef = firebase.storage().ref()
+
+        console.log(removed)
+        removed.forEach(toremove => {
+            console.log("removing image: " + toremove.filename)
+            if (toremove.filetype === MediaType.Image) {
+                // Remove both thumbnails and main image
+                const folder = "postimages"
+                promises.push(storageRef.child(folder + "/" + Media.imageThumbnailFilename(toremove, ImageSize.Size_200)).delete())
+                promises.push(storageRef.child(folder + "/" + Media.imageThumbnailFilename(toremove, ImageSize.Size_1600)).delete())
+                promises.push(storageRef.child(folder + "/" + toremove.filename).delete())
+            } else if (toremove.filetype === MediaType.Video) {
+                // Remove thumbnail and main video
+                const folder = "postvideos"
+                promises.push(storageRef.child(folder + "/" + Media.videoThumbnailFilename(toremove)).delete())
+                promises.push(storageRef.child(folder + "/" + toremove.filename).delete())
+            }
+        })
+        return Promise.all(promises)
+    }
+
+    removeMedia(media: IMedia) {
+        // Remove from our uploads and add to removedUploads list
+        const newMedia = this.state.uploads.filter((value, index, arr) => {
+            return value.filename !== media.filename
+        })
+        const newRemoved = this.state.removeduploads
+        newRemoved.push(media)
+        this.setState({
+            removeduploads: newRemoved,
+            uploads: newMedia
+        })
     }
 
     isUploading() {
@@ -179,18 +221,6 @@ class PostEntry extends React.Component {
             }
         }
         return false
-    }
-
-    removeMedia(media: IMedia) {
-        // Remove from our uploads and add to removedUploads list
-        alert('would remove the image, feature still in progress: ' + media.filename)
-        // const newMedia = this.state.uploads.filter((value, index, arr) => {
-        //     return value.filename !== media.filename
-        // })
-        // this.setState({
-        //     removeduploads: this.state.removeduploads.push(media),
-        //     uploads: newMedia
-        // })
     }
 
     render() {

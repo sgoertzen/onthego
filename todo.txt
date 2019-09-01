@@ -40,7 +40,7 @@ Done:
 [done] (3-medium) Fix menu bar to work with a lot of location (mobile and desktop)
 [done] (4-low) Edit locations
 [done] (4-low) Show location on post entry screen
+[done] (5-bottom) RSS Feed of blog?
 [won't do] (4-low) Delete locations
-[won't do] (5-bottom) RSS Feed of blog?
 [won't do] (5-bottom) Subscribe to blog?
 [won't do] (5-bottom) Filter by family member
