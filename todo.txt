@@ -1,6 +1,8 @@
 Todo:
-(3-medium) Fix vertical videos sizing
-(3-medium) Put database rules and indexes into code
+(3-medium) Add general pages: Full Schedule, Full map, Overview page with description and family picture
+(3-medium) Allow comments to be editted or deleted
+(4-low) Fix vertical videos sizing
+(4-low) Put database rules and indexes into code
 (4-low) Pick photos from google photots (https://developers.google.com/picker/docs/) and (https://developers.google.com/photos/library/guides/access-media-items)
 (4-low) Auto merge PRs (https://alexwlchan.net/2019/03/creating-a-github-action-to-auto-merge-pull-requests/)
 (4-low) Update state to be readonly in TypeScript (https://levelup.gitconnected.com/ultimate-react-component-patterns-with-typescript-2-8-82990c516935)
@@ -41,6 +43,7 @@ Done:
 [done] (4-low) Edit locations
 [done] (4-low) Show location on post entry screen
 [done] (5-bottom) RSS Feed of blog?
+[done] (3-medium) Hide far off arrive and departure dates
 [won't do] (4-low) Delete locations
 [won't do] (5-bottom) Subscribe to blog?
 [won't do] (5-bottom) Filter by family member
