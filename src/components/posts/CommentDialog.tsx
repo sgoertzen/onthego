@@ -9,7 +9,7 @@ import * as firebase from "firebase/app";
 export interface ICommentSavedCallback {
     (): void
 }
-interface commentDialogProps {
+interface ICommentDialogProps {
     comment?: string
     onClose: ICommentSavedCallback
     open: boolean
@@ -24,12 +24,12 @@ interface commentDialogState {
     saving: boolean
 }
 
-class CommentDialog extends React.Component {
+class CommentDialog extends React.Component<ICommentDialogProps> {
 
-    public props: commentDialogProps
+    public props: ICommentDialogProps
     public state: commentDialogState
 
-    constructor(props: commentDialogProps) {
+    constructor(props: ICommentDialogProps) {
         super(props);
         this.props = props;
         this.state = { ...props, editing: (this.props.comment !== undefined), saving: false }

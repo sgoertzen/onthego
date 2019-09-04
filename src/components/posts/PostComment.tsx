@@ -5,7 +5,7 @@ import { formatRelative } from 'date-fns';
 import './PostComment.css'
 import { ParagraphHelper } from '../../util/ParagraphHelper';
 
-class PostComment extends React.Component {
+class PostComment extends React.Component<IComment> {
 
     public props: IComment
 

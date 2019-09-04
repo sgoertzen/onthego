@@ -1,17 +1,17 @@
 import React from 'react';
 import './TripStats.css'
 
-interface statsProps {
+interface ITripStatsProps {
     daysOnTheRoad: number
     countriesVisited: number
     milesTraveled: number
 }
 
-class TripStats extends React.Component {
+class TripStats extends React.Component<ITripStatsProps> {
 
-    public props: statsProps
+    public props: ITripStatsProps
 
-    constructor(props: statsProps) {
+    constructor(props: ITripStatsProps) {
         super(props);
         this.props = props;
     }

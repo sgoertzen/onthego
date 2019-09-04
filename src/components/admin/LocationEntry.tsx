@@ -16,7 +16,7 @@ export interface ILocationCreated {
     (): void;
 }
 
-export interface locationEntryProps {
+export interface ILocationEntryProps {
     loc?: ITravelLocation
     onLocationCreated: ILocationCreated
 }
@@ -30,12 +30,12 @@ interface ILocationEntryState {
     countrycode: string
 }
 
-class LocationEntry extends React.Component {
+class LocationEntry extends React.Component<ILocationEntryProps> {
 
     public state: ILocationEntryState;
-    public props: locationEntryProps
+    public props: ILocationEntryProps
 
-    constructor(props: locationEntryProps) {
+    constructor(props: ILocationEntryProps) {
         super(props)
         this.props = props
         const loc = this.props.loc

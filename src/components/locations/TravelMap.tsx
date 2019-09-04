@@ -7,19 +7,23 @@ import { ILocChangeCallback } from '../../classes/ILocChangeCallback'
 import './TravelMap.css'
 import * as firebase from "firebase/app";;
 
-interface mapProps {
+interface IMapProps {
     locations: ITravelLocation[]
     selectedLocation?: ITravelLocation
     onLocChange: ILocChangeCallback
+    fullscreen?: boolean
 }
 
-class TravelMap extends React.Component<mapProps> {
+const DefaultZoom = 6
+const DefaultZoomFullScreen = 3
 
-    public props: mapProps
+class TravelMap extends React.Component<IMapProps> {
+
+    public props: IMapProps
     private map: google.maps.Map | undefined;
     private maps: any;
 
-    constructor(props: mapProps) {
+    constructor(props: IMapProps) {
         super(props);
         this.props = props;
     }
@@ -101,20 +105,19 @@ class TravelMap extends React.Component<mapProps> {
             center = this.props.selectedLocation.coords
         } else {
             // Defaults to San Francisco
-            center = new firebase.firestore.GeoPoint(37.7749, -122.4194)
+            center = new firebase.firestore.GeoPoint(18.9920112,-9.4377394)
         }
         this.drawPaths()
 
         return (
             // Important! Always set the container height explicitly
-            <div className="TravelMap">
+            <div className={this.props.fullscreen ? "MapFullscreen" : "TravelMap"}>
                 <GoogleMapReact
                     yesIWantToUseGoogleMapApiInternals
                     onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
                     bootstrapURLKeys={{ key: 'AIzaSyBDe1KUNj3px_7kkfl7cfkrEpihDwvunt4' }}
                     center={{ lat: center.latitude, lng: center.longitude }}
-                    defaultZoom={6}
-                >
+                    defaultZoom={this.props.fullscreen ? DefaultZoomFullScreen : DefaultZoom}>
                     {this.buildMarkers()}
                 </GoogleMapReact>
             </div>

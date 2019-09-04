@@ -4,7 +4,7 @@ import { ILocChangeCallback } from '../../classes/ILocChangeCallback';
 import { Paper } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
-interface markerProps {
+interface IMarkerProps {
     lat: number,
     lng: number,
     text: string,
@@ -12,7 +12,7 @@ interface markerProps {
     onLocChange: ILocChangeCallback
 }
 
-const MapMarker: React.FC<markerProps> = (props) => {
+const MapMarker: React.FC<IMarkerProps> = (props) => {
     return (
         <Paper className="MapMarker" onClick={() => { props.onLocChange(props.locationid) }}>
             <Typography variant="h6" component="h5">

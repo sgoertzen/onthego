@@ -9,7 +9,7 @@ import LocationLink, { LinkDirection } from './LocationLink'
 import FlagIconFactory from 'react-flag-icon-css'
 import "./LocationDetails.css"
 
-interface detailProps {
+interface IDetailProps {
     locations?: ITravelLocation[]
     onLocChange: ILocChangeCallback
     selectedLocation?: ITravelLocation
@@ -18,11 +18,11 @@ interface detailProps {
 export const FlagIcon = FlagIconFactory(React, { useCssModules: false })
 const Hide_Dates_After_Months = 2
 
-class LocationDetails extends React.Component {
+class LocationDetails extends React.Component<IDetailProps> {
 
-    public props: detailProps
+    public props: IDetailProps
 
-    constructor(props: detailProps) {
+    constructor(props: IDetailProps) {
         super(props);
         this.props = props;
     }

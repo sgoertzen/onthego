@@ -9,8 +9,7 @@ interface IPostMenuProps {
     locationname?: string
 }
 
-
-class PostMenu extends React.Component {
+class PostMenu extends React.Component<IPostMenuProps> {
 
     public props: IPostMenuProps
 

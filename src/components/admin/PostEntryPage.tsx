@@ -5,7 +5,7 @@ import { ITravelLocation } from '../../classes/TravelLocation';
 import { IPost } from '../../classes/Post';
 import { FirestoreHelper } from '../../util/FirestoreHelper';
 
-interface postEntryPageProps {
+interface IPostEntryPageProps {
     history?: IHistoryProps
     match: {
         params: {
@@ -15,17 +15,17 @@ interface postEntryPageProps {
     }
 }
 
-interface postEntryPageState {
+interface IPostEntryPageState {
     editing: boolean
     location?: ITravelLocation
     post?: IPost
 }
 
-class PostEntryPage extends React.Component {
-    public props: postEntryPageProps
-    public state: postEntryPageState
+class PostEntryPage extends React.Component<IPostEntryPageProps> {
+    public props: IPostEntryPageProps
+    public state: IPostEntryPageState
 
-    constructor(props: postEntryPageProps) {
+    constructor(props: IPostEntryPageProps) {
         super(props);
         this.props = props;
         this.state = {

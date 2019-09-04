@@ -16,7 +16,7 @@ interface ILocationListState {
     locs: ITravelLocation[]
 }
 
-class LocationList extends React.Component {
+class LocationList extends React.Component<ILocationListProps> {
 
     public props: ILocationListProps
     public state: ILocationListState
