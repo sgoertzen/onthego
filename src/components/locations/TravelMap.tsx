@@ -87,7 +87,8 @@ class TravelMap extends React.Component<mapProps> {
                     lat={loc.coords.latitude}
                     lng={loc.coords.longitude}
                     text={loc.name}
-                    key={loc.name}
+                    key={loc.id}
+                    locationid={loc.id}
                     onLocChange={this.props.onLocChange}
                 />
             );
