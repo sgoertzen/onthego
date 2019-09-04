@@ -16,6 +16,7 @@ interface detailProps {
 }
 
 export const FlagIcon = FlagIconFactory(React, { useCssModules: false })
+const Hide_Dates_After_Months = 2
 
 class LocationDetails extends React.Component {
 
@@ -51,6 +52,8 @@ class LocationDetails extends React.Component {
             previous = l;
         }
         const now = new Date()
+        const hideDatesAfter = new Date()
+        hideDatesAfter.setMonth(now.getMonth() + Hide_Dates_After_Months)
         const inLocation = loc.arrive.toDate() < now && loc.depart.toDate() > now
         return (
             <div className="detailsPanel">
@@ -63,11 +66,11 @@ class LocationDetails extends React.Component {
                 </Typography>
                 <Typography component="span" className="details-arrive">
                     {loc.arrive.toDate() < now ? "Arrived" : "Arriving"}:&nbsp;
-                    {this.format2(loc.arrive)}
+                    {loc.arrive.toDate() > hideDatesAfter ? "(to be determined)" : this.format2(loc.arrive)}
                 </Typography>
                 <Typography component="span" className="details-depart">
                     {loc.depart.toDate() < now ? "Departed" : "Departing"}:&nbsp;
-                    {this.format2(loc.depart)}
+                    {loc.depart.toDate() > hideDatesAfter ? "(to be determined)" : this.format2(loc.depart)}
                 </Typography>
                 <div className="detailNav">
                     <LocationLink onLocChange={this.props.onLocChange} loc={previous} direction={LinkDirection.Back} />
