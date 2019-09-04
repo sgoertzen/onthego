@@ -8,14 +8,15 @@ interface markerProps {
     lat: number,
     lng: number,
     text: string,
+    locationid: string,
     onLocChange: ILocChangeCallback
 }
 
-const MapMarker: React.FC<markerProps> = (mark) => {
+const MapMarker: React.FC<markerProps> = (props) => {
     return (
-        <Paper className="MapMarker">
+        <Paper className="MapMarker" onClick={() => { props.onLocChange(props.locationid) }}>
             <Typography variant="h6" component="h5">
-                {mark.text}
+                {props.text}
             </Typography>
         </Paper>
     );

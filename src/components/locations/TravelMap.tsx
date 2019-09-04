@@ -87,7 +87,8 @@ class TravelMap extends React.Component<mapProps> {
                     lat={loc.coords.latitude}
                     lng={loc.coords.longitude}
                     text={loc.name}
-                    key={loc.name}
+                    key={loc.id}
+                    locationid={loc.id}
                     onLocChange={this.props.onLocChange}
                 />
             );
@@ -113,6 +114,7 @@ class TravelMap extends React.Component<mapProps> {
                     bootstrapURLKeys={{ key: 'AIzaSyBDe1KUNj3px_7kkfl7cfkrEpihDwvunt4' }}
                     center={{ lat: center.latitude, lng: center.longitude }}
                     defaultZoom={6}
+                    onChildClick={(args) => { console.log(args) }}
                 >
                     {this.buildMarkers()}
                 </GoogleMapReact>
