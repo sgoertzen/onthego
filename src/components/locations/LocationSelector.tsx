@@ -3,17 +3,17 @@ import { ITravelLocation } from '../../classes/TravelLocation';
 import { ILocChangeCallback } from '../../classes/ILocChangeCallback';
 import { Select, MenuItem } from '@material-ui/core';
 
-interface buttonProps {
+interface ILocationSelectorProps {
     locs: ITravelLocation[]
     selectedLocation?: ITravelLocation
     onLocChange: ILocChangeCallback
 }
 
-class LocationSelector extends React.Component {
+class LocationSelector extends React.Component<ILocationSelectorProps> {
 
-    public props: buttonProps
+    public props: ILocationSelectorProps
 
-    constructor(props: buttonProps) {
+    constructor(props: ILocationSelectorProps) {
         super(props);
         this.props = props;
         this.tabChange = this.tabChange.bind(this);

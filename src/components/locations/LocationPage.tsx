@@ -28,7 +28,7 @@ interface ILocationPageState {
     distanceTraveled: number
 }
 
-class LocationPage extends React.Component {
+class LocationPage extends React.Component<ILocationPageProps> {
 
     public state: ILocationPageState;
     public props: ILocationPageProps

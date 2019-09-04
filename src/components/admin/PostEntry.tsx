@@ -15,7 +15,7 @@ export interface IPostCreated {
     (): void;
 }
 
-interface postEntryProps {
+interface IPostEntryProps {
     loc: ITravelLocation
     post?: IPost
     onPostCreated: IPostCreated
@@ -29,12 +29,12 @@ interface IPostEntryState {
     removeduploads: IMedia[]
 }
 
-class PostEntry extends React.Component {
+class PostEntry extends React.Component<IPostEntryProps> {
 
     public state: IPostEntryState
-    public props: postEntryProps
+    public props: IPostEntryProps
 
-    constructor(props: postEntryProps) {
+    constructor(props: IPostEntryProps) {
         super(props);
         this.props = props;
         this.state = {

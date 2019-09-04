@@ -4,15 +4,15 @@ import { IHistoryProps } from '../../classes/IHistoryProps';
 import './Header.css'
 // import { Link } from 'react-router-dom'
 
-interface titleProps {
+interface IHeaderProps {
     history?: IHistoryProps
 }
 
-class Header extends React.Component {
+class Header extends React.Component<IHeaderProps> {
 
-    public props: titleProps
+    public props: IHeaderProps
 
-    constructor(props: titleProps) {
+    constructor(props: IHeaderProps) {
         super(props);
         this.props = props;
         this.goHome = this.goHome.bind(this)

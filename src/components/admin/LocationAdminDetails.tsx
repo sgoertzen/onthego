@@ -22,7 +22,7 @@ interface ILocationPostsState {
     posts: IPost[]
 }
 
-class LocationAdminDetails extends React.Component {
+class LocationAdminDetails extends React.Component<ILocationPostsProps> {
 
     public props: ILocationPostsProps
     public state: ILocationPostsState

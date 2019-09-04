@@ -8,18 +8,18 @@ export enum LoginControl {
     Button
 }
 
-interface loginProps {
+interface ILoginProps {
     control: LoginControl
     username?: string
     adminLogin?: boolean
     intro?: string
 }
 
-class Login extends React.Component {
+class Login extends React.Component<ILoginProps> {
 
-    public props: loginProps
+    public props: ILoginProps
 
-    constructor(props: loginProps) {
+    constructor(props: ILoginProps) {
         super(props);
         this.props = props;
         this.login = this.login.bind(this)

@@ -4,23 +4,23 @@ import GoogleMapReact from 'google-map-react'
 import { SvgIcon } from '@material-ui/core'
 import './SelectionMap.css'
 
-interface mapProps {
+interface IMapProps {
     latitude?: number
     longitude?: number
     onChange: (lat: number, lng: number) => void
 }
 
-interface SelectionMapState {
+interface ISelectionMapState {
     latitude: number
     longitude: number
 }
 
-class SelectionMap extends React.Component<mapProps> {
+class SelectionMap extends React.Component<IMapProps> {
 
-    public props: mapProps
-    public state: SelectionMapState
+    public props: IMapProps
+    public state: ISelectionMapState
 
-    constructor(props: mapProps) {
+    constructor(props: IMapProps) {
         super(props);
         this.props = props;
         this.state = {

@@ -6,15 +6,15 @@ import { MediaHelper } from '../../util/MediaHelper';
 import { IMedia } from '../../classes/Media';
 import { IconButton, SvgIcon } from '@material-ui/core';
 
-interface UploadingMediaProps extends IMedia {
+interface IUploadingMediaProps extends IMedia {
     removeCallback: (media: IMedia) => void
 }
 
-class UploadingMedia extends React.Component {
+class UploadingMedia extends React.Component<IUploadingMediaProps> {
 
-    public props: UploadingMediaProps
+    public props: IUploadingMediaProps
 
-    constructor(props: UploadingMediaProps) {
+    constructor(props: IUploadingMediaProps) {
         super(props);
         this.props = props
     }

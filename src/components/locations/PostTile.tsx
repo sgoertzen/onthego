@@ -8,16 +8,16 @@ import { MediaHelper } from '../../util/MediaHelper';
 import { IPostClickCallback } from '../../classes/IPostClickCallback'
 import { ImageSize, Media } from '../../classes/Media';
 
-interface postTileProps {
+interface IPostTileProps {
     post: IPost
     onPostClick: IPostClickCallback
 }
 
-class PostTile extends React.Component {
+class PostTile extends React.Component<IPostTileProps> {
 
-    public props: postTileProps
+    public props: IPostTileProps
 
-    constructor(props: postTileProps) {
+    constructor(props: IPostTileProps) {
         super(props);
         this.props = props;
         this.onClick = this.onClick.bind(this)

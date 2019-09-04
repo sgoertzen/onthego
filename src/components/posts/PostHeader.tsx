@@ -4,18 +4,18 @@ import { Typography } from '@material-ui/core';
 import './PostHeader.css'
 import { ParagraphHelper } from '../../util/ParagraphHelper';
 
-interface postHeaderProps {
+interface IPostHeaderProps {
     title: string
     author: string
     date: Date
     details: string
 }
 
-class PostHeader extends React.Component {
+class PostHeader extends React.Component<IPostHeaderProps> {
 
-    public props: postHeaderProps
+    public props: IPostHeaderProps
 
-    constructor(props: postHeaderProps) {
+    constructor(props: IPostHeaderProps) {
         super(props);
         this.props = props;
     }

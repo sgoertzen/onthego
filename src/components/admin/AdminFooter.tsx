@@ -3,15 +3,15 @@ import { Typography, Box } from '@material-ui/core';
 import './AdminFooter.css'
 import Login, { LoginControl } from '../common/Login';
 
-interface footerProps {
+interface IFooterProps {
     username?: string
 }
 
-class AdminFooter extends React.Component {
+class AdminFooter extends React.Component<IFooterProps> {
 
-    public props: footerProps
+    public props: IFooterProps
 
-    constructor(props: footerProps) {
+    constructor(props: IFooterProps) {
         super(props);
         this.props = props;
     }

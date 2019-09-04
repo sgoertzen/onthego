@@ -5,7 +5,7 @@ import { Link } from '@material-ui/core';
 import { FlagIcon } from './LocationDetails'
 import './LocationLink.css'
 
-interface locationLinkProps {
+interface ILocationLinkProps {
     onLocChange: ILocChangeCallback
     loc?: ITravelLocation
     direction: LinkDirection
@@ -17,10 +17,10 @@ export enum LinkDirection {
     None
 }
 
-class LocationLink extends React.Component {
-    public props: locationLinkProps
+class LocationLink extends React.Component<ILocationLinkProps> {
+    public props: ILocationLinkProps
 
-    constructor(props: locationLinkProps) {
+    constructor(props: ILocationLinkProps) {
         super(props)
         this.props = props
     }

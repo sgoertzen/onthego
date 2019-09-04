@@ -8,7 +8,7 @@ interface IAdminMenuProps {
 }
 
 
-class AdminMenuBar extends React.Component {
+class AdminMenuBar extends React.Component<IAdminMenuProps> {
 
     public props: IAdminMenuProps
 

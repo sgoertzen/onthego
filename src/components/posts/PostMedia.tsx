@@ -6,15 +6,15 @@ import { IMedia, MediaType, ImageSize, Media } from '../../classes/Media';
 import 'react-image-gallery/styles/css/image-gallery.css'
 
 
-interface postMediaProps {
+interface IPostMediaProps {
     items: IMedia[]
 }
 
-class PostMedia extends React.Component {
+class PostMedia extends React.Component<IPostMediaProps> {
 
-    public props: postMediaProps
+    public props: IPostMediaProps
 
-    constructor(props: postMediaProps) {
+    constructor(props: IPostMediaProps) {
         super(props);
         this.props = props;
     }

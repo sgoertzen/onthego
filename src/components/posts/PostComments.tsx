@@ -5,23 +5,23 @@ import { Button, Divider } from '@material-ui/core';
 import CommentDialog, { ICommentSavedCallback } from './CommentDialog';
 import './PostComments.css'
 
-interface postCommentsProps {
+interface IPostCommentsProps {
     comments: IComment[]
     username?: string
     postid: string
     onChange: ICommentSavedCallback
 }
-interface postCommentsState {
+interface IPostCommentsState {
     comments: IComment[]
     open: boolean
 }
 
-class PostComments extends React.Component {
+class PostComments extends React.Component<IPostCommentsProps> {
 
-    public props: postCommentsProps
-    public state: postCommentsState
+    public props: IPostCommentsProps
+    public state: IPostCommentsState
 
-    constructor(props: postCommentsProps) {
+    constructor(props: IPostCommentsProps) {
         super(props);
         this.props = props;
         this.state = { ...props, open: false }

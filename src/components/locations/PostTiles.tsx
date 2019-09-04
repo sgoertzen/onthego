@@ -11,7 +11,7 @@ interface postProps {
     onPostClick: IPostClickCallback
 }
 
-class PostTiles extends React.Component {
+class PostTiles extends React.Component<postProps> {
 
     public props: postProps
 
