@@ -105,7 +105,7 @@ class TravelMap extends React.Component<IMapProps> {
             center = this.props.selectedLocation.coords
         } else {
             // Defaults to San Francisco
-            center = new firebase.firestore.GeoPoint(18.9920112,-9.4377394)
+            center = new firebase.firestore.GeoPoint(18.9920112, -9.4377394)
         }
         this.drawPaths()
 

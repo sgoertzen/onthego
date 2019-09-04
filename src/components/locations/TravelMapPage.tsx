@@ -11,7 +11,7 @@ interface ITravelMapPageState {
 class TravelMapPage extends React.Component {
     public state: ITravelMapPageState
 
-    constructor(props:any) {
+    constructor(props: any) {
         super(props)
         this.state = { locs: [] }
         this.locationsLoaded = this.locationsLoaded.bind(this)
