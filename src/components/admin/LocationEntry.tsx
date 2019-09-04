@@ -7,7 +7,8 @@ import DateFnsUtils from '@date-io/date-fns'
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
 import * as firebase from "firebase/app"
 import { ITravelLocation } from '../../classes/TravelLocation'
-import CountrySelector from './CountrySelector';
+import CountrySelector from './CountrySelector'
+import SelectionMap from './SelectionMap'
 
 
 // Todo: may want to move this out of this class later
@@ -50,6 +51,7 @@ class LocationEntry extends React.Component {
         this.handleArrivalDateChange = this.handleArrivalDateChange.bind(this)
         this.handleDepartureDateChange = this.handleDepartureDateChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.onMapChange = this.onMapChange.bind(this)
     }
 
     handleChange(event: any): void {
@@ -111,6 +113,13 @@ class LocationEntry extends React.Component {
         }
     }
 
+    onMapChange(lat: number, lng: number) {
+        this.setState({
+            latitude: lat,
+            longitude: lng,
+        })
+    }
+
     render() {
         return (
             <ValidatorForm
@@ -129,35 +138,15 @@ class LocationEntry extends React.Component {
                             validators={['required']}
                             errorMessages={['field required']}
                             autoFocus
+                            fullWidth
                         />
-                        <CountrySelector
-                            value={this.state.countrycode}
-                            onChange={this.handleChange} />
                     </div>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid container justify="space-around">
-
-                            <TextValidator
-                                id="location-entry-latitude"
-                                name="location-entry-latitude"
-                                label="Latitude"
-                                value={this.state.latitude}
-                                onChange={this.handleChange}
-                                margin="normal"
-                                validators={['required', 'isFloat', 'minNumber:-90', 'maxNumber:90']}
-                                errorMessages={['field required', 'Must be a number', 'Value should be greater then -90', 'Value should be less then 90']}
-                                required
-                            />
-                            <TextValidator
-                                id="location-entry-longitude"
-                                name="location-entry-longitude"
-                                label="Longitude"
-                                value={this.state.longitude}
-                                onChange={this.handleChange}
-                                margin="normal"
-                                validators={['required', 'isFloat', 'minNumber:-180', 'maxNumber:180']}
-                                errorMessages={['field required', 'Must be a number', 'Value should be greater then -180', 'Value should be less then 180']}
-                            />
+                            <SelectionMap latitude={this.state.latitude} longitude={this.state.longitude} onChange={this.onMapChange} />
+                            <CountrySelector
+                                value={this.state.countrycode}
+                                onChange={this.handleChange} />
                             <KeyboardDatePicker
                                 margin="normal"
                                 id="location-entry-arrive"
