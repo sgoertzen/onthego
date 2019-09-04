@@ -114,7 +114,6 @@ class TravelMap extends React.Component<mapProps> {
                     bootstrapURLKeys={{ key: 'AIzaSyBDe1KUNj3px_7kkfl7cfkrEpihDwvunt4' }}
                     center={{ lat: center.latitude, lng: center.longitude }}
                     defaultZoom={6}
-                    onChildClick={(args) => { console.log(args) }}
                 >
                     {this.buildMarkers()}
                 </GoogleMapReact>
