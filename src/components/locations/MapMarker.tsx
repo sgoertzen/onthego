@@ -15,7 +15,7 @@ interface IMarkerProps {
 const MapMarker: React.FC<IMarkerProps> = (props) => {
     return (
         <Paper className="MapMarker" onClick={() => { props.onLocChange(props.locationid) }}>
-            <Typography variant="h6" component="h5">
+            <Typography component="h6">
                 {props.text}
             </Typography>
         </Paper>
