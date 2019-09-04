@@ -14,8 +14,8 @@ storiesOf('admin/Location Entry', module)
     .add('Basic Form', () => {
         return <LocationEntry onLocationCreated={() => { }} />
     })
-    .add('Filled Form', () => {
-        const loc = new TravelLocation("", "Antarctica", new firebase.firestore.GeoPoint(15.5, 31.156), new TimeStamp(), new TimeStamp())
-        loc.countrycode = "AT"
+    .add('Filled - Ukraine', () => {
+        const loc = new TravelLocation("", "Ukraine", new firebase.firestore.GeoPoint(48.9603792, 31.3424444), new TimeStamp(), new TimeStamp())
+        loc.countrycode = "UA"
         return <LocationEntry loc={loc} onLocationCreated={() => { }} />
     })
