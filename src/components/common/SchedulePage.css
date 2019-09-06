@@ -1,0 +1,13 @@
+
+@media only screen and (max-width: 800px) {
+    .schedule-area {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 801px) {
+    .schedule-area {
+        width: 75%;
+        margin: auto;
+    }
+}

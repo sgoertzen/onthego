@@ -1,7 +1,7 @@
-import React from "react";
-import TravelMap from "./TravelMap";
-import { TravelLocation, ITravelLocation } from "../../classes/TravelLocation";
-import { FirestoreHelper } from "../../util/FirestoreHelper";
+import React from "react"
+import TravelMap from "../locations/TravelMap"
+import { TravelLocation, ITravelLocation } from "../../classes/TravelLocation"
+import { FirestoreHelper } from "../../util/FirestoreHelper"
 
 
 interface ITravelMapPageState {
@@ -11,7 +11,7 @@ interface ITravelMapPageState {
 class TravelMapPage extends React.Component {
     public state: ITravelMapPageState
 
-    constructor(props:any) {
+    constructor(props: any) {
         super(props)
         this.state = { locs: [] }
         this.locationsLoaded = this.locationsLoaded.bind(this)

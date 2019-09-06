@@ -1,6 +1,7 @@
 
 @media only screen and (max-width: 800px) {
     .header {
+        flex-direction: column;
         text-align: center;
         padding-top: .3em;
         padding-bottom: .1em;
@@ -9,12 +10,23 @@
 
 @media only screen and (min-width: 801px) {
     .header {
+        flex-direction: row;
         padding: .4em;
     }
 }
 .header {
+    display: flex;
+    justify-content: space-between;
     background-color: #6A7062;
+}
+.headerlogo {
     color:#ffffff;
+    cursor: pointer;
+}
+#headerlink {
+    color: #ffffff;
+    cursor: pointer;
+    padding-right: 1em;
 }
 
 /* https://coolors.co/3e442b-ffffff-6a7062-8d909b-aaadc4 */

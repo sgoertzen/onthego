@@ -1,0 +1,29 @@
+@media only screen and (max-width: 800px) {
+    .about-container {
+        width: 100%;
+    }
+    .about-image {
+        width: 100%;
+        max-width: 1024px;
+    }
+    .about-text {
+        margin: 1em;
+    }
+}
+
+@media only screen and (min-width: 801px) {
+    .about-container {
+        width: 90%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        text-align: center;
+    }
+    .about-image {
+        width: 100%;
+        max-width: 1024px;
+        margin: auto;
+        padding: 1em;
+    }
+}

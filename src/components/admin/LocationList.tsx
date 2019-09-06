@@ -109,7 +109,7 @@ class LocationList extends React.Component<ILocationListProps> {
                     </TableBody>
                 </Table>
             </Paper>
-        );
+        )
     }
 }
 
