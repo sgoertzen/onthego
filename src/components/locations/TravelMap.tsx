@@ -38,6 +38,16 @@ class TravelMap extends React.Component<IMapProps> {
             return;
         }
         const pathCoords = this.buildFlightPlanCoordinates(this.props.locations)
+
+        const upcomingPath = new this.maps.Polyline({
+            path: pathCoords.upcoming,
+            geodesic: true,
+            strokeColor: '#AAADC4',
+            strokeOpacity: 1,
+            strokeWeight: 3
+        });
+        upcomingPath.setMap(this.map);
+
         const traveledPath = new this.maps.Polyline({
             path: pathCoords.traveled,
             geodesic: true,
@@ -46,15 +56,6 @@ class TravelMap extends React.Component<IMapProps> {
             strokeWeight: 4
         });
         traveledPath.setMap(this.map);
-
-        const upcomingPath = new this.maps.Polyline({
-            path: pathCoords.upcoming,
-            geodesic: true,
-            strokeColor: '#AAADC4',
-            strokeOpacity: 0.4,
-            strokeWeight: 3
-        });
-        upcomingPath.setMap(this.map);
     }
 
     buildFlightPlanCoordinates(locs: ITravelLocation[]) {
