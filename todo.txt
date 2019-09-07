@@ -1,5 +1,5 @@
 Todo:
-(3-medium) Add general pages: Full Schedule, Full map, Overview page with description and family picture
+(3-medium) Show recent activity
 (3-medium) Allow comments to be edited or deleted
 (4-low) Fix vertical videos sizing
 (4-low) Put database rules and indexes into code
@@ -45,6 +45,8 @@ Done:
 [done] (5-bottom) RSS Feed of blog?
 [done] (3-medium) Hide far off arrive and departure dates
 [done] Map in location form
+[done] (3-medium) Add general pages: Full Schedule, Full map, Overview page with description and family picture
+
 [won't do] (4-low) Delete locations
 [won't do] (5-bottom) Subscribe to blog?
 [won't do] (5-bottom) Filter by family member

@@ -137,12 +137,12 @@ class LocationPage extends React.Component<ILocationPageProps> {
 
     render() {
         const daysOnTheRoad = Math.max(differenceInDays(new Date(), new Date(2019, 6, 27)), 0)
-
+        const center = this.state.selectedLocation ? this.state.selectedLocation.coords : undefined
         return (
             <div className="App">
                 <div className="App-header"><TripStats daysOnTheRoad={daysOnTheRoad} countriesVisited={this.state.countriesVisited} milesTraveled={this.state.distanceTraveled} /></div>
                 <div className="App-details"><LocationDetails locations={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} /></div>
-                <div className="App-map"><TravelMap locations={this.state.locs} onLocChange={this.locationChanged} selectedLocation={this.state.selectedLocation} /></div>
+                <div className="App-map"><TravelMap locations={this.state.locs} onLocChange={this.locationChanged} center={center} /></div>
                 <div className="App-posts"><PostTiles posts={this.state.posts} onPostClick={this.postClick} /></div>
             </div>
         );
