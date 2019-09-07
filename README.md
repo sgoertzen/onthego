@@ -17,6 +17,7 @@ Status: [![Build Status](https://travis-ci.com/sgoertzen/onthego.svg?branch=mast
 
 ### Directory Structure
 ```
+/functions - Cloud functions, used for media resizing, etc.
 /public - Public assests deployed to webserver
 /src
     /classes - POTOs (plain old TypeScript objects)

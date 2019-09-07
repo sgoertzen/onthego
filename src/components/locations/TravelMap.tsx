@@ -5,11 +5,11 @@ import MapMarker from './MapMarker'
 import { ITravelLocation } from '../../classes/TravelLocation'
 import { ILocChangeCallback } from '../../classes/ILocChangeCallback'
 import './TravelMap.css'
-import * as firebase from "firebase/app";;
+import * as firebase from "firebase/app"
 
 interface IMapProps {
     locations: ITravelLocation[]
-    selectedLocation?: ITravelLocation
+    center?: firebase.firestore.GeoPoint
     onLocChange: ILocChangeCallback
     fullscreen?: boolean
 }
@@ -101,13 +101,10 @@ class TravelMap extends React.Component<IMapProps> {
         return markers;
     }
     render() {
-        let center: firebase.firestore.GeoPoint
-        if (this.props.selectedLocation) {
-            center = this.props.selectedLocation.coords
-        } else {
-            // Defaults to San Francisco
-            center = new firebase.firestore.GeoPoint(18.9920112, -9.4377394)
+        if (!this.props.center) {
+            return (<div className={this.props.fullscreen ? "MapFullscreen" : "TravelMap"}>Loading...</div>)
         }
+        const center = this.props.center
         this.drawPaths()
 
         return (

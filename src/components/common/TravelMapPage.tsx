@@ -2,6 +2,7 @@ import React from "react"
 import TravelMap from "../locations/TravelMap"
 import { TravelLocation, ITravelLocation } from "../../classes/TravelLocation"
 import { FirestoreHelper } from "../../util/FirestoreHelper"
+import * as firebase from "firebase/app"
 
 
 interface ITravelMapPageState {
@@ -24,10 +25,11 @@ class TravelMapPage extends React.Component {
 
     render() {
         if (this.state.locs.length === 0) {
-            return <div>Loading</div>
+            return <div>Loading...</div>
         }
+        const center = new firebase.firestore.GeoPoint(18.9920112, -9.4377394)
         return (
-            <TravelMap fullscreen={true} locations={this.state.locs} onLocChange={() => { }} />
+            <TravelMap fullscreen={true} locations={this.state.locs} onLocChange={() => { }} center={center} />
         )
     }
 }

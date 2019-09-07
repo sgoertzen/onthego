@@ -76,7 +76,7 @@ class LocationList extends React.Component<ILocationListProps> {
                 <Button variant="outlined" onClick={() => { this.createLocation() }}>
                     Add Location
                 </Button>
-                <Table className="location-table">
+                <Table className="location-table" size="small">
                     <TableHead>
                         <TableRow>
                             <TableCell>Name</TableCell>
