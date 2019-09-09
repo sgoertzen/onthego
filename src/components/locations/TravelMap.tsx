@@ -65,16 +65,20 @@ class TravelMap extends React.Component<IMapProps> {
 
         for (const loc of locs) {
             if (loc.arrive === undefined || loc.arrive.toDate() < now) {
-                traveledPath.push({
-                    lat: loc.coords.latitude,
-                    lng: loc.coords.longitude
-                });
+                for (let c of loc.coordinates) {
+                    traveledPath.push({
+                        lat: c.latitude,
+                        lng: c.longitude
+                    });
+                }
             }
             if (loc.depart === undefined || loc.depart.toDate() > now) {
-                upcomingPath.push({
-                    lat: loc.coords.latitude,
-                    lng: loc.coords.longitude
-                });
+                for (let c of loc.coordinates) {
+                    upcomingPath.push({
+                        lat: c.latitude,
+                        lng: c.longitude
+                    });
+                }
             }
 
         }
@@ -87,10 +91,13 @@ class TravelMap extends React.Component<IMapProps> {
 
     buildMarkers() {
         const markers: any = this.props.locations.map(loc => {
+            if (!loc.coordinates || loc.coordinates.length === 0) {
+                return null
+            }
             return (
                 <MapMarker
-                    lat={loc.coords.latitude}
-                    lng={loc.coords.longitude}
+                    lat={loc.coordinates[0].latitude}
+                    lng={loc.coordinates[0].longitude}
                     text={loc.name}
                     key={loc.id}
                     locationid={loc.id}

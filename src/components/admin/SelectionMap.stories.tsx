@@ -7,11 +7,11 @@ import SelectionMap from './SelectionMap';
 storiesOf('admin/Selection Map', module)
     .add('With click alert', () => {
         return (
-            <SelectionMap onChange={(lat, lng) => { alert('Map clicked at: ' + lat + ', ' + lng) }} />
+            <SelectionMap onChange={(lat, lng) => { alert('Map clicked at: ' + lat + ', ' + lng) }} label={1} />
         )
     })
     .add('Egypt', () => {
         return (
-            <SelectionMap latitude={27.06443478849777} longitude={29.798397045724073} onChange={() => { }} />
+            <SelectionMap latitude={27.06443478849777} longitude={29.798397045724073} onChange={() => { }} label={2} />
         )
     })

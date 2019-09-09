@@ -23,8 +23,7 @@ export interface ILocationEntryProps {
 
 interface ILocationEntryState {
     name: string
-    latitude: number
-    longitude: number
+    coordinates: firebase.firestore.GeoPoint[]
     arrive: Date
     depart: Date
     countrycode: string
@@ -41,8 +40,7 @@ class LocationEntry extends React.Component<ILocationEntryProps> {
         const loc = this.props.loc
         this.state = {
             name: loc ? loc.name : "",
-            latitude: loc && loc.coords ? loc.coords.latitude : 0,
-            longitude: loc && loc.coords ? loc.coords.longitude : 0,
+            coordinates: loc && loc.coordinates ? loc.coordinates : [new firebase.firestore.GeoPoint(0,0)],
             arrive: loc && loc.arrive ? loc.arrive.toDate() : new Date(),
             depart: loc && loc.depart ? loc.depart.toDate() : new Date(),
             countrycode: loc ? loc.countrycode : ""
@@ -52,6 +50,7 @@ class LocationEntry extends React.Component<ILocationEntryProps> {
         this.handleDepartureDateChange = this.handleDepartureDateChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.onMapChange = this.onMapChange.bind(this)
+        this.addTravelPoint = this.addTravelPoint.bind(this)
     }
 
     handleChange(event: any): void {
@@ -91,7 +90,8 @@ class LocationEntry extends React.Component<ILocationEntryProps> {
             db.doc(`locations/${loc.id}`)
                 .update({
                     name: this.state.name,
-                    coords: new firebase.firestore.GeoPoint(Number(this.state.latitude), Number(this.state.longitude)),
+                    coordinates: this.state.coordinates,
+                    // coords: new firebase.firestore.GeoPoint(Number(this.state.latitude), Number(this.state.longitude)),
                     arrive: this.state.arrive,
                     depart: this.state.depart,
                     countrycode: this.state.countrycode
@@ -103,7 +103,8 @@ class LocationEntry extends React.Component<ILocationEntryProps> {
             db.collection("locations")
                 .add({
                     name: this.state.name,
-                    coords: new firebase.firestore.GeoPoint(Number(this.state.latitude), Number(this.state.longitude)),
+                    coordinates: this.state.coordinates,
+                    // coords: new firebase.firestore.GeoPoint(Number(this.state.latitude), Number(this.state.longitude)),
                     arrive: this.state.arrive,
                     depart: this.state.depart,
                     countrycode: this.state.countrycode
@@ -113,14 +114,33 @@ class LocationEntry extends React.Component<ILocationEntryProps> {
         }
     }
 
-    onMapChange(lat: number, lng: number) {
+    onMapChange(index: number, lat: number, lng: number) {
+        const coordinates = this.state.coordinates
+        coordinates[index] = new firebase.firestore.GeoPoint(lat, lng)
         this.setState({
-            latitude: lat,
-            longitude: lng,
+            coordinates: coordinates
         })
     }
 
+    addTravelPoint() {
+        const coordinates = this.state.coordinates
+        coordinates.push(this.state.coordinates[this.state.coordinates.length - 1])
+        this.setState({ coordinates: coordinates})
+    }
+
     render() {
+        let index = 0
+        const maps = this.state.coordinates.map(obj => {
+            let i = index++
+            return (<SelectionMap
+                label={index}
+                key={`map${index}`}
+                latitude={obj.latitude} 
+                longitude={obj.longitude} 
+                onChange={(lat,lng) => {this.onMapChange(i, lat, lng)}}
+            />)
+        })
+
         return (
             <ValidatorForm
                 ref="form"
@@ -143,7 +163,6 @@ class LocationEntry extends React.Component<ILocationEntryProps> {
                     </div>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid container justify="space-around">
-                            <SelectionMap latitude={this.state.latitude} longitude={this.state.longitude} onChange={this.onMapChange} />
                             <CountrySelector
                                 value={this.state.countrycode}
                                 onChange={this.handleChange} />
@@ -173,6 +192,8 @@ class LocationEntry extends React.Component<ILocationEntryProps> {
                                 format="MM/dd/yyyy"
                                 required
                             />
+                            {maps}
+                            <Button onClick={this.addTravelPoint}>Add Travel Point</Button>
                         </Grid>
                     </MuiPickersUtilsProvider>
                     <Button
