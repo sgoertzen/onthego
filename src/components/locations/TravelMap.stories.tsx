@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import TravelMap from './TravelMap'
 import { TravelLocation } from '../../classes/TravelLocation'
 import { TimeStamp } from '../../classes/TimeStamp'
-import * as firebase from "firebase/app";;
+import * as firebase from "firebase/app"
 
 
 storiesOf('locations/Travel Map', module)

@@ -7,7 +7,11 @@ import * as firebase from "firebase/app"
 storiesOf('admin/Selection Map', module)
     .add('With click alert', () => {
         return (
-            <SelectionMap onChange={(coordinates) => { alert('Total coordinates: ' + coordinates.length) }} coordinates={[]} />
+            <SelectionMap onChange={(coordinates) => { 
+                    if (coordinates.length > 0) {
+                        alert('Total coordinates: ' + coordinates.length)
+                    }
+                }} coordinates={[]} />
         )
     })
     .add('Egypt', () => {

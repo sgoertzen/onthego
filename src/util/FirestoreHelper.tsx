@@ -1,6 +1,6 @@
-import { ITravelLocation } from "../classes/TravelLocation";
-import { IPost } from "../classes/Post";
-import { IComment } from "../classes/Comment";
+import { ITravelLocation } from "../classes/TravelLocation"
+import { IPost } from "../classes/Post"
+import { IComment } from "../classes/Comment"
 import * as firebase from 'firebase/app'
 
 export interface LocationsLoaded {
