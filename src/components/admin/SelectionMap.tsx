@@ -170,7 +170,6 @@ class SelectionMap extends React.Component<IMapProps> {
         }
         return (
             <div className="SelectionMap">
-
                 <GoogleMapReact
                     onClick={(args) => { this.handleClick(args.lat, args.lng) }}
                     yesIWantToUseGoogleMapApiInternals={true}

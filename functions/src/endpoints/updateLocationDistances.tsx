@@ -13,6 +13,8 @@ import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import { haversine } from '../util/haversine'
 import { ITravelLocation } from '../../../src/classes/TravelLocation'
+import { GeoPoint } from '@google-cloud/firestore'
+import { ArrayHelper } from '../../../src/util/ArrayHelper'
 
 const db = admin.firestore();
 
@@ -22,9 +24,7 @@ exports = module.exports = functions.firestore.document('locations/{locationid}'
         change.after.exists) {
         const before = change.before.data() as ITravelLocation
         const after = change.after.data() as ITravelLocation
-        if (before.coords.isEqual(after.coords) &&
-            before.arrive === after.arrive &&
-            before.depart === after.depart) {
+        if (ArrayHelper.equals(before.coordinates, after.coordinates)) {
             // Matching lat long, exit early
             console.debug("Exiting as lat and long match")
             return null;
@@ -47,7 +47,7 @@ exports = module.exports = functions.firestore.document('locations/{locationid}'
         const promises = []
         for (const current of locations) {
             if (previous !== null) { // No distance on the first location
-                const dist = haversine.distanceMiles(previous.coords, current.coords)
+                const dist = sumDistance(previous.coordinates, current.coordinates)
                 if (dist !== current.distance) {
                     console.debug(`Setting distance of ${dist} on ${current.id}.  Previous distance was ${previous.distance}`)
                     promises.push(setDistance(current, dist))
@@ -56,8 +56,29 @@ exports = module.exports = functions.firestore.document('locations/{locationid}'
             previous = current
         }
         await Promise.all(promises)
-    });
-});
+    })
+})
+
+export function sumDistance(c1:GeoPoint[], c2:GeoPoint[]):number{
+    // Ensure we have at least one point each
+    if (c1.length === 0 || c2.length === 0) {
+        return 0
+    }
+
+    // Only take the first point of the second location
+    c1.push(c2[0])
+
+    let total = 0
+    let previous: GeoPoint | null = null
+    for (let current of c1) {
+        if (previous !== null) {
+            total += haversine.distanceMiles(previous, current)
+        }
+        previous = current
+    }
+    
+    return total
+}
 
 async function setDistance(location: ITravelLocation, distance: number): Promise<void | FirebaseFirestore.WriteResult> {
     return db.doc(`locations/${location.id}`).update({
