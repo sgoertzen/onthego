@@ -15,7 +15,7 @@ storiesOf('admin/Location Entry', module)
         return <LocationEntry onLocationCreated={() => { }} />
     })
     .add('Filled - Ukraine', () => {
-        const loc = new TravelLocation("", "Ukraine", new firebase.firestore.GeoPoint(48.9603792, 31.3424444), new TimeStamp(), new TimeStamp())
+        const loc = new TravelLocation("", "Ukraine", [new firebase.firestore.GeoPoint(48.9603792, 31.3424444)], new TimeStamp(), new TimeStamp())
         loc.countrycode = "UA"
         return <LocationEntry loc={loc} onLocationCreated={() => { }} />
     })

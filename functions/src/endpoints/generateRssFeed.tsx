@@ -64,7 +64,7 @@ exports = module.exports = functions.firestore.document('posts/{postid}').onWrit
 
 function buildContent(post: IPost): string {
     let content = post.details
-    for (let media of post.media) {
+    for (const media of post.media) {
         content += `<img src="${Media.imageThumbnail(media, ImageSize.Size_1600)}"/>`
     }
     return content

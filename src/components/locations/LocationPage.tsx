@@ -137,7 +137,8 @@ class LocationPage extends React.Component<ILocationPageProps> {
 
     render() {
         const daysOnTheRoad = Math.max(differenceInDays(new Date(), new Date(2019, 6, 27)), 0)
-        const center = this.state.selectedLocation ? this.state.selectedLocation.coords : undefined
+        const center = this.state.selectedLocation && this.state.selectedLocation.coordinates && this.state.selectedLocation.coordinates.length > 0 ?
+            this.state.selectedLocation.coordinates[0] : undefined
         return (
             <div className="App">
                 <div className="App-header"><TripStats daysOnTheRoad={daysOnTheRoad} countriesVisited={this.state.countriesVisited} milesTraveled={this.state.distanceTraveled} /></div>

@@ -4,7 +4,7 @@ import * as firebase from 'firebase/app'
 export interface ITravelLocation {
     id: string
     name: string
-    coords: firebase.firestore.GeoPoint
+    coordinates: firebase.firestore.GeoPoint[]
     arrive: ITimeStamp
     depart: ITimeStamp
     distance: number
@@ -12,10 +12,10 @@ export interface ITravelLocation {
 }
 
 export class TravelLocation implements ITravelLocation {
-    constructor(id: string, name: string, coords?: firebase.firestore.GeoPoint, arrive?: TimeStamp, depart?: TimeStamp) {
+    constructor(id: string, name: string, coordinates?: firebase.firestore.GeoPoint[], arrive?: TimeStamp, depart?: TimeStamp) {
         this.id = id
         this.name = name
-        this.coords = (coords === undefined) ? new firebase.firestore.GeoPoint(0, 0) : coords
+        this.coordinates = (coordinates === undefined) ? [] : coordinates
         this.arrive = (arrive === undefined) ? new TimeStamp() : arrive
         this.depart = (depart === undefined) ? new TimeStamp() : depart
         this.distance = 0
@@ -23,7 +23,7 @@ export class TravelLocation implements ITravelLocation {
     }
     id: string
     name: string
-    coords: firebase.firestore.GeoPoint
+    coordinates: firebase.firestore.GeoPoint[]
     arrive: TimeStamp
     depart: TimeStamp
     distance: number

@@ -16,8 +16,3 @@ storiesOf('admin/Location Details', module)
         }
         return <LocationAdminDetails match={match} history={history} />
     })
-    // .add('Filled Form', () => {
-    //     const loc = new TravelLocation("", "Antarctica", new firebase.firestore.GeoPoint(15.5, 31.156), new TimeStamp(), new TimeStamp())
-    //     loc.countrycode = "AT"
-    //     return <LocationEntry loc={loc} onLocationCreated={() => { }} />
-    // })

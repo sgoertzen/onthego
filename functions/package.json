@@ -16,6 +16,7 @@
   },
   "main": "lib/functions/src/index.js",
   "dependencies": {
+    "@google-cloud/firestore": "^2.3.0",
     "@google-cloud/storage": "^3.2.1",
     "@types/fluent-ffmpeg": "^2.1.10",
     "@types/fs-extra": "^8.0.0",
@@ -31,6 +32,7 @@
     "sharp": "^0.23.0"
   },
   "devDependencies": {
+    "jest": "^24.9.0",
     "ts-jest": "^24.0.2",
     "tslint": "^5.19.0",
     "typescript": "^3.6.2",
