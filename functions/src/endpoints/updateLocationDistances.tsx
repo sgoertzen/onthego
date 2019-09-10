@@ -11,12 +11,11 @@
 
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
-import { haversine } from '../util/haversine'
 import { ITravelLocation } from '../../../src/classes/TravelLocation'
-import { GeoPoint } from '@google-cloud/firestore'
 import { ArrayHelper } from '../../../src/util/ArrayHelper'
+import { distanceCalculator } from '../util/distanceCalculator'
 
-const db = admin.firestore();
+const db = admin.firestore()
 
 exports = module.exports = functions.firestore.document('locations/{locationid}').onWrite((change, context) => {
     // Exit immediately if this wasn't a create event or lat long wasn't changed 
@@ -47,7 +46,7 @@ exports = module.exports = functions.firestore.document('locations/{locationid}'
         const promises = []
         for (const current of locations) {
             if (previous !== null) { // No distance on the first location
-                const dist = sumDistance(previous.coordinates, current.coordinates)
+                const dist = distanceCalculator.sumDistance(previous.coordinates, current.coordinates)
                 if (dist !== current.distance) {
                     console.debug(`Setting distance of ${dist} on ${current.id}.  Previous distance was ${previous.distance}`)
                     promises.push(setDistance(current, dist))
@@ -59,26 +58,6 @@ exports = module.exports = functions.firestore.document('locations/{locationid}'
     })
 })
 
-export function sumDistance(c1:GeoPoint[], c2:GeoPoint[]):number{
-    // Ensure we have at least one point each
-    if (c1.length === 0 || c2.length === 0) {
-        return 0
-    }
-
-    // Only take the first point of the second location
-    c1.push(c2[0])
-
-    let total = 0
-    let previous: GeoPoint | null = null
-    for (let current of c1) {
-        if (previous !== null) {
-            total += haversine.distanceMiles(previous, current)
-        }
-        previous = current
-    }
-    
-    return total
-}
 
 async function setDistance(location: ITravelLocation, distance: number): Promise<void | FirebaseFirestore.WriteResult> {
     return db.doc(`locations/${location.id}`).update({
