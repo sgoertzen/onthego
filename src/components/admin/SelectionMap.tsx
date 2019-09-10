@@ -1,57 +1,193 @@
 /// <reference types="googlemaps" />
 import React from 'react'
-import GoogleMapReact from 'google-map-react'
-import { SvgIcon } from '@material-ui/core'
+import GoogleMapReact, { Coords } from 'google-map-react'
 import './SelectionMap.css'
+import * as firebase from "firebase/app"
+import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
+
+enum MapMode {
+    Drag = "Drag",
+    Add = "Add",
+    Remove = "Remove"
+}
 
 interface IMapProps {
-    label: number
-    latitude?: number
-    longitude?: number
-    onChange: (lat: number, lng: number) => void
+    coordinates: firebase.firestore.GeoPoint[]
+    onChange: (coords: firebase.firestore.GeoPoint[]) => void
 }
 
 interface ISelectionMapState {
-    latitude: number
-    longitude: number
+    markers: google.maps.Marker[]
+    mode: MapMode
+    mapline: google.maps.Polyline | undefined
 }
 
 class SelectionMap extends React.Component<IMapProps> {
 
     public props: IMapProps
     public state: ISelectionMapState
+    private map: google.maps.Map | undefined;
+    private maps: any;
 
     constructor(props: IMapProps) {
         super(props);
         this.props = props;
         this.state = {
-            latitude: this.props.latitude ? this.props.latitude : 0,
-            longitude: this.props.longitude ? this.props.longitude : 0,
+            mode: MapMode.Drag,
+            markers: [],
+            mapline: undefined
         }
-        this.onChange = this.onChange.bind(this)
+        this.addMarkers = this.addMarkers.bind(this)
+        this.addMarker = this.addMarker.bind(this)
+        this.updateEverything = this.updateEverything.bind(this)
+        this.handleModeChange = this.handleModeChange.bind(this)
     }
 
-    onChange(args: any) {
-        const lat = args.center.lat
-        const lng = args.center.lng
-        if (lat !== this.props.latitude && lng !== this.props.longitude) {
-            this.props.onChange(lat, lng)
+
+    handleApiLoaded(map: google.maps.Map, maps: any) {
+        this.map = map
+        this.maps = maps
+
+        const mapline = new this.maps.Polyline({
+            map: this.map,
+            path: this.convertLatLongs(this.props.coordinates),
+            strokeColor: '#AAADC4',
+            strokeOpacity: 1,
+            strokeWeight: 3
+        })
+        this.setState({ mapline: mapline })
+        this.addMarkers(this.props.coordinates)
+        this.updateEverything()
+    }
+
+    addMarkers(points: firebase.firestore.GeoPoint[]) {
+        for (let point of points) {
+            this.addMarker(point)
         }
     }
+
+    addMarker(point: firebase.firestore.GeoPoint) {
+        if (this.map === undefined || this.maps === undefined) {
+            return;
+        }
+        const marker = new google.maps.Marker()
+        marker.setPosition({ lat: point.latitude, lng: point.longitude })
+        marker.setMap(this.map)
+        marker.setClickable(true)
+        marker.setDraggable(true)
+        marker.addListener('dragend', this.updateEverything)
+        marker.addListener('click', () => { this.removeMarker(marker) })
+        const markers = this.state.markers
+        markers.push(marker)
+        this.setState({ markers: markers })
+    }
+
+    removeMarker(marker: google.maps.Marker) {
+        if (this.state.mode !== MapMode.Remove) {
+            return
+        }
+        // Remove the marker from the map and our state
+        marker.setMap(null)
+        this.state.markers.forEach((item, index) => {
+            if (item === marker) {
+                const marks = this.state.markers
+                marks.splice(index, 1)
+                this.setState({ markers: marks })
+            }
+        })
+        this.updateEverything()
+    }
+
+    updateEverything() {
+        // Draw the path
+        if (this.state.mapline) {
+            const points: google.maps.LatLng[] = []
+            for (let marker of this.state.markers) {
+                const position = marker.getPosition()
+                if (position && position !== null) {
+                    points.push(position)
+                }
+            }
+            this.state.mapline.setPath(points)
+        }
+
+        // Number the markers
+        let index = 1
+        for (let marker of this.state.markers) {
+            marker.setLabel(`${index++}`)
+        }
+
+        // Push out the changes to our onChange listener
+        const points: firebase.firestore.GeoPoint[] = []
+        for (let marker of this.state.markers) {
+            const position = marker.getPosition()
+            if (position)
+                points.push(new firebase.firestore.GeoPoint(position.lat(), position.lng()))
+        }
+        this.props.onChange(points)
+    }
+
+    convertLatLongs(points: firebase.firestore.GeoPoint[]): google.maps.LatLng[] {
+        const latlngs: google.maps.LatLng[] = []
+        for (let point of points) {
+            latlngs.push(new google.maps.LatLng(point.latitude, point.longitude))
+        }
+        return latlngs
+    }
+
+    handleClick(lat: number, lng: number) {
+        if (this.state.mode !== MapMode.Add) {
+            return
+        }
+        this.addMarker(new firebase.firestore.GeoPoint(lat, lng))
+        this.updateEverything()
+    }
+
+    handleModeChange(_: any, value: string) {
+        let mode: MapMode
+        switch (value) {
+            case "Drag":
+                mode = MapMode.Drag
+                break
+            case "Add":
+                mode = MapMode.Add
+                break
+            case "Remove":
+                mode = MapMode.Remove
+                break
+            default:
+                return
+        }
+        this.setState({ mode: mode })
+    }
+
     render() {
+        let center: Coords
+        if (this.props.coordinates.length > 0) {
+            center = { lat: this.props.coordinates[0].latitude, lng: this.props.coordinates[0].longitude }
+        } else {
+            center = { lat: 0, lng: 0 }
+        }
         return (
             <div className="SelectionMap">
+
                 <GoogleMapReact
+                    onClick={(args) => { this.handleClick(args.lat, args.lng) }}
+                    yesIWantToUseGoogleMapApiInternals={true}
+                    onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
                     bootstrapURLKeys={{ key: 'AIzaSyBDe1KUNj3px_7kkfl7cfkrEpihDwvunt4' }}
-                    center={{ lat: this.state.latitude, lng: this.state.longitude }}
+                    center={center}
                     defaultZoom={6}
-                    onChange={this.onChange}
+                    options={{
+                        fullscreenControl: false
+                    }}
                 >
                 </GoogleMapReact>
-                <SvgIcon className="centered">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" /><path d="M0 0h24v24H0z" fill="none" />
-                </SvgIcon>
-                Travel Point {this.props.label}
+                <RadioGroup aria-label="mode" name="mode" value={this.state.mode} onChange={this.handleModeChange} row className="map-control">
+                    <FormControlLabel value="Drag" control={<Radio />} label="Drag" />
+                    <FormControlLabel value="Add" control={<Radio />} label="Add" />
+                    <FormControlLabel value="Remove" control={<Radio />} label="Remove" />
+                </RadioGroup>
             </div>
         )
     }
