@@ -1,14 +1,14 @@
-import React from 'react';
-import './LocationPage.css';
-import TravelMap from './TravelMap';
-import { ITravelLocation, TravelLocation } from '../../classes/TravelLocation';
-import { Post } from '../../classes/Post';
-import PostTiles from './PostTiles';
-import TripStats from './TripStats';
-import { differenceInDays } from 'date-fns';
-import { IHistoryProps } from '../../classes/IHistoryProps';
-import LocationDetails from './LocationDetails';
-import { FirestoreHelper } from '../../util/FirestoreHelper';
+import React from 'react'
+import './LocationPage.css'
+import TravelMap from './TravelMap'
+import { ITravelLocation, TravelLocation } from '../../classes/TravelLocation'
+import { Post } from '../../classes/Post'
+import PostTiles from './PostTiles'
+import TripStats from './TripStats'
+import { differenceInDays } from 'date-fns'
+import { IHistoryProps } from '../../classes/IHistoryProps'
+import LocationDetails from './LocationDetails'
+import { FirestoreHelper } from '../../util/FirestoreHelper'
 
 interface ILocationPageProps {
     match?: {

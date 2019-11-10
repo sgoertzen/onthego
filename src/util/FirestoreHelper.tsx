@@ -3,6 +3,11 @@ import { IPost } from "../classes/Post"
 import { IComment } from "../classes/Comment"
 import * as firebase from 'firebase/app'
 
+export enum ActivityType {
+    Comment,
+    Post
+}
+
 export interface LocationsLoaded {
     (location: ITravelLocation[]): void
 }
@@ -20,6 +25,10 @@ export interface PostLoaded {
 }
 export interface CommentsLoaded {
     (comments: IComment[]): void
+}
+
+export interface RecentPostsLoaded {
+    (posts: IPost[]): void
 }
 
 export class FirestoreHelper {
@@ -45,11 +54,11 @@ export class FirestoreHelper {
 
     static loadPosts(locationid: string, callback: PostsLoaded): void {
         firebase.firestore().collection("posts").where("locationid", "==", locationid).orderBy("posted").get().then((snapshot) => {
-            const posts: IPost[] = [];
+            const posts: IPost[] = []
             snapshot.forEach((doc) => {
-                const loc = doc.data() as IPost
-                loc.id = doc.id
-                posts.push(loc)
+                const post = doc.data() as IPost
+                post.id = doc.id
+                posts.push(post)
             })
             callback(posts)
         }).catch((reason) => { console.log("Unable to load posts", reason) })
@@ -65,14 +74,25 @@ export class FirestoreHelper {
 
     static loadComments(postid: string, callback: CommentsLoaded) {
         firebase.firestore().collection("comments").where("postid", "==", postid).orderBy("posted").get().then((snapshot) => {
-            const comments: IComment[] = [];
-            snapshot.forEach(function(doc) {
+            const comments: IComment[] = []
+            snapshot.forEach((doc) => {
                 const comment: IComment = doc.data() as IComment
                 comment.commentid = doc.id
                 comments.push(comment)
             })
             callback(comments)
         }).catch((reason) => { console.log("Unable to load comments", reason) })
+    }
 
+    static loadRecentPosts(count: number, callback: RecentPostsLoaded) {
+        const posts: IPost[] = []
+        firebase.firestore().collection("posts").orderBy("posted", "desc").limit(count).get().then((snapshot) => {
+            snapshot.forEach((doc) => {
+                const post = doc.data() as IPost
+                post.id = doc.id
+                posts.push(post)
+            })
+            callback(posts)
+        })
     }
 }

@@ -55,12 +55,10 @@ class LocationSelector extends React.Component<ILocationSelectorProps> {
             )
         }
         return (
-            <div>
-                <div className="LocationSelectorDropdown">
-                    <Select value={selectedValue} onChange={this.optionChange} fullWidth>
-                        {options}
-                    </Select>
-                </div>
+            <div className="LocationSelectorDropdown">
+                <Select value={selectedValue} onChange={this.optionChange} fullWidth>
+                    {options}
+                </Select>
             </div>
         );
     }

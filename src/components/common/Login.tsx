@@ -50,12 +50,12 @@ class Login extends React.Component<ILoginProps> {
             )
         } else {
             return (
-                <div>
+                <>
                     {this.props.intro && <Typography>{this.props.intro}</Typography>}
                     {isLink ?
                         <Typography className="footer-user"><Link onClick={this.login}>{text}</Link></Typography>
                         : <Button variant="outlined" onClick={this.login} id="login_button" >{text}</Button>}
-                </div>
+                </>
             )
         }
     }

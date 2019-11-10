@@ -1,22 +1,29 @@
 import React from 'react';
 import { FirestoreHelper } from "../../util/FirestoreHelper";
-import { ITravelLocation } from '../../classes/TravelLocation';
+import { ITravelLocation, TravelLocation } from '../../classes/TravelLocation';
 import { Paper, Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
 import { format } from 'date-fns';
 import './SchedulePage.css'
 import { FlagIcon } from '../locations/LocationDetails';
 import { TimeStamp } from '../../classes/TimeStamp';
+import { IHistoryProps } from '../../classes/IHistoryProps';
+
+interface ISchedulePageProps {
+    history?: IHistoryProps
+}
 
 interface ISchedulePageState {
     locs: ITravelLocation[]
 }
 
-class SchedulePage extends React.Component {
+class SchedulePage extends React.Component<ISchedulePageProps> {
 
+    public props: ISchedulePageProps
     public state: ISchedulePageState
 
-    constructor(props: any) {
+    constructor(props: ISchedulePageProps) {
         super(props)
+        this.props = props
         this.state = { locs: [] }
         this.locationsLoaded = this.locationsLoaded.bind(this)
         FirestoreHelper.loadLocations(this.locationsLoaded)
@@ -48,6 +55,12 @@ class SchedulePage extends React.Component {
         return format(date, "MMM do, yyyy")
     }
 
+    rowClicked(loc: ITravelLocation) {
+        if (this.props.history) {
+            this.props.history.push('/location/' + TravelLocation.encode(loc.name))
+        }
+    }
+
     render() {
         return (
             <Paper className="schedule-area">
@@ -61,7 +74,7 @@ class SchedulePage extends React.Component {
                     </TableHead>
                     <TableBody>
                         {this.state.locs.map(loc => (
-                            <TableRow key={loc.id}>
+                            <TableRow key={loc.id} onClick={() => { this.rowClicked(loc) }}>
                                 <TableCell>
                                     {loc.countrycode && loc.countrycode.length > 0 ? <FlagIcon code={loc.countrycode.toLowerCase()} size="lg" /> : ""}
                                     {loc.name}
