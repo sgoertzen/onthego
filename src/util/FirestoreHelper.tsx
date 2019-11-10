@@ -2,18 +2,10 @@ import { ITravelLocation } from "../classes/TravelLocation"
 import { IPost } from "../classes/Post"
 import { IComment } from "../classes/Comment"
 import * as firebase from 'firebase/app'
-import { TimeStamp } from "../classes/TimeStamp"
 
 export enum ActivityType {
     Comment,
     Post
-}
-
-export interface IRecentActivity {
-    Author: string
-    Type: ActivityType
-    Posted: TimeStamp
-    Snippet: string
 }
 
 export interface LocationsLoaded {
@@ -35,8 +27,8 @@ export interface CommentsLoaded {
     (comments: IComment[]): void
 }
 
-export interface RecentActivityLoaded {
-    (activities: IRecentActivity[]): void
+export interface RecentPostsLoaded {
+    (posts: IPost[]): void
 }
 
 export class FirestoreHelper {
@@ -92,32 +84,15 @@ export class FirestoreHelper {
         }).catch((reason) => { console.log("Unable to load comments", reason) })
     }
 
-    static loadRecent(count: number, callback: RecentActivityLoaded) {
-        const snip = (str:string) => {
-            if (!str || str === undefined || str.length < 40) {
-                return str
-            }
-            return str.substring(0, 37) + "..."
-        }
-        const activity: IRecentActivity[] = []
+    static loadRecentPosts(count: number, callback: RecentPostsLoaded) {
+        const posts: IPost[] = []
         firebase.firestore().collection("posts").orderBy("posted", "desc").limit(count).get().then((snapshot) => {
             snapshot.forEach((doc) => {
                 const post = doc.data() as IPost
-                activity.push({
-                    Author: post.author,
-                    Type: ActivityType.Post,
-                    Posted: post.posted,
-                    Snippet: snip(post.title + " - " + post.details)
-                })
+                post.id = doc.id
+                posts.push(post)
             })
-            callback(activity)
+            callback(posts)
         })
-        // Promise.all([commentPromise, postPromise]).then(() => {
-        //     const sorted = activity.sort((a,b) => {
-        //         return a.Posted < b.Posted ? 1 : -1
-        //     })
-        //     const limited = sorted.slice(0, count)
-        //     callback(limited)
-        // })
     }
 }

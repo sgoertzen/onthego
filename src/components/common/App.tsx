@@ -53,29 +53,29 @@ class App extends React.Component {
     render() {
         return (
             <Router>
-                    <Route path="/" component={Header} />
-                    <Switch>
-                        <Route path="/notadmin" component={AdminMenuBar}></Route>
-                    </Switch>
-                    <Switch>
-                        <Route exact path="/" component={LocationPage} />
-                        <Route exact path="/about" component={AboutPage} />
-                        <Route exact path="/map" component={TravelMapPage} />
-                        <Route exact path="/schedule" component={SchedulePage} />
-                        <Route exact path="/location/:locationName" component={LocationPage} />
-                        <Route exact path="/post/:postid" render={(props) => <PostPage {...props} username={this.state.username} />} />
-                        <Route exact path="/notadmin" component={LocationList} />
-                        <Route exact path="/notadmin/locationentry" component={LocationEntryPage} />
-                        <Route exact path="/notadmin/locationentry/:locationid" component={LocationEntryPage} />
-                        <Route exact path="/notadmin/location/:locationid" component={LocationAdminDetails} />
-                        <Route exact path="/notadmin/location/:locationid/postentry" component={PostEntryPage} />
-                        <Route exact path="/notadmin/location/:locationid/postentry/:postid" component={PostEntryPage} />
-                        <Redirect to="/" />
-                    </Switch>
-                    <Switch>
-                        <Route path="/notadmin" render={(props) => <AdminFooter {...props} username={this.state.username} />} />
-                        <Route component={Footer} />
-                    </Switch>
+                <Route path="/" component={Header} />
+                <Switch>
+                    <Route path="/notadmin" component={AdminMenuBar}></Route>
+                </Switch>
+                <Switch>
+                    <Route exact path="/" component={LocationPage} />
+                    <Route exact path="/about" component={AboutPage} />
+                    <Route exact path="/map" component={TravelMapPage} />
+                    <Route exact path="/schedule" component={SchedulePage} />
+                    <Route exact path="/location/:locationName" component={LocationPage} />
+                    <Route exact path="/post/:postid" render={(props) => <PostPage {...props} username={this.state.username} />} />
+                    <Route exact path="/notadmin" component={LocationList} />
+                    <Route exact path="/notadmin/locationentry" component={LocationEntryPage} />
+                    <Route exact path="/notadmin/locationentry/:locationid" component={LocationEntryPage} />
+                    <Route exact path="/notadmin/location/:locationid" component={LocationAdminDetails} />
+                    <Route exact path="/notadmin/location/:locationid/postentry" component={PostEntryPage} />
+                    <Route exact path="/notadmin/location/:locationid/postentry/:postid" component={PostEntryPage} />
+                    <Redirect to="/" />
+                </Switch>
+                <Switch>
+                    <Route path="/notadmin" render={(props) => <AdminFooter {...props} username={this.state.username} />} />
+                    <Route component={Footer} />
+                </Switch>
             </Router>
         )
     }

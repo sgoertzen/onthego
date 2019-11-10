@@ -16,12 +16,16 @@ class Header extends React.Component<IHeaderProps> {
         super(props)
         this.props = props
         this.redirect = this.redirect.bind(this)
+        this.onClick = this.onClick.bind(this)
     }
 
     redirect(path: string) {
         if (this.props.history) {
             this.props.history.push(path)
         }
+    }
+    onClick(postID: string): void {
+        this.redirect("/post/" + postID)
     }
 
     render() {
@@ -32,7 +36,7 @@ class Header extends React.Component<IHeaderProps> {
                 </Typography>
                 <div className="headerlinks">
                     <Link id="headerlink" onClick={() => { this.redirect("/") }}>Home</Link>
-                    <RecentActivities count={8}/>
+                    <RecentActivities onClick={this.onClick} count={8} />
                     <Link id="headerlink" onClick={() => { this.redirect("/map") }}>Map</Link>
                     <Link id="headerlink" onClick={() => { this.redirect("/schedule") }}>Schedule</Link>
                     <Link id="headerlink" onClick={() => { this.redirect("/about") }}>About</Link>

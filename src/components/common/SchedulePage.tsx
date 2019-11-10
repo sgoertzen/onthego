@@ -55,7 +55,7 @@ class SchedulePage extends React.Component<ISchedulePageProps> {
         return format(date, "MMM do, yyyy")
     }
 
-    rowClicked(loc:ITravelLocation) {
+    rowClicked(loc: ITravelLocation) {
         if (this.props.history) {
             this.props.history.push('/location/' + TravelLocation.encode(loc.name))
         }
@@ -74,7 +74,7 @@ class SchedulePage extends React.Component<ISchedulePageProps> {
                     </TableHead>
                     <TableBody>
                         {this.state.locs.map(loc => (
-                            <TableRow key={loc.id} onClick={() => {this.rowClicked(loc)}}>
+                            <TableRow key={loc.id} onClick={() => { this.rowClicked(loc) }}>
                                 <TableCell>
                                     {loc.countrycode && loc.countrycode.length > 0 ? <FlagIcon code={loc.countrycode.toLowerCase()} size="lg" /> : ""}
                                     {loc.name}
