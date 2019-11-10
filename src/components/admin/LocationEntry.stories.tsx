@@ -2,13 +2,11 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import LocationEntry from './LocationEntry';
-import { firebaseConfig } from '../../config/firebase.config'
 import * as firebase from "firebase/app";
 import "firebase/firestore";
 import { TravelLocation } from '../../classes/TravelLocation';
 import { TimeStamp } from '../../classes/TimeStamp';
 
-firebase.initializeApp(firebaseConfig);
 
 storiesOf('admin/Location Entry', module)
     .add('Basic Form', () => {

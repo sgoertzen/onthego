@@ -3,5 +3,6 @@
     border: 1px solid #888888;
     padding: 0 6px 0 6px;
     display: inline-block;
+    cursor: pointer;
   }
   

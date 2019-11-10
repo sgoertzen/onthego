@@ -1,0 +1,9 @@
+.activity-paper {
+    max-width: 400px;
+}
+.activity-icon {
+    margin-left: .5em;
+}
+.activity-title {
+    font-weight: bolder;
+}

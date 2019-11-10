@@ -83,12 +83,12 @@ class PostPage extends React.Component {
         }
         const post = this.state.post
         return (
-            <div>
+            <>
                 <PostMenu history={this.props.history} locationname={this.state.locationname} />
                 <PostHeader title={post.title} author={post.author} date={post.posted.toDate()} details={post.details} />
                 <PostMedia items={post.media} />
                 <PostComments comments={this.state.comments} username={this.props.username} postid={post.id} onChange={this.commentsChanged} />
-            </div>
+            </>
         );
     }
 }

@@ -94,28 +94,13 @@ export class FirestoreHelper {
 
     static loadRecent(count: number, callback: RecentActivityLoaded) {
         const snip = (str:string) => {
-            if (!str || str === undefined || str.length < 100) {
+            if (!str || str === undefined || str.length < 40) {
                 return str
             }
-            return str.substring(0, 97) + "..."
+            return str.substring(0, 37) + "..."
         }
-        // Since we don't know if this will be all posts, all comments, or a combination,
-        // we fetch the total count of each, combine them, then sort and limit the total returned 
         const activity: IRecentActivity[] = []
-        // Load comments
-        const commentPromise = firebase.firestore().collection("comments").orderBy("posted").limit(count).get().then((snapshot) => {
-            snapshot.forEach((doc) => {
-                const comment: IComment = doc.data() as IComment
-                activity.push({
-                    Author: comment.author,
-                    Type: ActivityType.Comment,
-                    Posted: comment.posted,
-                    Snippet: snip(comment.comment)
-                })
-            })
-        })
-        // Load posts
-        const postPromise = firebase.firestore().collection("posts").orderBy("posted").limit(count).get().then((snapshot) => {
+        firebase.firestore().collection("posts").orderBy("posted", "desc").limit(count).get().then((snapshot) => {
             snapshot.forEach((doc) => {
                 const post = doc.data() as IPost
                 activity.push({
@@ -125,13 +110,14 @@ export class FirestoreHelper {
                     Snippet: snip(post.title + " - " + post.details)
                 })
             })
+            callback(activity)
         })
-        Promise.all([commentPromise, postPromise]).then(() => {
-            const sorted = activity.sort((a,b) => {
-                return a.Posted > b.Posted ? 1 : -1
-            })
-            const limited = sorted.slice(0, count)
-            callback(limited)
-        })
+        // Promise.all([commentPromise, postPromise]).then(() => {
+        //     const sorted = activity.sort((a,b) => {
+        //         return a.Posted < b.Posted ? 1 : -1
+        //     })
+        //     const limited = sorted.slice(0, count)
+        //     callback(limited)
+        // })
     }
 }

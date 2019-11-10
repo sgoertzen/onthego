@@ -1,9 +1,8 @@
-import React from 'react';
-import { storiesOf } from '@storybook/react';
-import RecentActivities from './RecentActivities';
-import { IRecentActivity, ActivityType } from '../../util/FirestoreHelper';
-import { TimeStamp } from '../../classes/TimeStamp';
-
+import React from 'react'
+import { storiesOf } from '@storybook/react'
+import RecentActivities from './RecentActivities'
+import { IRecentActivity, ActivityType } from '../../util/FirestoreHelper'
+import { TimeStamp } from '../../classes/TimeStamp'
 
 storiesOf('locations/Recent Activities', module)
     .add('standard', () => {
@@ -14,5 +13,7 @@ storiesOf('locations/Recent Activities', module)
             Snippet: "balh"
         }
         const activities = [activity]
-        return (<RecentActivities count={2} activities={activities} />)
+        return (<div style={{backgroundColor:'blue'}}>
+                <RecentActivities count={2} activities={activities} />
+            </div>)
     })

@@ -53,7 +53,6 @@ class App extends React.Component {
     render() {
         return (
             <Router>
-                <div>
                     <Route path="/" component={Header} />
                     <Switch>
                         <Route path="/notadmin" component={AdminMenuBar}></Route>
@@ -77,7 +76,6 @@ class App extends React.Component {
                         <Route path="/notadmin" render={(props) => <AdminFooter {...props} username={this.state.username} />} />
                         <Route component={Footer} />
                     </Switch>
-                </div>
             </Router>
         )
     }
