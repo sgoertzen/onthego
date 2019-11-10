@@ -34,6 +34,11 @@ class PostTile extends React.Component<IPostTileProps> {
                     return Media.imageThumbnail(media, ImageSize.Size_200);
                 }
             }
+            for (const media of post.media) {
+                if (MediaHelper.isVideo(media.filename)) {
+                    return Media.videoThumbnail(media);
+                }
+            }
         }
         return defaultImage
     }

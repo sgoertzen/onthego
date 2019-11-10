@@ -1,7 +1,7 @@
 import React from 'react'
 import { Typography, Link } from '@material-ui/core'
 import { IHistoryProps } from '../../classes/IHistoryProps'
-import RecentActivities from '../locations/RecentActivities'
+import RecentActivities from './RecentActivities'
 import './Header.css'
 
 interface IHeaderProps {
