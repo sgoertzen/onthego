@@ -120,7 +120,7 @@ class TravelMap extends React.Component<IMapProps> {
                 <GoogleMapReact
                     yesIWantToUseGoogleMapApiInternals
                     onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
-                    bootstrapURLKeys={{ key: 'AIzaSyBDe1KUNj3px_7kkfl7cfkrEpihDwvunt4' }}
+                    bootstrapURLKeys={{ key: 'AIzaSyDOkkJbGg-n39NsLihqZACkGYOiTDDMMd4' }}
                     center={{ lat: center.latitude, lng: center.longitude }}
                     defaultZoom={this.props.fullscreen ? DefaultZoomFullScreen : DefaultZoom}>
                     {this.buildMarkers()}

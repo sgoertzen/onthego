@@ -1,9 +1,10 @@
 export const firebaseConfig = {
-    apiKey: "AIzaSyBD_kBMKYuaiVbP_O8d4nm1vVGGtWFoZNI",
-    authDomain: "auth.goertzensonthego.com",
-    databaseURL: "https://goertzensonthego.firebaseio.com",
-    projectId: "goertzensonthego",
-    storageBucket: "goertzensonthego.appspot.com",
-    messagingSenderId: "696043264490",
-    appId: "1:696043264490:web:4b20e1e07ed75e5f"
+    apiKey: "AIzaSyBjeX7pVLgyaB7RtU2SuqrIbhEg7dJCPeQ",
+    authDomain: "mypaulie-000.firebaseapp.com",
+    databaseURL: "https://mypaulie-000.firebaseio.com",
+    projectId: "mypaulie-000",
+    storageBucket: "mypaulie-000.appspot.com",
+    messagingSenderId: "42655989043",
+    appId: "1:42655989043:web:b502fcf04d22e7dcc19246",
+    measurementId: "G-C24TT6VPJJ"
 };

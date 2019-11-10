@@ -2,7 +2,7 @@
   "name": "on-the-go",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://www.goertzensonthego.com",
+  "homepage": "https://whereispaulie.com",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

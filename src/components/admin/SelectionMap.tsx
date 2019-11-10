@@ -174,7 +174,7 @@ class SelectionMap extends React.Component<IMapProps> {
                     onClick={(args) => { this.handleClick(args.lat, args.lng) }}
                     yesIWantToUseGoogleMapApiInternals={true}
                     onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
-                    bootstrapURLKeys={{ key: 'AIzaSyBDe1KUNj3px_7kkfl7cfkrEpihDwvunt4' }}
+                    bootstrapURLKeys={{ key: 'AIzaSyDOkkJbGg-n39NsLihqZACkGYOiTDDMMd4' }}
                     center={center}
                     defaultZoom={6}
                     options={{

@@ -28,7 +28,7 @@ class Header extends React.Component<IHeaderProps> {
         return (
             <div className="header">
                 <Typography variant="h4" onClick={() => { this.redirect("/") }} className="headerlogo">
-                    Goertzens on the Go
+                    Where is Paulie?
                 </Typography>
                 <div className="headerlinks">
                     <Link id="headerlink" onClick={() => { this.redirect("/") }}>Home</Link>

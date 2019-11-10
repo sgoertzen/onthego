@@ -7,7 +7,7 @@ Custom website for tracking and sharing a year long travel.  Main features inclu
 * Allow users to post comments
 
 ## Development
-Status: [![Build Status](https://travis-ci.com/sgoertzen/onthego.svg?branch=master)](https://travis-ci.com/sgoertzen/onthego) 
+Status: [![Build Status](https://travis-ci.com/pdunnavant/onthego.svg?branch=master)](https://travis-ci.com/pdunnavant/onthego) 
 
 ### Development stack
 * Written in TypeScript

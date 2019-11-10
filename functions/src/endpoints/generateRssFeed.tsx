@@ -17,14 +17,14 @@ const db = admin.firestore();
 
 exports = module.exports = functions.firestore.document('posts/{postid}').onWrite((change, context) => {
     const feed = new Feed({
-        title: "Goertzens on the Go",
+        title: "Where is Paulie?",
         description: "Lists of posts from our trip around the world",
-        id: "https://www.goertzensonthego.com",
-        link: "https://www.goertzensonthego.com",
+        id: "https://whereispaulie.com",
+        link: "https://whereispaulie.com",
         language: "en",
-        favicon: "https://www.goertzensonthego.com/favicon.ico",
-        copyright: "All rights reserved 2019, Goertzen Family",
-        generator: "Goertzens on the Go feed",
+        favicon: "https://whereispaulie.com/favicon.ico",
+        copyright: "All rights reserved 2019, Paul Dunnavant",
+        generator: "Where is Paulie feed",
     })
 
     return db.collection("posts").orderBy("posted", "desc").limit(20).get().then(async (querySnapshot) => {
@@ -35,7 +35,7 @@ exports = module.exports = functions.firestore.document('posts/{postid}').onWrit
             feed.addItem({
                 title: post.title,
                 id: post.id,
-                link: `https://www.goertzensonthego.com/post/${post.id}`,
+                link: `https://whereispaulie.com/post/${post.id}`,
                 content: buildContent(post),
                 author: [{ name: post.author }],
                 date: post.posted.toDate()
@@ -48,7 +48,7 @@ exports = module.exports = functions.firestore.document('posts/{postid}').onWrit
 
         // Create write stream for uploading thumbnail
         const gcs = new Storage.Storage()
-        const bucket = gcs.bucket("goertzensonthego.appspot.com")
+        const bucket = gcs.bucket("whereispaulie.appspot.com")
         const file = bucket.file("feed.rss")
         const stream = file.createWriteStream()
 
