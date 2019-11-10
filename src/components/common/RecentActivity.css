@@ -1,0 +1,12 @@
+.activity-paper {
+    padding: .2em 1em;
+    max-width: 800px;
+    margin: .5em;
+    cursor: pointer;
+}
+.activity-icon {
+    margin-left: .5em;
+}
+.activity-title {
+    font-weight: bolder;
+}

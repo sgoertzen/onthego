@@ -9,5 +9,6 @@
     .schedule-area {
         width: 75%;
         margin: auto;
+        cursor: pointer;
     }
 }
