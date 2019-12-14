@@ -47,37 +47,42 @@ exports = module.exports = functions.storage.object().onFinalize(async (object) 
 
     let thumbnailGeneratedName = ""
 
+    
     // 3. Create the screenshot
-    await ffmpeg(tmpFilePath)
-        .on('filenames', (filenames: string[]) => {
-            console.log('Will generate ' + filenames.join(', '))
-            thumbnailGeneratedName = filenames[0]
-        })
-        .on('error', (err: any) => {
-            console.log('Error while creating video screenshot', err.message)
-        })
-        .on('end', async () => {
-            const tmpThumbPath = join(workingDir, thumbnailGeneratedName)
-            console.log('Video screenshot conversion ended')
-            console.log("expecting thumbnail at: ", tmpThumbPath)
-
-            // 4. Write the file back to firestore
-            await bucket.upload(tmpThumbPath, {
-                destination: join(bucketDir, thumbFileName)
+    return new Promise((resolve, reject) => {
+        
+        ffmpeg(tmpFilePath)
+            .on('filenames', (filenames: string[]) => {
+                console.log('Will generate ' + filenames.join(', '));
+                thumbnailGeneratedName = filenames[0];
             })
-            console.log("Thumbnail uploaded: ", thumbnailGeneratedName)
+            .on('error', (err: any) => {
+                const message = `Error while creating video screenshot: ${err.message}`
+                console.log(message);
+                reject(message)
+            })
+            .on('end', async () => {
+                const tmpThumbPath = join(workingDir, thumbnailGeneratedName);
+                console.log('Video screenshot conversion ended');
+                console.log("expecting thumbnail at: ", tmpThumbPath);
+                // 4. Write the file back to firestore
+                await bucket.upload(tmpThumbPath, {
+                    destination: join(bucketDir, thumbFileName)
+                });
+                console.log("Thumbnail uploaded: ", thumbnailGeneratedName);
+                // 5. Cleanup remove the tmp/thumbs from the filesystem
+                return fs.remove(workingDir)
+                    .then(() => { resolve("Complete") })
+                    .catch(() => { reject("Unable to cleanup working directory") })
+            })
+            .takeScreenshots({
+                timemarks: ['0'],
+                folder: workingDir,
+                filename: thumbFileName,
+                size: '200x200'
+            })
 
-            // 5. Cleanup remove the tmp/thumbs from the filesystem
-            return fs.remove(workingDir)
-        })
-        .takeScreenshots({
-            timemarks: ['0'], // number of seconds
-            folder: workingDir,
-            filename: thumbFileName,
-            size: '200x200'
-        })
-
-    return true
+    })
 })
 
 function validateVideo(object: any) {

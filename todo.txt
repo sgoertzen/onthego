@@ -1,4 +1,7 @@
 Todo:
+(3-medium) Add in 360 panaorama page
+(3-medium) Add in april fools mode
+(3-medium) Write script to detach from firebase and use static data (database to json, disable comments)
 (3-medium) Allow comments to be edited or deleted
 (4-low) Fix vertical videos sizing
 (4-low) Put database rules and indexes into code
