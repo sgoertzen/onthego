@@ -1,7 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import RecentActivities from './RecentActivities'
-import { ActivityType } from '../../util/FirestoreHelper'
 import { TimeStamp } from '../../classes/TimeStamp'
 import { Post } from '../../classes/Post'
 
