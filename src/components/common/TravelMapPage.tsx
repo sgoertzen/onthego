@@ -20,7 +20,7 @@ class TravelMapPage extends React.Component {
         this.locationsLoaded = this.locationsLoaded.bind(this)
         this.panoramasLoaded = this.panoramasLoaded.bind(this)
         FirestoreHelper.loadLocations(this.locationsLoaded)
-        FirestoreHelper.loadPanoramas(this.panoramasLoaded)
+        //FirestoreHelper.loadPanoramas(this.panoramasLoaded)
     }
 
     locationsLoaded(locations: ITravelLocation[]): void {
