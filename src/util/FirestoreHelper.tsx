@@ -2,6 +2,7 @@ import { ITravelLocation } from "../classes/TravelLocation"
 import { IPost } from "../classes/Post"
 import { IComment } from "../classes/Comment"
 import * as firebase from 'firebase/app'
+import { IPanorama } from "../classes/Panorama"
 
 export enum ActivityType {
     Comment,
@@ -29,6 +30,10 @@ export interface CommentsLoaded {
 
 export interface RecentPostsLoaded {
     (posts: IPost[]): void
+}
+
+export interface PanoramasLoaded {
+    (panoramas: IPanorama[]): void
 }
 
 export class FirestoreHelper {
@@ -93,6 +98,18 @@ export class FirestoreHelper {
                 posts.push(post)
             })
             callback(posts)
+        })
+    }
+
+    static loadPanoramas(callback: PanoramasLoaded) {
+        const panoramas: IPanorama[] = []
+        firebase.firestore().collection("panoramas").limit(1000).get().then(snapshot => {
+            snapshot.forEach(doc => {
+                const pano = doc.data() as IPanorama
+                pano.id = doc.id
+                panoramas.push(pano)
+            })
+            callback(panoramas)
         })
     }
 }

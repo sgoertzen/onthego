@@ -51,4 +51,9 @@ export class Media implements IMedia {
         const THUMB_PREFIX = "thumb_";
         return media.url.replace(media.filename, `${THUMB_PREFIX}${media.filename}`).replace(".mp4", ".png")
     }
+
+    static panoThumbnail(url: string, filename: string): string {
+        const THUMB_PREFIX = "thumb_";
+        return url.replace(filename, `${THUMB_PREFIX}${filename}`)
+    }
 }

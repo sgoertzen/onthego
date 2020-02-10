@@ -6,16 +6,20 @@ import { ITravelLocation } from '../../classes/TravelLocation'
 import { ILocChangeCallback } from '../../classes/ILocChangeCallback'
 import './TravelMap.css'
 import * as firebase from "firebase/app"
+import { IPanorama } from '../../classes/Panorama'
+import PanoMarker from './PanoMarker'
+import { Media } from '../../classes/Media'
 
 interface IMapProps {
     locations: ITravelLocation[]
+    panoramas?: IPanorama[]
     center?: firebase.firestore.GeoPoint
     onLocChange: ILocChangeCallback
     fullscreen?: boolean
 }
 
 const DefaultZoom = 6
-const DefaultZoomFullScreen = 3
+const DefaultZoomFullScreen = 1
 
 class TravelMap extends React.Component<IMapProps> {
 
@@ -86,7 +90,7 @@ class TravelMap extends React.Component<IMapProps> {
         return {
             traveled: traveledPath,
             upcoming: upcomingPath
-        };
+        }
     }
 
     buildMarkers() {
@@ -103,10 +107,31 @@ class TravelMap extends React.Component<IMapProps> {
                     locationid={loc.id}
                     onLocChange={this.props.onLocChange}
                 />
-            );
-        });
-        return markers;
+            )
+        })
+        return markers
     }
+
+    buildPanos() {
+        if (!this.props.panoramas) {
+            return
+        }
+        const panos: any = this.props.panoramas.map(pan => {
+            return (
+                <PanoMarker
+                    lat={pan.coords.latitude}
+                    lng={pan.coords.longitude}
+                    text={pan.title}
+                    key={pan.id}
+                    panoid={pan.id}
+                    thumbnail={Media.panoThumbnail(pan.url, pan.filename)}
+                    onClick={() => { alert('clicked') }}
+                />
+            )
+        })
+        return panos
+    }
+
     render() {
         if (!this.props.center) {
             return (<div className={this.props.fullscreen ? "MapFullscreen" : "TravelMap"}>Loading...</div>)
@@ -124,9 +149,10 @@ class TravelMap extends React.Component<IMapProps> {
                     center={{ lat: center.latitude, lng: center.longitude }}
                     defaultZoom={this.props.fullscreen ? DefaultZoomFullScreen : DefaultZoom}>
                     {this.buildMarkers()}
+                    {this.buildPanos()}
                 </GoogleMapReact>
             </div>
-        );
+        )
     }
 }
 

@@ -1,11 +1,11 @@
-import React from 'react';
-import { Paper, Table, TableHead, TableRow, TableCell, TableBody, Button } from '@material-ui/core';
+import React from 'react'
+import { Paper, Table, TableHead, TableRow, TableCell, TableBody, Button, IconButton, SvgIcon } from '@material-ui/core'
 import "./LocationList.css"
-import { ITravelLocation } from '../../classes/TravelLocation';
-import { format } from 'date-fns';
-import * as firebase from "firebase/app";
-import { IHistoryProps } from '../../classes/IHistoryProps';
-import { FirestoreHelper } from '../../util/FirestoreHelper';
+import { ITravelLocation } from '../../classes/TravelLocation'
+import { format } from 'date-fns'
+import * as firebase from "firebase/app"
+import { IHistoryProps } from '../../classes/IHistoryProps'
+import { FirestoreHelper } from '../../util/FirestoreHelper'
 
 
 interface ILocationListProps {
@@ -91,17 +91,19 @@ class LocationList extends React.Component<ILocationListProps> {
                             <TableRow key={loc.id}>
                                 <TableCell component="th" scope="row">
                                     {loc.name}
+                                    &nbsp;
+                                    <IconButton aria-label="Edit" onClick={() => { this.edit(loc) }}>
+                                        <SvgIcon width="12" height="12">
+                                            <path d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z" />
+                                        </SvgIcon>
+                                    </IconButton>
                                 </TableCell>
                                 <TableCell id="codeCol" align="right">{loc.countrycode}</TableCell>
                                 <TableCell id="arriveCol" align="right" className="expandedColumn">{format(loc.arrive.toDate(), "MMM do, yyyy")}</TableCell>
                                 <TableCell id="departCol" align="right">{format(loc.depart.toDate(), "MMM do, yyyy")}</TableCell>
                                 <TableCell align="center">
-
-                                    <Button variant="outlined" onClick={() => { this.edit(loc) }}>
-                                        Edit
-                                    </Button> &nbsp;
                                     <Button variant="outlined" onClick={() => { this.viewLocation(loc) }}>
-                                        Manage
+                                        Manage Posts
                                     </Button>
                                 </TableCell>
                             </TableRow>

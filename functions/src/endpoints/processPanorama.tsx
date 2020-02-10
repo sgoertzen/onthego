@@ -32,8 +32,11 @@ exports = module.exports = functions.storage.object().onFinalize(async (object) 
         db.collection("panoramas").add({
             filename: filePath,
             coords: new firebase.firestore.GeoPoint(metadata.lat, metadata.long)
+        }).then(() => {
+            console.debug(`Saved panorama to the database successfully`)
+        }).catch(reason => {
+            console.log(`Error saving panorama to the database: ${reason}`)
         })
-
     }).catch((reason) => {
         console.log("Error fetching metadata for panorama:  " + reason)
     })
