@@ -1,9 +1,8 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { ActivityType } from '../../util/FirestoreHelper';
-import { TimeStamp } from '../../classes/TimeStamp';
-import RecentActivity from './RecentActivity';
-import { Post } from '../../classes/Post';
+import { storiesOf } from '@storybook/react'
+import { TimeStamp } from '../../classes/TimeStamp'
+import RecentActivity from './RecentActivity'
+import { Post } from '../../classes/Post'
 
 
 storiesOf('locations/Recent Activity', module)
