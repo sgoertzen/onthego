@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography, Box } from '@material-ui/core';
 import "firebase/auth";
 import './Footer.css'
-import rssImage from "../../../public/rss.png"
+import rssImage from '../../images/rss.png';
 
 
 class Footer extends React.Component {
