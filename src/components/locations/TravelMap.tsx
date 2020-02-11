@@ -69,7 +69,7 @@ class TravelMap extends React.Component<IMapProps> {
 
         for (const loc of locs) {
             if (loc.arrive === undefined || loc.arrive.toDate() < now) {
-                for (let c of loc.coordinates) {
+                for (const c of loc.coordinates) {
                     traveledPath.push({
                         lat: c.latitude,
                         lng: c.longitude
@@ -77,7 +77,7 @@ class TravelMap extends React.Component<IMapProps> {
                 }
             }
             if (loc.depart === undefined || loc.depart.toDate() > now) {
-                for (let c of loc.coordinates) {
+                for (const c of loc.coordinates) {
                     upcomingPath.push({
                         lat: c.latitude,
                         lng: c.longitude

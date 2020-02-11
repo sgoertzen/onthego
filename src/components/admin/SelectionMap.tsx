@@ -61,7 +61,7 @@ class SelectionMap extends React.Component<IMapProps> {
     }
 
     addMarkers(points: firebase.firestore.GeoPoint[]) {
-        for (let point of points) {
+        for (const point of points) {
             this.addMarker(point)
         }
     }
@@ -101,25 +101,25 @@ class SelectionMap extends React.Component<IMapProps> {
     updateEverything() {
         // Draw the path
         if (this.state.mapline) {
-            const points: google.maps.LatLng[] = []
-            for (let marker of this.state.markers) {
+            const latlng: google.maps.LatLng[] = []
+            for (const marker of this.state.markers) {
                 const position = marker.getPosition()
                 if (position && position !== null) {
-                    points.push(position)
+                    latlng.push(position)
                 }
             }
-            this.state.mapline.setPath(points)
+            this.state.mapline.setPath(latlng)
         }
 
         // Number the markers
         let index = 1
-        for (let marker of this.state.markers) {
+        for (const marker of this.state.markers) {
             marker.setLabel(`${index++}`)
         }
 
         // Push out the changes to our onChange listener
         const points: firebase.firestore.GeoPoint[] = []
-        for (let marker of this.state.markers) {
+        for (const marker of this.state.markers) {
             const position = marker.getPosition()
             if (position)
                 points.push(new firebase.firestore.GeoPoint(position.lat(), position.lng()))
@@ -129,7 +129,7 @@ class SelectionMap extends React.Component<IMapProps> {
 
     convertLatLongs(points: firebase.firestore.GeoPoint[]): google.maps.LatLng[] {
         const latlngs: google.maps.LatLng[] = []
-        for (let point of points) {
+        for (const point of points) {
             latlngs.push(new google.maps.LatLng(point.latitude, point.longitude))
         }
         return latlngs
