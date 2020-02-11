@@ -1,13 +1,15 @@
-/// <reference types="storybook__react" />
+
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import LocationList from './LocationList'
 import { TravelLocation } from '../../classes/TravelLocation'
 import { TimeStamp } from '../../classes/TimeStamp'
 import * as firebase from "firebase/app"
+import { StorybookHelper } from '../../util/StorybookHelper'
 
 storiesOf('admin/Location List', module)
     .add('No entries', () => {
+        StorybookHelper.initFirebase()
         return <LocationList locs={[]} history={{ push: () => { } }} />
     })
     .add('With locations', () => {

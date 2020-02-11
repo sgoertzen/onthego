@@ -262,7 +262,7 @@ class PostEntry extends React.Component<IPostEntryProps> {
                         value={this.state.details}
                         multiline
                         fullWidth
-                        rows="3"
+                        rows="12"
                         margin="normal"
                         onChange={this.handleChange}
                     />

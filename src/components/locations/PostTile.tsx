@@ -1,12 +1,12 @@
-import React from 'react';
-import './PostTile.css';
-import { IPost } from '../../classes/Post';
-import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, IconButton, SvgIcon } from '@material-ui/core';
-import { formatDistance } from 'date-fns';
-import defaultImage from '../../images/default.png';
-import { MediaHelper } from '../../util/MediaHelper';
+import React from 'react'
+import './PostTile.css'
+import { IPost } from '../../classes/Post'
+import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, IconButton, SvgIcon } from '@material-ui/core'
+import { formatDistance } from 'date-fns'
+import defaultImage from '../../images/default.png'
+import { MediaHelper } from '../../util/MediaHelper'
 import { IPostClickCallback } from '../../classes/IPostClickCallback'
-import { ImageSize, Media } from '../../classes/Media';
+import { ImageSize, Media } from '../../classes/Media'
 
 interface IPostTileProps {
     post: IPost

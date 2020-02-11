@@ -61,7 +61,7 @@ class RecentActivities extends React.Component<IRecentActivitiesProps> {
 
     render() {
         const activities: any[] = []
-        for (let post of this.state.recentPosts) {
+        for (const post of this.state.recentPosts) {
             activities.push(<RecentActivity key={post.id} {...post} onClick={this.handleClickMenuItem} />)
         }
         return (

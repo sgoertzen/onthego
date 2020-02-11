@@ -33,7 +33,9 @@ class LocationEntryPage extends React.Component {
 
         const locationid = this.props.match.params.locationid
         if (locationid) {
+            console.log('Before load of ' + locationid)
             FirestoreHelper.loadLocation(locationid, (loc) => {
+                console.log('After load of ' + locationid)
                 this.setState({ location: loc })
             })
         }

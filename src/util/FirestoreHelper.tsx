@@ -98,7 +98,7 @@ export class FirestoreHelper {
                 posts.push(post)
             })
             callback(posts)
-        })
+        }).catch(reason => console.log("Unable to load posts", reason))
     }
 
     static loadPanoramas(callback: PanoramasLoaded) {
@@ -110,6 +110,6 @@ export class FirestoreHelper {
                 panoramas.push(pano)
             })
             callback(panoramas)
-        })
+        }).catch(reason => console.log("Unable to load posts", reason))
     }
 }

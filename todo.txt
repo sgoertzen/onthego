@@ -4,6 +4,11 @@ Todo:
 (3-medium) Add panos to map page as icon
 (3-medium) Create full screen pano viewer
 
+
+(3-medium) Create script to pull down database into json
+(3-medium) Update FirestoreHelper to use json data instead of web requests 
+(3-medium) Hide Recent Posts menu item
+
 (3-medium) Add in april fools mode
 (3-medium) Write script to detach from firebase and use static data (database to json, disable comments)
 (3-medium) Allow comments to be edited or deleted
