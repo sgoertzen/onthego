@@ -15,9 +15,10 @@ import AdminMenuBar from '../admin/AdminMenuBar'
 import AdminFooter from '../admin/AdminFooter'
 import PostPage from '../posts/PostPage'
 import LocationAdminDetails from '../admin/LocationAdminDetails'
-import TravelMapPage from './TravelMapPage';
+import TravelMapPage from './TravelMapPage'
 import SchedulePage from './SchedulePage'
 import AboutPage from './AboutPage'
+import PanoramaList from '../admin/PanoramaList'
 
 firebase.initializeApp(firebaseConfig);
 
@@ -70,6 +71,7 @@ class App extends React.Component {
                     <Route exact path="/notadmin/location/:locationid" component={LocationAdminDetails} />
                     <Route exact path="/notadmin/location/:locationid/postentry" component={PostEntryPage} />
                     <Route exact path="/notadmin/location/:locationid/postentry/:postid" component={PostEntryPage} />
+                    <Route exact path="/notadmin/panoramas" component={PanoramaList} />
                     <Redirect to="/" />
                 </Switch>
                 <Switch>
@@ -81,4 +83,4 @@ class App extends React.Component {
     }
 }
 
-export default App;
+export default App
