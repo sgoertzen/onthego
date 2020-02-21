@@ -34,9 +34,18 @@ class PanoramaList extends React.Component<IPanoramaListProps> {
         }
     }
 
-    uploadPanorama() {
-        // TODO: Show upload window
+    uploadPanorama(event: any) {
         // Upon file selection, upload immediately
+        if (event.target.files) {
+            console.log("Processing " + event.target.files.length + " files")
+            for (const file of event.target.files) {
+                console.log("processing file ", file.name)
+        //         uploadings.push(this.uploadFile(file))
+            }
+        //     this.setState({
+        //         uploads: this.state.uploads.concat(uploadings)
+        //     })
+        }
         // When upload complete, reload list (might need a delay on this so function can do its thing)
     }
 
@@ -48,9 +57,26 @@ class PanoramaList extends React.Component<IPanoramaListProps> {
     render() {
         return (
             <Paper className="root">
-                <Button variant="outlined" onClick={() => { this.uploadPanorama() }}>
+                
+                <input
+                    id="post-entry-media"
+                    className="PostEntryInput"
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={this.uploadPanorama}
+                />
+                
+                <div className="secondaryButtons">
+                    <label htmlFor="post-entry-media">
+                        <Button variant="outlined" component="span">
+                            Add Panorama
+                        </Button>
+                    </label>
+                </div>
+                {/* <Button variant="outlined" onClick={() => { this.uploadPanorama() }}>
                     Upload Panorama
-                </Button>
+                </Button> */}
 
                 <Table className="location-table" size="small">
                     <TableHead>

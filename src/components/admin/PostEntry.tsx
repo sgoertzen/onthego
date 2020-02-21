@@ -67,9 +67,7 @@ class PostEntry extends React.Component<IPostEntryProps> {
             case "post-entry-media": {
                 if (event.target.files) {
                     const uploadings: IMedia[] = []
-                    console.log("Processing " + event.target.files.length + " files")
                     for (const file of event.target.files) {
-                        console.log("processing file ", file.name)
                         uploadings.push(this.uploadFile(file))
                     }
                     this.setState({
