@@ -1,3 +1,8 @@
+/**
+ * Distance Calcuator tests
+ * 
+ * @group unit
+ */
 import { equal } from 'assert'
 import { GeoPoint } from '@google-cloud/firestore'
 import { distanceCalculator } from './distanceCalculator'

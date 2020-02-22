@@ -4,16 +4,19 @@
     "lint": "tslint --project tsconfig.json",
     "format": "tsfmt -r",
     "build": "tsc",
-    "test": "jest src",
+    "test": "jest src --group=unit",
+    "test-int": "jest src --group=integration",
+    "test-watch": "jest src --watch",
     "serve": "npm run build && firebase serve --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
+    "emulate": "firebase emulators:start --only firestore,functions",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
     "update-dependencies": "ncu -u"
   },
   "engines": {
-    "node": "10"
+    "node": "13"
   },
   "main": "lib/functions/src/index.js",
   "dependencies": {
@@ -36,6 +39,7 @@
     "firebase-functions-test": "^0.1.7",
     "firebase-tools": "^7.12.1",
     "jest": "^25.1.0",
+    "jest-runner-groups": "^1.1.1",
     "mocha": "^7.0.1",
     "ts-jest": "^25.2.0",
     "tslint": "^6.0.0",
@@ -43,13 +47,15 @@
     "typescript-formatter": "^7.2.2"
   },
   "jest": {
+    "runner": "groups",
     "moduleFileExtensions": [
       "ts",
       "tsx",
-      "js"
+      "js",
+      "json"
     ],
     "transform": {
-      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+      "\\.(ts|tsx)$": "ts-jest"
     },
     "testRegex": "/.*\\.test.(ts|tsx|js)$"
   },

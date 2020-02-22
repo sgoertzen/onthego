@@ -47,10 +47,10 @@ exports = module.exports = functions.storage.object().onFinalize(async (object) 
 
     let thumbnailGeneratedName = ""
 
-    
+
     // 3. Create the screenshot
     return new Promise((resolve, reject) => {
-        
+
         ffmpeg(tmpFilePath)
             .on('filenames', (filenames: string[]) => {
                 console.log('Will generate ' + filenames.join(', '));

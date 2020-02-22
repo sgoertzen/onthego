@@ -28,6 +28,8 @@ exports = module.exports = functions.storage.object().onFinalize(async (object) 
     const fileName = basename(filePath)
     const resizes = [
         { size: 200, fit: sharp.fit.cover },
+        { size: 600, fit: sharp.fit.inside },
+        { size: 1200, fit: sharp.fit.inside },
         { size: 1600, fit: sharp.fit.inside }
     ]
     const metadata = { contentType: contentType };
