@@ -15,7 +15,6 @@ import { tmpdir } from 'os'
 import { videos } from '../util/videoRenditions';
 
 const gcs = new Storage.Storage();
-const RENDITION_PREFIX = "rendition"
 
 exports = module.exports = functions.storage.object().onFinalize(async (object:functions.storage.ObjectMetadata) => {
     if (!validateVideo(object)) {
@@ -59,7 +58,6 @@ async function uploadRendition(bucket: Storage.Bucket, bucketDir: string, workin
     console.log("Rendition uploaded: ", file);
 }
 
-// TODO: Unit tese this function
 function validateVideo(object: functions.storage.ObjectMetadata) {
     if (!object) {
         console.log('No video object found')
@@ -83,7 +81,7 @@ function validateVideo(object: functions.storage.ObjectMetadata) {
 
     const fileName = basename(filePath)
 
-    if (fileName.includes(RENDITION_PREFIX)) {
+    if (fileName.includes(videos.RENDITION_PREFIX)) {
         console.log('Already a rendition', fileName)
         return false;
     }

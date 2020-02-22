@@ -4,7 +4,6 @@ import * as fs from 'fs-extra'
 
 export class videos {
 
-    // TODO: Don't copy these from the function.  Share or pass them in.
     static RENDITION_PREFIX = "rendition";
     static renditions = [
         { label: "240p", size: "320x?" },
@@ -13,7 +12,6 @@ export class videos {
         { label: "720p", size: "1280x?" }
     ]
 
-    //, callback: (file:string) => void
     // Created all needed rendtions for a given video file
     // Returns the list of rendition file paths (wrapped in a promise)
     static async createRenditions(file: string): Promise<string[]> {
