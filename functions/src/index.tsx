@@ -1,3 +1,4 @@
+// Map each file in the endpoints to folder into a cloud function for deployment
 // Adapted from: https://gist.github.com/theprojectsomething/2076f856f9c4488366dc88e6e8ab2f20
 
 import { sync } from 'glob'
@@ -66,19 +67,3 @@ sync(`./**/*.js`, {
 if (BREAK_ON_ERROR && skipped.length) {
     throw new Error(`naming conflict: "${skipped.join('", "')}"`);
 }
-
-
-// import { readdirSync } from 'fs'
-// import { resolve } from 'path'
-
-// // Folder where all your individual Cloud Functions files are located.
-// const FUNCTIONS_FOLDER = './endpoints';
-
-// readdirSync(resolve(__dirname, FUNCTIONS_FOLDER)).forEach(file => { // list files in the folder.
-//   if(file.endsWith('.js')) {
-//     const fileBaseName = file.slice(0, -3); // Remove the '.js' extension
-//     if (!process.env.FUNCTION_NAME || process.env.FUNCTION_NAME === fileBaseName) {
-//       exports[fileBaseName] = require(`${FUNCTIONS_FOLDER}/${fileBaseName}`);
-//     }
-//   }
-// });
