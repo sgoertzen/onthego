@@ -16,7 +16,7 @@
     "update-dependencies": "ncu -u"
   },
   "engines": {
-    "node": "13"
+    "node": "10"
   },
   "main": "lib/functions/src/index.js",
   "dependencies": {
