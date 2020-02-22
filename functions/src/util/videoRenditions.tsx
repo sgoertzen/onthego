@@ -4,7 +4,7 @@ import * as fs from 'fs-extra'
 
 export class videos {
 
-    static RENDITION_PREFIX = "rendition";
+    static RENDITION_PREFIX = "rendition"
     static renditions = [
         { label: "240p", size: "320x?" },
         { label: "360p", size: "480x?" },

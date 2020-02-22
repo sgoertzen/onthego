@@ -36,7 +36,7 @@ class PostMedia extends React.Component<IPostMediaProps> {
             } else if (med.filetype === MediaType.Video) {
                 items.push({
                     thumbnail: Media.videoThumbnail(med), // prefix with thumb_ and switch extension to .png
-                    original: med.url,
+                    original: Media.videoSizedURL(med, window.innerWidth),
                     description: 'Render custom slides within the gallery',
                     renderItem: this._renderVideo.bind(this)
                 })
