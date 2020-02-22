@@ -14,7 +14,7 @@ import * as Storage from '@google-cloud/storage'
 import * as fs from 'fs-extra';
 import * as ffmpeg from 'fluent-ffmpeg'
 import { tmpdir } from 'os'
-import { videos } from '../util/videoRenditions';
+import { videoHelper } from '../util/videoHelper';
 
 const gcs = new Storage.Storage();
 const THUMB_PREFIX = "thumb_";
@@ -105,7 +105,7 @@ function validateVideo(object: any) {
 
     const fileName = basename(filePath)
 
-    if (fileName.startsWith(videos.RENDITION_PREFIX)) {
+    if (fileName.startsWith(videoHelper.RENDITION_PREFIX)) {
         console.debug('Skipping file as it is a rendition')
     }
     return true;

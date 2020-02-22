@@ -2,7 +2,7 @@ import { basename, dirname, join } from 'path'
 import * as ffmpeg from 'fluent-ffmpeg'
 import * as fs from 'fs-extra'
 
-export class videos {
+export class videoHelper {
 
     static RENDITION_PREFIX = "rendition"
     static renditions = [
@@ -25,8 +25,8 @@ export class videos {
 
         const promise = new Promise<string[]>((resolve, reject) => {
             const ffm = ffmpeg(file)
-            for (const rendition of videos.renditions) {
-                const renditionFileName = `${videos.RENDITION_PREFIX}${rendition.label}_${fileName}`
+            for (const rendition of videoHelper.renditions) {
+                const renditionFileName = `${videoHelper.RENDITION_PREFIX}${rendition.label}_${fileName}`
                 const reditionFullPath = join(directory, renditionFileName)
                 ffm.output(reditionFullPath)
                     .size(rendition.size)
@@ -35,10 +35,9 @@ export class videos {
                 reject(err.message)
             }).on('end', () => {
                 const results: string[] = []
-                for (const rendition of videos.renditions) {
-                    const renditionFileName = `${videos.RENDITION_PREFIX}${rendition.label}_${fileName}`
+                for (const rendition of videoHelper.renditions) {
+                    const renditionFileName = `${videoHelper.RENDITION_PREFIX}${rendition.label}_${fileName}`
                     results.push(renditionFileName)
-                    //callback(renditionFileName)
                 }
                 resolve(results)
             })
