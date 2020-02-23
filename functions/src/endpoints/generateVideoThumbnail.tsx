@@ -11,13 +11,13 @@ import * as functions from 'firebase-functions'
 
 import { basename, join, dirname, extname } from 'path'
 import * as Storage from '@google-cloud/storage'
-import * as fs from 'fs-extra';
+import * as fs from 'fs-extra'
 import * as ffmpeg from 'fluent-ffmpeg'
 import { tmpdir } from 'os'
-import { videoHelper } from '../util/videoHelper';
+import { videoHelper } from '../util/videoHelper'
 
-const gcs = new Storage.Storage();
-const THUMB_PREFIX = "thumb_";
+const gcs = new Storage.Storage()
+const THUMB_PREFIX = "thumb_"
 
 exports = module.exports = functions.storage.object().onFinalize(async (object) => {
     if (!validateVideo(object)) {
@@ -96,17 +96,18 @@ function validateVideo(object: any) {
     }
     if (!filePath.includes('postvideos')) {
         console.debug('Skipping file as it is not a video: ', filePath)
-        return false;
+        return false
     }
     if (!contentType.startsWith('video/')) {
         console.debug('Not a video: ', contentType)
-        return false;
+        return false
     }
 
     const fileName = basename(filePath)
 
     if (fileName.startsWith(videoHelper.RENDITION_PREFIX)) {
         console.debug('Skipping file as it is a rendition')
+        return false
     }
-    return true;
+    return true
 }

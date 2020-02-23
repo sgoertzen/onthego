@@ -10,7 +10,7 @@
     "serve": "npm run build && firebase serve --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
-    "emulate": "firebase emulators:start --only firestore,functions",
+    "emulate": "npm run build && firebase emulators:start --only firestore,functions",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
     "update-dependencies": "ncu -u"

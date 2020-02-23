@@ -10,5 +10,5 @@ import * as functions from 'firebase-functions'
 import { renditionManager } from '../util/renditionManager';
 
 exports = module.exports = functions.storage.object().onFinalize(async (object: functions.storage.ObjectMetadata) => {
-    renditionManager.createRenditions(object)
+    return renditionManager.createRenditions(object)
 })
