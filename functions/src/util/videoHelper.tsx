@@ -52,6 +52,7 @@ export class videoHelper {
             for (const rendition of videoHelper.RENDITIONS) {
                 const renditionFileName = `${videoHelper.RENDITION_PREFIX}${rendition.label}_${fileName}`
                 const reditionFullPath = join(directory, renditionFileName)
+                console.debug(`ffmpeg configured to create ${renditionFileName}`)
                 ffm.output(reditionFullPath)
                     .size(rendition.size)
             }
@@ -61,11 +62,11 @@ export class videoHelper {
                 const results: string[] = []
                 for (const rendition of videoHelper.RENDITIONS) {
                     const renditionFileName = `${videoHelper.RENDITION_PREFIX}${rendition.label}_${fileName}`
+                    console.debug(`Storing rendition of ${renditionFileName}`)
                     results.push(renditionFileName)
                 }
                 resolve(results)
-            })
-                .run()
+            }).run()
         })
         return promise
     }
@@ -96,16 +97,12 @@ export class videoHelper {
         // Fill in filesets with all found renditions
         for (const rendition of renditionFiles) {
             const filename = basename(rendition)
-            // TODO - Move this format into constants
-            // TODO - Move the deliminator into constants
             const orig = filename.substr(filename.indexOf('_') + 1)
             const rendLabel = filename.substr(videoHelper.RENDITION_PREFIX.length, 4)
             const fileset = filesets.get(orig)
             if (!fileset) {
-                console.debug(`Set not found for ${orig} continuing `)
                 continue
             }
-            console.debug(`Checking rendlabel of ${rendLabel}`)
             switch (rendLabel) {
                 case '240p':
                     fileset.Rend240p = filename
@@ -125,9 +122,7 @@ export class videoHelper {
         // Loop over file sets and return any that aren't full
         const needsRenditions: string[] = []
         filesets.forEach((set) => {
-            console.debug(`Checking set for all rends ${set.Original}`)
             if (!set.hasAllRenditions()) {
-                console.debug(`File ${set.Original} is missing some renditions`)
                 needsRenditions.push(set.Original)
             }
         })

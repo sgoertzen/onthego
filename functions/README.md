@@ -11,7 +11,7 @@ These functions are used for processing data for the site.  Main features are:
 index.tsx - Wraps the /endpoints directory for Firebase 
 
 ## Deploy
-This will lint, build and deploy the functions. 
+This will lint, build and deploy the functions.  Note: deleting a function and deploying will not remove the function from Firebase.
 ```
 npm run deploy
 ```
