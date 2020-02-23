@@ -1,73 +1,71 @@
 /**
  * Video Rendition tests
  * 
- * @group integration
+ * @group unit
  */
-import { videos } from './videoRenditions'
-import { join } from 'path'
-import { equal, fail } from 'assert'
-import * as fs from 'fs-extra'
-import { tmpdir } from 'os'
+import { videoHelper } from './videoHelper'
+import { equal } from 'assert'
 
-interface VideoData {
-    fullpath: string,
-    directory: string
-}
-const VIDEO_TEST_FILE = 'SampleVideo_720x480_1mb.mp4'
-
-it('Exists when file does not exist', async () => {
-    const nonExistantFile = '/nope/notthere.avi'
-    const renderer = 
-        videos
-            .createRenditions(nonExistantFile)
-            .catch(() => {fail("Error occurred when file does not exist")})
-    await renderer
+it('Video has no renditions', () => {
+    const files = ['singleFile.avi']
+    let results = videoHelper.findFilesNeedingRenditions(files)
+    equal(results.length, 1)
+    equal(results[0], 'singleFile.avi')
 })
 
-it('Calls callback when complete', async () => {
-    // Setup
-    const testdata = setupVideoData()
-    // Test
-    let callbackCalled = false
-    await videos.createRenditions(testdata.fullpath)
-            .catch((msg) => {fail(`Error occurred when creating all reditions: ${msg}`)})
-            .then(() =>  { callbackCalled = true }, (reason) => fail(`Failed due to ${reason}`))
-
-    equal(true, callbackCalled, "Callback was never called after rendition creation")
-
-    // Cleanup
-    fs.removeSync(testdata.directory)
+it('Empty array returns nothing', () => {
+    const files:string[] = []
+    let results = videoHelper.findFilesNeedingRenditions(files)
+    equal(results.length, 0)
 })
 
-it('Creates all renditions', async () => {
-    // Setup
-    const testdata = setupVideoData()
-
-    // Test
-    await videos.createRenditions(testdata.fullpath)
-            .catch((msg) => {fail(`Error occurred when creating all reditions: ${msg}`)})
-            .then(() =>  { }, (reason) => fail(`Failed due to ${reason}`))
-
-    const rend240pFile = join(testdata.directory, `rendition240p_${VIDEO_TEST_FILE}`)
-    equal(fs.existsSync(rend240pFile), true, `Unable to find ${rend240pFile}`)
-
-    // Cleanup
-    fs.removeSync(testdata.directory)
+it('Video has all renditions', () => {
+    const files: string[] = ['folder/complete.avi']
+    videoHelper.RENDITIONS.forEach(value => 
+        files.push(`folder/${videoHelper.RENDITION_PREFIX}${value.label}_complete.avi`))
+    let results = videoHelper.findFilesNeedingRenditions(files)
+    equal(results.length, 0)
 })
 
+it('Video has all renditions but random order', () => {
+    const files: string[] = []
+    videoHelper.RENDITIONS.forEach(value => 
+        files.push(`folder/${videoHelper.RENDITION_PREFIX}${value.label}_random.avi`))
+    files.push('folder/random.avi')
+    let results = videoHelper.findFilesNeedingRenditions(files)
+    equal(results.length, 0)
+})
 
-function setupVideoData():VideoData {
-    const testFile = join(process.cwd(), '../testdata/' + VIDEO_TEST_FILE)
-    console.log(`testFile: ${testFile}`)
+it('Only Folder', () => {
+    const files: string[] = ['folder/']
+    let results = videoHelper.findFilesNeedingRenditions(files)
+    equal(results.length, 0)
+})
 
-    const tempDir = fs.mkdtempSync(join(tmpdir(), 'VideoDataTest-'))
-    const tempFile = join(tempDir, VIDEO_TEST_FILE)
-    console.log(`tempDir: ${tempFile}`)
+it('File named rendition', () => {
+    const files: string[] = ['/folder/rendition.avi']
+    let results = videoHelper.findFilesNeedingRenditions(files)
+    equal(results.length, 1)
+})
 
-    fs.copyFileSync(testFile, tempFile)
+it('Only Renditions', () => {
+    const files: string[] = ['']
+    videoHelper.RENDITIONS.forEach(value => 
+        files.push(`folder/${videoHelper.RENDITION_PREFIX}${value.label}_onlyrends.avi`))
+    let results = videoHelper.findFilesNeedingRenditions(files)
+    equal(results.length, 0)
+})
 
-    const tempVideo = join(tempFile, VIDEO_TEST_FILE)
-    console.log(`tempVideo: ${tempVideo}`)
-    return { fullpath: tempFile, directory: tempDir}
+it('Missing one renditions', () => {
+    let files: string[] = ['folder/file.avi']
+    videoHelper.RENDITIONS.forEach(value => files.push(`folder/${value}_file.avi`))
+    files = files.splice(1,1)
+    let results = videoHelper.findFilesNeedingRenditions(files)
+    equal(results.length, 1)
+})
 
-}
+it ('Ignores images', () => {
+    let files = ['folder/imagefile.png']
+    let results = videoHelper.findFilesNeedingRenditions(files)
+    equal(results.length, 0)
+})
