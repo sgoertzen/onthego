@@ -1,14 +1,12 @@
 Todo:
 (3-medium) Admin page to upload panaoramas
+(3-medium) Support more image sizes to save download size
 (3-medium) Setup automatic thumbnail for panaoramas (maybe use firebase tool instead of our custom one)
 (3-medium) Add panos to map page as icon
 (3-medium) Create full screen pano viewer
-
-
 (3-medium) Create script to pull down database into json
 (3-medium) Update FirestoreHelper to use json data instead of web requests 
 (3-medium) Hide Recent Posts menu item
-
 (3-medium) Add in april fools mode
 (3-medium) Write script to detach from firebase and use static data (database to json, disable comments)
 (3-medium) Allow comments to be edited or deleted
@@ -59,6 +57,7 @@ Done:
 [done] (3-medium) Add general pages: Full Schedule, Full map, Overview page with description and family picture
 [done] Multiple lat/longs per location
 [done] (3-medium) Show recent activity
+[done] Support video renditions for smaller downloads
 
 [won't do] (4-low) Delete locations
 [won't do] (5-bottom) Subscribe to blog?
