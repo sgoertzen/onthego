@@ -10,8 +10,7 @@ export class renditionManager {
         if (!renditionManager.validateVideo(filepath, contentType)) {
             return []
         }
-
-        //const filePath = object.name ? object.name : ""
+        
         const fileName = basename(filepath)
         const workingDir = join(tmpdir(), 'renditions')
         const tmpFilePath = join(workingDir, fileName)
