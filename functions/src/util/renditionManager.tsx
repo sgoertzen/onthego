@@ -7,7 +7,7 @@ import { Rendition } from '../classes/Rendition';
 
 export class renditionManager {
     // static async createRenditions(object: functions.storage.ObjectMetadata) {
-    static async createRenditions(filepath: string, bucketname: string, contentType: string | undefined): Promise<string[] | void> {
+    static async createRenditions(filepath: string, renditions: Rendition[], bucketname: string, contentType: string | undefined): Promise<string[]> {
         if (!renditionManager.validateVideo(filepath, contentType)) {
             return []
         }
@@ -34,20 +34,14 @@ export class renditionManager {
 
         // 3. Kick off async method to save renditions
         return new Promise<string[]>(async (resolve) => {
+            const created: string[] = []
+            for (const rendition of renditions) {
+                const file = await videoHelper.createRendition(tmpFilePath, rendition)
+                await renditionManager.uploadRendition(bucket, directory, workingDir, file)
+                created.push(file)
+            }
 
-            const file240 = await videoHelper.createRendition(tmpFilePath, Rendition.R240p)
-            await renditionManager.uploadRendition(bucket, directory, workingDir, file240)
-
-            const file360 = await videoHelper.createRendition(tmpFilePath, Rendition.R360p)
-            await renditionManager.uploadRendition(bucket, directory, workingDir, file360)
-
-            const file480 = await videoHelper.createRendition(tmpFilePath, Rendition.R480p)
-            await renditionManager.uploadRendition(bucket, directory, workingDir, file480)
-
-            const file720 = await videoHelper.createRendition(tmpFilePath, Rendition.R720p)
-            await renditionManager.uploadRendition(bucket, directory, workingDir, file720)
-
-            resolve([file240, file360, file480, file720])
+            resolve(created)
         })
     }
 

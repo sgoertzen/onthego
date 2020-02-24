@@ -30,18 +30,14 @@ exports = module.exports = functions.pubsub.schedule('every 10 minutes').onRun(a
                         for (const f of files) {
                             filenames.push(f.name)
                         }
-                        const filesNeedingRenditions = videoHelper.findFilesNeedingRenditions(filenames)
-                        if (filesNeedingRenditions.length > 0) {
-                            console.debug(`${filesNeedingRenditions.length} files still need renditions`)
-                            const file = `${VIDEO_FOLDER}/${filesNeedingRenditions[0]}`
+                        const neededRenditions = videoHelper.findMissingRenditions(filenames)
+                        if (neededRenditions.length > 0) {
+                            console.debug(`${neededRenditions.length} renditions still need`)
+                            const neededRendition = neededRenditions[0]
+                            const file = `${VIDEO_FOLDER}/${neededRendition.original}`
                             console.debug(`Attempting to create renditions for ${file}`)
-                            await renditionManager.createRenditions(file, b.name, 'video/')
-                                .then((renditions) => {
-                                    const rendString = renditions ? renditions.join(',') : ''
-                                    resolve(`Created renditions for ${file}: ${rendString}`)
-
-                                })
-                                .catch((msg) => reject(`Unable to create renditions for ${file}.  ${msg}`))
+                            await renditionManager.createRenditions(file, [neededRendition.rendition], b.name, 'video/')
+                            resolve(`Created rendition of ${neededRendition.rendition} for ${neededRendition.original}`)
                         } else {
                             resolve('No files found that need renditions')
                         }

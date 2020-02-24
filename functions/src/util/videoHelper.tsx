@@ -59,7 +59,7 @@ export class videoHelper {
         })
     }
 
-    static findFilesNeedingRenditions(filenames: string[]): NeededRendition[] {
+    static findMissingRenditions(filenames: string[]): NeededRendition[] {
         const filesets = new Map<string, RenditionSet>()
         const renditionFiles: string[] = []
 
