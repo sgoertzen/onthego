@@ -15,7 +15,7 @@ import { renditionManager } from '../util/renditionManager'
 const gcs = new Storage.Storage()
 const VIDEO_FOLDER = 'postvideos'
 
-exports = module.exports = functions.pubsub.schedule('every 10 minutes').onRun(async () => {
+exports = module.exports = functions.pubsub.schedule('every 5 minutes').onRun(async () => {
     return new Promise((resolve, reject) => {
 
         console.log('Starting backfill renditions');
