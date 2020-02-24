@@ -49,9 +49,13 @@ export class Media implements IMedia {
         const filename = encodeURI(media.filename)
         let url:string
         if (width <= 600) {
-            url = media.url.replace(filename, `${prefix}_600_${filename}`)
+            // TODO, switch this over when the image have been backfilled
+            //url = media.url.replace(filename, `${prefix}_600_${filename}`)
+            url = media.url.replace(filename, `${prefix}_1600_${filename}`)
         } else if (width <= 1200) {
-            url = media.url.replace(filename, `${prefix}_1200_${filename}`)
+            // TODO, switch this over when the image have been backfilled
+            //url = media.url.replace(filename, `${prefix}_1200_${filename}`)
+            url = media.url.replace(filename, `${prefix}_1600_${filename}`)
         } else { 
             url = media.url.replace(filename, `${prefix}_1600_${filename}`)
         } 

@@ -8,6 +8,7 @@ import { join } from 'path'
 import { equal, fail } from 'assert'
 import * as fs from 'fs-extra'
 import { tmpdir } from 'os'
+import { Rendition } from '../classes/Rendition'
 
 interface VideoData {
     fullpath: string,
@@ -19,7 +20,7 @@ it('Exists when file does not exist', async () => {
     const nonExistantFile = '/nope/notthere.avi'
     const renderer = 
         videoHelper
-            .createRenditions(nonExistantFile)
+            .createRendition(nonExistantFile, Rendition.R360p)
             .catch(() => {fail("Error occurred when file does not exist")})
     await renderer
 })
@@ -29,7 +30,7 @@ it('Calls callback when complete', async () => {
     const testdata = setupVideoData()
     // Test
     let callbackCalled = false
-    await videoHelper.createRenditions(testdata.fullpath)
+    await videoHelper.createRendition(testdata.fullpath, Rendition.R240p)
             .catch((msg) => {fail(`Error occurred when creating all reditions: ${msg}`)})
             .then(() =>  { callbackCalled = true }, (reason) => fail(`Failed due to ${reason}`))
 
@@ -44,7 +45,7 @@ it('Creates all renditions', async () => {
     const testdata = setupVideoData()
 
     // Test
-    await videoHelper.createRenditions(testdata.fullpath)
+    await videoHelper.createRendition(testdata.fullpath, Rendition.R240p)
             .catch((msg) => {fail(`Error occurred when creating all reditions: ${msg}`)})
             .then(() =>  { }, (reason) => fail(`Failed due to ${reason}`))
 

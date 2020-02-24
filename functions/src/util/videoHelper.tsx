@@ -2,6 +2,16 @@ import { basename, dirname, join } from 'path'
 import * as ffmpeg from 'fluent-ffmpeg'
 import * as fs from 'fs-extra'
 import { MediaHelper } from '../../../src/util/MediaHelper'
+import { Rendition } from '../classes/Rendition'
+
+class NeededRendition {
+    original: string
+    rendition: Rendition
+    constructor(original: string, rendition: Rendition) {
+        this.original = original
+        this.rendition = rendition
+    }
+}
 
 class RenditionSet {
     Original: string
@@ -17,61 +27,39 @@ class RenditionSet {
         this.Rend480p = ''
         this.Rend720p = ''
     }
-
-    hasAllRenditions = () => {
-        return this.Rend240p.length > 0 &&
-            this.Rend360p.length > 0 &&
-            this.Rend480p.length > 0 &&
-            this.Rend720p.length > 0
-    }
 }
 
 export class videoHelper {
 
     static RENDITION_PREFIX = "rendition"
-    static RENDITIONS = [
-        { label: "240p", size: "320x?" },
-        { label: "360p", size: "480x?" },
-        { label: "480p", size: "720x?" },
-        { label: "720p", size: "1280x?" }
-    ]
-
     // Created all needed rendtions for a given video file
     // Returns the list of rendition file paths (wrapped in a promise)
-    static async createRenditions(file: string): Promise<string[]> {
-
+    static async createRendition(file: string, rend: Rendition): Promise<string> {
         const fileName = basename(file)
         const directory = dirname(file)
 
         if (!fs.existsSync(file)) {
-            return []
+            return ''
         }
 
-        const promise = new Promise<string[]>((resolve, reject) => {
-            const ffm = ffmpeg(file)
-            for (const rendition of videoHelper.RENDITIONS) {
-                const renditionFileName = `${videoHelper.RENDITION_PREFIX}${rendition.label}_${fileName}`
-                const reditionFullPath = join(directory, renditionFileName)
-                console.debug(`ffmpeg configured to create ${renditionFileName}`)
-                ffm.output(reditionFullPath)
-                    .size(rendition.size)
-            }
-            ffm.on('error', (err: any) => {
-                reject(err.message)
-            }).on('end', () => {
-                const results: string[] = []
-                for (const rendition of videoHelper.RENDITIONS) {
-                    const renditionFileName = `${videoHelper.RENDITION_PREFIX}${rendition.label}_${fileName}`
-                    console.debug(`Storing rendition of ${renditionFileName}`)
-                    results.push(renditionFileName)
-                }
-                resolve(results)
-            }).run()
+        return new Promise<string>((resolve, reject) => {
+            const renditionFileName = `${videoHelper.RENDITION_PREFIX}${rend.label}_${fileName}`
+            const reditionFullPath = join(directory, renditionFileName)
+            console.debug(`ffmpeg creating ${renditionFileName}`)
+
+            ffmpeg(file)
+                .output(reditionFullPath)
+                .size(rend.size)
+                .on('error', (err: any) => {
+                    reject(err.message)
+                }).on('end', () => {
+                    console.debug(`rendition created ${renditionFileName}`)
+                    resolve(renditionFileName)
+                }).run()
         })
-        return promise
     }
 
-    static findFilesNeedingRenditions(filenames: string[]): string[] {
+    static findFilesNeedingRenditions(filenames: string[]): NeededRendition[] {
         const filesets = new Map<string, RenditionSet>()
         const renditionFiles: string[] = []
 
@@ -119,11 +107,20 @@ export class videoHelper {
             }
         }
 
-        // Loop over file sets and return any that aren't full
-        const needsRenditions: string[] = []
+        // Loop over file sets and return any renditions that are needed
+        const needsRenditions: NeededRendition[] = []
         filesets.forEach((set) => {
-            if (!set.hasAllRenditions()) {
-                needsRenditions.push(set.Original)
+            if (set.Rend240p.length === 0) {
+                needsRenditions.push(new NeededRendition(set.Original, Rendition.R240p))
+            }
+            if (set.Rend360p.length === 0) {
+                needsRenditions.push(new NeededRendition(set.Original, Rendition.R360p))
+            }
+            if (set.Rend480p.length === 0) {
+                needsRenditions.push(new NeededRendition(set.Original, Rendition.R480p))
+            }
+            if (set.Rend720p.length === 0) {
+                needsRenditions.push(new NeededRendition(set.Original, Rendition.R720p))
             }
         })
         return needsRenditions

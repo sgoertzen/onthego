@@ -3,6 +3,7 @@ import * as Storage from '@google-cloud/storage'
 import * as fs from 'fs-extra';
 import { tmpdir } from 'os'
 import { videoHelper } from './videoHelper';
+import { Rendition } from '../classes/Rendition';
 
 export class renditionManager {
     // static async createRenditions(object: functions.storage.ObjectMetadata) {
@@ -10,7 +11,7 @@ export class renditionManager {
         if (!renditionManager.validateVideo(filepath, contentType)) {
             return []
         }
-        
+
         const fileName = basename(filepath)
         const workingDir = join(tmpdir(), 'renditions')
         const tmpFilePath = join(workingDir, fileName)
@@ -32,12 +33,21 @@ export class renditionManager {
         })
 
         // 3. Kick off async method to save renditions
-        return videoHelper.createRenditions(tmpFilePath).then(async (renditions: string[]) => {
-            for (const file of renditions) {
-                await renditionManager.uploadRendition(bucket, directory, workingDir, file)
-            }
-        }).catch(msg => {
-            console.error("Unable to create renditions: " + msg)
+        return new Promise<string[]>(async (resolve) => {
+
+            const file240 = await videoHelper.createRendition(tmpFilePath, Rendition.R240p)
+            await renditionManager.uploadRendition(bucket, directory, workingDir, file240)
+
+            const file360 = await videoHelper.createRendition(tmpFilePath, Rendition.R360p)
+            await renditionManager.uploadRendition(bucket, directory, workingDir, file360)
+
+            const file480 = await videoHelper.createRendition(tmpFilePath, Rendition.R480p)
+            await renditionManager.uploadRendition(bucket, directory, workingDir, file480)
+
+            const file720 = await videoHelper.createRendition(tmpFilePath, Rendition.R720p)
+            await renditionManager.uploadRendition(bucket, directory, workingDir, file720)
+
+            resolve([file240, file360, file480, file720])
         })
     }
 

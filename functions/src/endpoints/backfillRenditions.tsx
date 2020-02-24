@@ -17,14 +17,14 @@ const VIDEO_FOLDER = 'postvideos'
 
 exports = module.exports = functions.pubsub.schedule('every 10 minutes').onRun(async () => {
     return new Promise((resolve, reject) => {
-    
+
         console.log('Starting backfill renditions');
 
         gcs.getBuckets().then(async value => {
             const filenames: string[] = []
             const buckets = value[0]
             for (const b of buckets) {
-                    if (b.name === 'goertzensonthego.appspot.com') {
+                if (b.name === 'goertzensonthego.appspot.com') {
                     await b.getFiles({ directory: VIDEO_FOLDER }).then(async (gfr: Storage.GetFilesResponse) => {
                         const files = gfr[0]
                         for (const f of files) {
@@ -39,7 +39,7 @@ exports = module.exports = functions.pubsub.schedule('every 10 minutes').onRun(a
                                 .then((renditions) => {
                                     const rendString = renditions ? renditions.join(',') : ''
                                     resolve(`Created renditions for ${file}: ${rendString}`)
-                                    
+
                                 })
                                 .catch((msg) => reject(`Unable to create renditions for ${file}.  ${msg}`))
                         } else {
@@ -50,6 +50,6 @@ exports = module.exports = functions.pubsub.schedule('every 10 minutes').onRun(a
                     })
                 }
             }
-        }).catch(msg_2 => { reject(`Unable to fetch bucket list ${msg_2}`)})
+        }).catch(msg_2 => { reject(`Unable to fetch bucket list ${msg_2}`) })
     })
 })
