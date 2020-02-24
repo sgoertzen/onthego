@@ -1,3 +1,8 @@
+/**
+ * Haversine tests
+ * 
+ * @group unit
+ */
 import { haversine, LatitudeLongitude } from './haversine';
 import { equal } from 'assert';
 

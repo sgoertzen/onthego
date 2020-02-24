@@ -37,8 +37,17 @@ npm run format
 This will auto format all the code.
 
 ### Deployment
+Deploy everything
 ```
-firebase deploy
+npm run deploy
+```
+
+Can also deploy pieces individually
+```
+npm run deploy-functions
+npm run deploy-hosting
+npm run deploy-database
+npm run deploy-rules
 ```
 More details at [https://firebase.google.com/docs/web/setup?authuser=0#install-cli_deploy](https://firebase.google.com/docs/web/setup?authuser=0#install-cli_deploy)
 
@@ -53,3 +62,12 @@ To run the automated tests
 ```
 npm run test
 ```
+
+### Update Dependencies
+To update the projects dependencies run
+```
+npm run update-dependencies
+npm install
+```
+
+Note: this will not update dependencies for /functions.  Those should be updated on their own.

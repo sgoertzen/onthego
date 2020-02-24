@@ -11,12 +11,13 @@ import * as functions from 'firebase-functions'
 
 import { basename, join, dirname, extname } from 'path'
 import * as Storage from '@google-cloud/storage'
-import * as fs from 'fs-extra';
+import * as fs from 'fs-extra'
 import * as ffmpeg from 'fluent-ffmpeg'
 import { tmpdir } from 'os'
+import { videoHelper } from '../util/videoHelper'
 
-const gcs = new Storage.Storage();
-const THUMB_PREFIX = "thumb_";
+const gcs = new Storage.Storage()
+const THUMB_PREFIX = "thumb_"
 
 exports = module.exports = functions.storage.object().onFinalize(async (object) => {
     if (!validateVideo(object)) {
@@ -47,24 +48,24 @@ exports = module.exports = functions.storage.object().onFinalize(async (object) 
 
     let thumbnailGeneratedName = ""
 
-    
+
     // 3. Create the screenshot
     return new Promise((resolve, reject) => {
-        
+
         ffmpeg(tmpFilePath)
             .on('filenames', (filenames: string[]) => {
-                console.log('Will generate ' + filenames.join(', '));
+                console.debug('Will generate ' + filenames.join(', '));
                 thumbnailGeneratedName = filenames[0];
             })
             .on('error', (err: any) => {
                 const message = `Error while creating video screenshot: ${err.message}`
-                console.log(message);
+                console.error(message);
                 reject(message)
             })
             .on('end', async () => {
                 const tmpThumbPath = join(workingDir, thumbnailGeneratedName);
-                console.log('Video screenshot conversion ended');
-                console.log("expecting thumbnail at: ", tmpThumbPath);
+                console.debug('Video screenshot conversion ended');
+                console.debug("expecting thumbnail at: ", tmpThumbPath);
                 // 4. Write the file back to firestore
                 await bucket.upload(tmpThumbPath, {
                     destination: join(bucketDir, thumbFileName)
@@ -90,23 +91,23 @@ function validateVideo(object: any) {
     const filePath = object.name
 
     if (!filePath || !contentType) {
-        console.log('No filepath or content type.')
+        console.debug('No filepath or content type.')
         return false
     }
     if (!filePath.includes('postvideos')) {
-        console.log('Skipping file as it is not a video: ', filePath)
-        return false;
+        console.debug('Skipping file as it is not a video: ', filePath)
+        return false
     }
     if (!contentType.startsWith('video/')) {
-        console.log('Not a video: ', contentType)
-        return false;
+        console.debug('Not a video: ', contentType)
+        return false
     }
 
     const fileName = basename(filePath)
 
-    if (fileName.includes(THUMB_PREFIX)) {
-        console.log('Already a thumbnail', fileName)
-        return false;
+    if (fileName.startsWith(videoHelper.RENDITION_PREFIX)) {
+        console.debug('Skipping file as it is a rendition')
+        return false
     }
-    return true;
+    return true
 }
