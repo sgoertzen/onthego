@@ -58,16 +58,9 @@ it('Creates all renditions', async () => {
 
 function setupVideoData():VideoData {
     const testFile = join(process.cwd(), '../testdata/' + VIDEO_TEST_FILE)
-    console.log(`testFile: ${testFile}`)
-
     const tempDir = fs.mkdtempSync(join(tmpdir(), 'VideoDataTest-'))
     const tempFile = join(tempDir, VIDEO_TEST_FILE)
-    console.log(`tempDir: ${tempFile}`)
-
     fs.copyFileSync(testFile, tempFile)
-
-    const tempVideo = join(tempFile, VIDEO_TEST_FILE)
-    console.log(`tempVideo: ${tempVideo}`)
     return { fullpath: tempFile, directory: tempDir}
 
 }
