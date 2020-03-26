@@ -7,4 +7,4 @@ storiesOf('common/Header', module)
     .add('Default', () => {
         StorybookHelper.initFirebase()
         return <Header />
-})
+    })
