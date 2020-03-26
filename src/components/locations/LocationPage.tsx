@@ -5,7 +5,6 @@ import { ITravelLocation, TravelLocation } from '../../classes/TravelLocation'
 import { Post } from '../../classes/Post'
 import PostTiles from './PostTiles'
 import TripStats from './TripStats'
-import { differenceInDays } from 'date-fns'
 import { IHistoryProps } from '../../classes/IHistoryProps'
 import LocationDetails from './LocationDetails'
 import { FirestoreHelper } from '../../util/FirestoreHelper'
@@ -136,7 +135,8 @@ class LocationPage extends React.Component<ILocationPageProps> {
     }
 
     render() {
-        const daysOnTheRoad = Math.max(differenceInDays(new Date(), new Date(2019, 6, 27)), 0)
+        // Hard coding this now that the trip is over
+        const daysOnTheRoad = 241
         const center = this.state.selectedLocation && this.state.selectedLocation.coordinates && this.state.selectedLocation.coordinates.length > 0 ?
             this.state.selectedLocation.coordinates[0] : undefined
         return (

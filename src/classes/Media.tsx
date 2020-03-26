@@ -47,7 +47,7 @@ export class Media implements IMedia {
         const prefix = "thumb"
         console.log('Found screen width of ' + width)
         const filename = encodeURI(media.filename)
-        let url:string
+        let url: string
         if (width <= 600) {
             // TODO, switch this over when the image have been backfilled
             //url = media.url.replace(filename, `${prefix}_600_${filename}`)
@@ -56,9 +56,9 @@ export class Media implements IMedia {
             // TODO, switch this over when the image have been backfilled
             //url = media.url.replace(filename, `${prefix}_1200_${filename}`)
             url = media.url.replace(filename, `${prefix}_1600_${filename}`)
-        } else { 
+        } else {
             url = media.url.replace(filename, `${prefix}_1600_${filename}`)
-        } 
+        }
         return url
     }
 
@@ -69,17 +69,15 @@ export class Media implements IMedia {
         const prefix = "rendition"
         console.log('Found screen width of ' + width)
         const filename = encodeURI(media.filename)
-        let url:string
+        let url: string
         if (width <= 320) {
             url = media.url.replace(filename, `${prefix}240p_${filename}`)
         } else if (width <= 480) {
             url = media.url.replace(filename, `${prefix}360p_${filename}`)
         } else if (width <= 720) {
             url = media.url.replace(filename, `${prefix}480p_${filename}`)
-        } else if (width <= 1280) {
-            url = media.url.replace(filename, `${prefix}720p_${filename}`)
         } else {
-            url = media.url
+            url = media.url.replace(filename, `${prefix}720p_${filename}`)
         }
         console.log("URL is: " + url)
         return url
