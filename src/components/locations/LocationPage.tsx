@@ -60,16 +60,6 @@ class LocationPage extends React.Component<ILocationPageProps> {
                 }
             });
         }
-        // Find the location where arrival/departure is around current date
-        if (!this.state.selectedLocation) {
-            // Find the location we are in and use it
-            const now = new Date()
-            locations.forEach(loc => {
-                if (loc.arrive.toDate() < now && loc.depart.toDate() > now) {
-                    this.setState({ selectedLocation: loc })
-                }
-            });
-        }
         // Default to the first location if nothing found yet
         if (!this.state.selectedLocation) {
             this.setState({ selectedLocation: locations[0] })
