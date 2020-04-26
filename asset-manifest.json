@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/main.css",
+    "main.js": "/main.2b6b9114ee056790d739.bundle.js",
+    "main.css.map": "/main.css.map",
+    "main.js.map": "/main.2b6b9114ee056790d739.bundle.js.map",
+    "runtime~main.js": "/runtime~main.2b6b9114ee056790d739.bundle.js",
+    "runtime~main.js.map": "/runtime~main.2b6b9114ee056790d739.bundle.js.map",
+    "vendors~main.css": "/vendors~main.css",
+    "vendors~main.js": "/vendors~main.2b6b9114ee056790d739.bundle.js",
+    "vendors~main.css.map": "/vendors~main.css.map",
+    "vendors~main.js.map": "/vendors~main.2b6b9114ee056790d739.bundle.js.map",
+    "iframe.html": "/iframe.html",
+    "precache-manifest.bf129c36d66b7a1085bee15105ed5ea4.js": "/precache-manifest.bf129c36d66b7a1085bee15105ed5ea4.js",
+    "service-worker.js": "/service-worker.js",
+    "static/media/Family.jpg": "/static/media/Family.023d3633.jpg",
+    "static/media/Travel.jpg": "/static/media/Travel.14c1a224.jpg",
+    "static/media/flag-icon.css": "/static/media/zw.ad4ad36d.svg",
+    "static/media/default.png": "/static/media/default.0438f9b2.png",
+    "static/media/rss.png": "/static/media/rss.492803ea.png",
+    "static/media/thumb_pano_101.jpg": "/static/media/thumb_pano_101.4504ee8a.jpg",
+    "vendors~main.2b6b9114ee056790d739.bundle.js.LICENSE.txt": "/vendors~main.2b6b9114ee056790d739.bundle.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "runtime~main.2b6b9114ee056790d739.bundle.js",
+    "vendors~main.css",
+    "vendors~main.2b6b9114ee056790d739.bundle.js",
+    "main.css",
+    "main.2b6b9114ee056790d739.bundle.js"
+  ]
+}

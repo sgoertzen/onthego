@@ -1,0 +1,535 @@
+
+@media only screen and (max-width: 800px) {
+    .footer {
+        text-align: center;
+        display: grid;
+        grid-template-columns: 100%;
+      }
+    .footer-copy{
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .footer-spacer{
+        display: none;
+    }
+    .footer-user {
+        grid-column: 1;
+        grid-row: 2;
+    }
+}
+
+@media only screen and (min-width: 801px) {
+    .footer {
+        text-align: center;
+        display: grid;
+      }
+    .footer-copy{
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .footer-spacer{
+        grid-column: 2;
+        grid-row: 1;
+    }
+    .footer-user {
+        grid-column: 3;
+        grid-row: 1;
+    }
+}
+@media only screen and (max-width: 800px) {
+    #authorCol, #mediaCol, #commentsCol, #viewCol {
+        display: none;
+    }
+    .location-table {
+        min-width: 250px;
+    }
+}
+    
+@media only screen and (min-width: 801px) {
+    .location-table {
+        min-width: 650px;
+    }
+}
+.PostEntryInput {
+    display: none;
+  }
+.country-selector {
+  padding-top: 1em;
+  width: 20em;
+  margin: 1px;
+}
+  
+@media only screen and (max-width: 800px) {
+    .SelectionMap {
+        width: 100%;
+        height: 200px;
+        position: relative;
+        margin-top: 30px;
+    }
+
+    .map-control {
+        display: inline;
+        position: absolute;
+        left: 50%;
+        top: 40px;
+        -webkit-transform: translate(-50%, -90%);
+                transform: translate(-50%, -90%);
+        z-index: 100;
+        background-color: white;
+        vertical-align: middle;
+        font-size: .5em;
+    }
+}
+
+@media only screen and (min-width: 801px) {
+    .SelectionMap {
+        width: 100%;
+        height: 400px;
+        position: relative;
+    }
+    
+    .map-control {
+        display: inline;
+        position: absolute;
+        left: 50%;
+        top: 40px;
+        -webkit-transform: translate(-50%, -90%);
+                transform: translate(-50%, -90%);
+        z-index: 100;
+        background-color: white;
+        padding-left: 5px;
+        padding-right: 5px;
+        vertical-align: middle;
+    }
+}
+@media only screen and (max-width: 800px) {
+    #arriveCol, #departCol, #codeCol {
+        display: none;
+    }
+    .location-table {
+        min-width: 250px;
+    }
+}
+    
+@media only screen and (min-width: 801px) {
+    .location-table {
+        min-width: 650px;
+    }
+}
+  
+
+.root {
+    width: '100%';
+    margin-top: 1em;
+    overflow-x: auto;
+}
+.UploadingContainer {
+    display: inline;
+    position: relative;
+}
+
+.UploadingMedia {
+    position: relative;
+    width: 100px;
+}
+
+.UploadedMedia {
+    margin: 0;
+}
+
+.UploadingRemoveIcon {
+  position: absolute;
+  top: -20px;
+  right: 46px;
+}
+.secondaryButtons {
+    margin-bottom: 5px;
+}
+@media only screen and (max-width: 800px) {
+    .about-container {
+        width: 100%;
+    }
+    .about-image {
+        width: 100%;
+        max-width: 1024px;
+    }
+    .about-text {
+        margin: 1em;
+    }
+}
+
+@media only screen and (min-width: 801px) {
+    .about-container {
+        width: 90%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        text-align: center;
+    }
+    .about-image {
+        width: 100%;
+        max-width: 1024px;
+        margin: auto;
+        padding: 1em;
+    }
+}
+
+
+@media only screen and (max-width: 800px) {
+    .footer {
+        text-align: center;
+        display: grid;
+        grid-template-columns: 100%;
+      }
+    .footer-copy{
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .footer-spacer{
+        display: none;
+    }
+    .footer-rss {
+        grid-column: 1;
+        grid-row: 2;
+    }
+}
+
+@media only screen and (min-width: 801px) {
+    .footer {
+        text-align: center;
+        display: grid;
+      }
+    .footer-copy{
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .footer-spacer{
+        grid-column: 2;
+        grid-row: 1;
+    }
+    .footer-rss {
+        grid-column: 3;
+        grid-row: 1;
+    }
+}
+.activity-paper {
+    padding: .2em 1em;
+    max-width: 800px;
+    margin: .5em;
+    cursor: pointer;
+}
+.activity-icon {
+    margin-left: .5em;
+}
+.activity-title {
+    font-weight: bolder;
+}
+
+
+@media only screen and (max-width: 800px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+        padding-top: .3em;
+        padding-bottom: .1em;
+    }
+}
+
+@media only screen and (min-width: 801px) {
+    .header {
+        flex-direction: row;
+        padding: .4em;
+    }
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #6A7062;
+}
+.headerlogo {
+    color:#ffffff;
+    cursor: pointer;
+}
+#headerlink {
+    color: #ffffff;
+    cursor: pointer;
+    padding-right: 1em;
+}
+
+/* https://coolors.co/3e442b-ffffff-6a7062-8d909b-aaadc4 */
+@media only screen and (max-width: 800px) {
+}
+
+@media only screen and (min-width: 801px) {
+}
+
+.link {
+    cursor: pointer;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    height: 20px;
+    
+}
+.flag-icon {
+    margin-left: .2em;
+    margin-right: .2em;
+}
+.detailsPanel {
+    text-align: center;
+    min-width: 250px;
+    width: 100%;
+    display: grid;
+    grid-gap: 10px;
+    vertical-align: middle;
+}
+.detailNav {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+}
+@media only screen and (max-width: 800px) {
+  .App {
+    text-align: center;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-gap: 0;
+  }
+
+  .App-header {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .App-details {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .App-map {
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .App-stats {
+    grid-column: 1;
+    grid-row: 4;
+  }
+  .App-posts {
+    grid-column: 1;
+    grid-row: 5;
+  }
+}
+
+@media only screen and (min-width: 801px) {
+  .App {
+    text-align: center;
+    display: grid;
+    grid-template-columns: 44% 55%;
+    grid-gap: 0;
+  }
+
+  .App-header {
+    grid-column: 1 / 3;
+    grid-row: 1;
+  }
+  .App-details {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .App-map {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .App-posts {
+    grid-column: 1 / 3;
+    grid-row: 3;
+  }
+}
+
+/* 
+.color1 {
+  color: #6f584b
+}
+.color2 {
+  color: #4e6e5d
+}
+.color3 {
+  color: #1c6e8c
+}
+.color4 {
+  color: #4d5057
+}
+.color5 {
+  color: #000000
+} */
+.MapMarker {
+    text-align: center;
+    border: 1px solid #888888;
+    padding: 0 6px 0 6px;
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+@media only screen and (max-width: 800px) {
+    .TravelMap {
+        height: 200px;
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 801px) {
+    .TravelMap {
+        height: 250px;
+        width: 100%;
+    }
+}
+
+.MapFullscreen {
+    width: 100vw;
+    height: calc(100vh - 120px);
+}
+.Post-Image {
+    width: 50px;
+    height: 50px;
+    margin: auto;
+  }
+.cardGrid {
+  padding-top: 1em;
+  padding-bottom: 2em;
+  margin: auto;
+}
+.no-posts {
+  font-size: 26px;
+  padding: 20px;
+}
+.card {
+  max-width: 345px;
+  display: 'flex';
+  flex-direction: 'column';
+}
+.media {
+  height: 140px;
+}
+
+.statsPanel {
+  text-align: center;
+  min-width: 275px;
+  width: 100%;
+  justify-content: center;
+  vertical-align: middle;
+  align-content: center;
+  background-color: #3E442B;
+  padding: .2em;
+}
+.statsContent {
+  color: white;
+  text-align: left;
+  padding-left: .5em;
+  padding-top: .5em;
+  padding-bottom: .5em;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 800px) {
+  .statsPanel {
+    display: grid;
+  }
+  .statsContent {
+    font-size: 1.0em;
+  }
+
+}
+
+@media only screen and (min-width: 801px) {
+  .statsPanel {
+    display: flex;
+    flex-direction: row;
+  }
+  .statsContent {
+    font-size: 1.3em;
+  }
+}
+
+.statsLabel {
+  font-size: 1.0em;
+  color: white;
+  text-align: right;
+  padding-left: 2em;
+  padding-top: .5em;
+  padding-bottom: .5em;
+}
+
+.color1 {
+    color: #6f584b
+  }
+  .color2 {
+    color: #4e6e5d
+  }
+  .color3 {
+    color: #1c6e8c
+  }
+  .color4 {
+    color: #4d5057
+  }
+  .color5 {
+    color: #000000
+  } 
+.postcomment {
+    padding: 1em;
+    margin-bottom: 1em;
+}
+@media only screen and (max-width: 800px) {
+    .postcomments {
+        width: 96%;
+        margin: .5em auto;
+    }
+    .AddCommentButton {
+        width: 100%;
+        margin-bottom: 1em;
+    }
+  }
+    
+    @media only screen and (min-width: 801px) {
+    .postcomments {
+      width: 75%;
+      margin: .5em auto;
+    }
+    .AddCommentButton {
+        width: 100%;
+    }
+  }
+  
+@media only screen and (max-width: 800px) {
+    .post-header {
+        margin: auto;
+        width: 90%;
+    }
+  }
+    
+@media only screen and (min-width: 801px) {
+    .post-header {
+        padding: 1em;
+        margin: 0 auto;
+        width: 75%;
+    }
+}
+
+.post-header-details {
+    padding-top: 1em;
+}
+@media only screen and (max-width: 800px) {
+  .MediaViewer {
+      width: 100%;
+  }
+}
+  
+  @media only screen and (min-width: 801px) {
+  .MediaViewer {
+    margin: 0 auto;
+    width: 75%;
+    max-width: 800px;
+  }
+}
+
+
+/*# sourceMappingURL=main.css.map*/
